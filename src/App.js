@@ -1,8 +1,15 @@
+// Packages
+import { BrowserRouter as Router } from 'react-router-dom'
+// Components
+import PageRoutes from './components/PageRoutes'
+
 const App = () => {
 	return (
-		<h1 className="text-3xl font-bold underline">
-			Hello world!
-		</h1>
+		<Router>
+			<div className="flex flex-col min-h-screen justify-between">
+				<PageRoutes />
+			</div>
+		</Router>
 	)
 }
 
