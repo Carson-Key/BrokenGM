@@ -1,7 +1,7 @@
 const Clock = () => {
     return (
         <>
-            Hello World
+            Clock
         </>
 	)
 }
