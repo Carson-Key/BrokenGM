@@ -1,13 +1,32 @@
 // Packages
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // UI
 import Banner from './Banner'
 import Navigation from './Navigation'
 // Helpers
-import { signIn } from '../helpers/login'
+import { signIn, signOutFunc, isCurrentUser } from '../helpers/auth'
 
 const Header = () => {
     const [drawerMenuIsOpen, setDrawerMenuIsOpen] = useState(false)
+	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+	const [authButtonText, setAuthButtontext] = useState("Login")
+
+	useEffect(() => {
+		isCurrentUser(setIsUserLoggedIn)
+		if (isUserLoggedIn) {
+			setAuthButtontext("Signout")
+		} else {
+			setAuthButtontext("Login")
+		}
+	}, [isUserLoggedIn])
+
+	const invokeAuthFunction = () => {
+		if (authButtonText === "Signout") {
+			signOutFunc()
+		} else {
+			signIn()
+		}
+	}
 
     const toggleDrawerMenu = () => {
         setDrawerMenuIsOpen(!drawerMenuIsOpen)
@@ -29,7 +48,7 @@ const Header = () => {
 					drawerMenuIsOpen={drawerMenuIsOpen}
 				/>
 			</div>
-			<button onClick={signIn} className="relative text-black bg-white h-12 my-auto rounded-md px-2 py-1 right-0 mr-2 lg:relative lg:right-0">Login</button>
+			<button onClick={invokeAuthFunction} className="relative text-black bg-white h-12 my-auto rounded-md px-2 py-1 right-0 mr-2 lg:relative lg:right-0">{authButtonText}</button>
 		</header>
 	)
 }

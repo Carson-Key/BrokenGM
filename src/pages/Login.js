@@ -1,9 +1,7 @@
-import { signIn } from '../helpers/login'
-
 const Login = () => {
     return (
         <>
-            <button onClick={signIn}>hello</button>
+            <button>hello</button>
         </>
 	)
 }
