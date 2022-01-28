@@ -1,17 +1,13 @@
 // Packages
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth"
-import { auth, provider, db } from './firebase'
-import { doc, getDoc, setDoc } from "firebase/firestore" 
+// Firebase
+import { auth, provider } from './firebase'
+// Helpers
+import { getDocument, setDocument } from './firestore'
 
 async function createUserEntry(user) {
-	const userDoc = doc(db, "users", user.uid)
-	const userDBEntry = await getDoc(userDoc)
-	if (!userDBEntry.exists()) {
-		await setDoc(userDoc, {
-			clocks: [],
-			relations: []
-		})
-	}
+	let userDoc = await getDocument("users", user.uid)
+	setDocument("users", user.uid, {clocks: [], relations: []}, !userDoc)
 }
 
 export const isCurrentUser = (setState) => {
