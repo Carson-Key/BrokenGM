@@ -1,25 +1,27 @@
 // Packages
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 // Components
 import Container from "../components/Container"
+import Timer from "../components/Timer"
 
 const Clock = () => {
     const [timer, setTimer] = useState(0)
     const [isActive, setIsActive] = useState(true)
 
-    useEffect(() => {
-        let interval = null
-        if (isActive) {
-          interval = setInterval(() => {
-            setTimer(timer => timer + 1)
-          }, 10)
-        }
-        return () => clearInterval(interval)
-      }, [isActive, timer])
+    function reset() {
+        setTimer(0)
+        setIsActive(false)
+    }
 
     return (
         <Container>
-            {timer}
+            <Timer 
+                timer={timer} 
+                setTimer={setTimer}
+                isActive={isActive}
+            />
+            <button onClick={() => {setIsActive(!isActive)}}>start/stop</button>
+            <button onClick={reset}>reset</button>
         </Container>
 	)
 }
