@@ -20,6 +20,9 @@ const Timer = (props) => {
     }
 
     useEffect(() => {
+        if (timer === 0) {
+            setDividedTimer([])
+        }
         let interval = null
         if (isActive) {
           interval = setInterval(() => {

@@ -6,7 +6,7 @@ import Timer from "../components/Timer"
 
 const Clock = () => {
     const [timer, setTimer] = useState(0)
-    const [isActive, setIsActive] = useState(true)
+    const [isActive, setIsActive] = useState(false)
 
     function reset() {
         setTimer(0)
