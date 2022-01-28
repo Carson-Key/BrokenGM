@@ -1,6 +1,18 @@
 // Packages
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth"
-import { auth, provider } from './firebase'
+import { auth, provider, db } from './firebase'
+import { doc, getDoc, setDoc } from "firebase/firestore" 
+
+async function createUserEntry(user) {
+	const userDoc = doc(db, "users", user.uid)
+	const userDBEntry = await getDoc(userDoc)
+	if (!userDBEntry.exists()) {
+		await setDoc(userDoc, {
+			clocks: [],
+			relations: []
+		})
+	}
+}
 
 export const isCurrentUser = (setState) => {
 	onAuthStateChanged(auth, (user) => {
@@ -21,6 +33,7 @@ export const signOutFunc = () => {
 export const signIn = () => {
 	signInWithPopup(auth, provider)
 		.then((result) => {
+			createUserEntry(result.user)
 		}).catch((error) => {
 		})
 }
