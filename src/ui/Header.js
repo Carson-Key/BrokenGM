@@ -3,6 +3,8 @@ import { useState } from 'react'
 // UI
 import Banner from './Banner'
 import Navigation from './Navigation'
+// Helpers
+import { signIn } from '../helpers/login'
 
 const Header = () => {
     const [drawerMenuIsOpen, setDrawerMenuIsOpen] = useState(false)
@@ -27,7 +29,7 @@ const Header = () => {
 					drawerMenuIsOpen={drawerMenuIsOpen}
 				/>
 			</div>
-			<button className="relative text-black bg-white h-12 my-auto rounded-md px-2 py-1 right-0 mr-2 lg:relative lg:right-0">Login</button>
+			<button onClick={signIn} className="relative text-black bg-white h-12 my-auto rounded-md px-2 py-1 right-0 mr-2 lg:relative lg:right-0">Login</button>
 		</header>
 	)
 }
