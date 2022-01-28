@@ -1,6 +1,11 @@
+// Components
+import Container from "../components/Container"
+
 const Relations = () => {
     return (
-        <>Relations Page</>
+        <Container>
+            Relations Page
+        </Container>
 	)
 }
 
