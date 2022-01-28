@@ -27,7 +27,7 @@ const Header = () => {
 					drawerMenuIsOpen={drawerMenuIsOpen}
 				/>
 			</div>
-			<button className="relative right-0 mr-2 lg:relative lg:right-0">Login</button>
+			<button className="relative text-black bg-white h-12 my-auto rounded-md px-2 py-1 right-0 mr-2 lg:relative lg:right-0">Login</button>
 		</header>
 	)
 }
