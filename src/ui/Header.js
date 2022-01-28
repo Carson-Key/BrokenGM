@@ -15,16 +15,19 @@ const Header = () => {
     }
 
 	return (
-		<header className="flex relative h-14 z-40 text-white bg-purple-500 lg:h-20 lg:text-2xl xl:h-24 xl:text-3xl 2xl:h-28 2xl:text-4xl">
-			<Banner 
-				toggleDrawerMenu={toggleDrawerMenu} 
-				closeDrawerMenu={closeDrawerMenu} 
-				drawerMenuIsOpen={drawerMenuIsOpen} 
-			/>
-			<Navigation 
-				closeDrawerMenu={closeDrawerMenu} 
-				drawerMenuIsOpen={drawerMenuIsOpen}
-			/>
+		<header className="flex justify-between w-full h-14 text-white bg-purple-500 lg:h-20 lg:text-2xl xl:h-24 xl:text-3xl 2xl:h-28 2xl:text-4xl">
+			<div className="flex w-full">
+				<Banner 
+					toggleDrawerMenu={toggleDrawerMenu} 
+					closeDrawerMenu={closeDrawerMenu} 
+					drawerMenuIsOpen={drawerMenuIsOpen} 
+				/>
+				<Navigation 
+					closeDrawerMenu={closeDrawerMenu} 
+					drawerMenuIsOpen={drawerMenuIsOpen}
+				/>
+			</div>
+			<button className="relative right-0 mr-2 lg:relative lg:right-0">Login</button>
 		</header>
 	)
 }

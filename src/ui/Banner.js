@@ -16,7 +16,7 @@ const Banner = (props) => {
 				aria-label="Mobile Navigation Button" 
 				className="lg:hidden"
 			>
-				<MdMenu className="absolute inset-y-0 left-0 h-14 text-2xl ml-2"/>
+				<MdMenu className="h-14 text-2xl mx-2"/>
 			</button>
 			<NavLink to="/" className="flex justify-center my-auto mx-auto lg:mx-3"  onClick={closeDrawerMenu}>
 				<h1 className="my-auto text-lg font-helvetica lg:text-2xl xl:text-3xl 2xl:text-4xl" aria-label="Title Broken">Broken</h1>
