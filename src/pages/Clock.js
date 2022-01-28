@@ -8,11 +8,6 @@ const Clock = () => {
     const [timer, setTimer] = useState(0)
     const [isActive, setIsActive] = useState(false)
 
-    function reset() {
-        setTimer(0)
-        setIsActive(false)
-    }
-
     return (
         <Container>
             <Timer 
@@ -21,7 +16,6 @@ const Clock = () => {
                 isActive={isActive}
             />
             <button onClick={() => {setIsActive(!isActive)}}>start/stop</button>
-            <button onClick={reset}>reset</button>
         </Container>
 	)
 }
