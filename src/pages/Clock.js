@@ -10,10 +10,12 @@ const Clock = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [timer, setTimer] = useState(0)
     const [isActive, setIsActive] = useState(false)
+    const [isClock, setIsClock] = useState(false)
 
     async function getClockData() {
-        let clockData = await (await getDocument("clocks", "b37722f7-00da-4d7c-b9f5-67325445c313")).data()
-        setTimer(clockData.timer)
+        let clockData = await (await getDocument("clocks", "b37722f7-00da-4d7c-b9f5-67325445c313"))
+        setTimer(clockData.data().timer)
+        setIsClock(clockData.exists())
         setIsLoading(false)
     }
 
@@ -28,6 +30,7 @@ const Clock = () => {
                 setTimer={setTimer}
                 isActive={isActive}
                 isLoading={isLoading}
+                isClock={isClock}
             />
             <button disabled={isLoading} onClick={() => {setIsActive(!isActive)}}>start/stop</button>
         </Container>
