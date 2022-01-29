@@ -19,14 +19,14 @@ const Timer = (props) => {
             let interval = null
             if (isActive) {
                 interval = setInterval(() => {
-                    addMilliSecond(timer, setTimer, isClock)
+                    addMilliSecond(timer, setTimer, timerObject, isClock)
                 }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)
             }
             return () => clearInterval(interval)
         }
-    }, [isActive, timer, setTimer, isLoading, isClock])
+    }, [isActive, timer, setTimer, isLoading, isClock, timerObject])
 
     if (isLoading) {
         return (<h1>Loading...</h1>)
