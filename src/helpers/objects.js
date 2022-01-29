@@ -8,6 +8,8 @@ import {
  } from './timer'
 
 export const TIMETYPES = {
+    mils: "mils",
+    secs: "secs",
     mins: "mins",
     hours: "hours",
     days: "days",

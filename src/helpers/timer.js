@@ -4,36 +4,44 @@ import { defaultAccessArray } from './misc'
 // Objects
 import { TIMECONVERSTIONS, TIMETYPES, OVERFLOWOBJECT } from './objects.js'
 
-export const addHour = (timer, setTimer, timerObject, isClock = false, ammount = 1) => {
+export const addHour = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 1) => {
     const amountInMilliseconds = ammount * 3600000
     setTimer(timer => timer + amountInMilliseconds)
+
+    checkOverflow({ ...timerObject, timer: timer + amountInMilliseconds }, setTimerObject, 1, TIMETYPES.hours)
     
     updateDocument(
         "clocks", 
         "b37722f7-00da-4d7c-b9f5-67325445c313", 
-        { ...timerObject, timer }, 
+        { ...timerObject, timer: timer + amountInMilliseconds }, 
         isClock
     )
 }
-export const addMinute = (timer, setTimer, timerObject, isClock = false, ammount = 1) => {
+export const addMinute = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 1) => {
     const amountInMilliseconds = ammount * 60000
     setTimer(timer => timer + amountInMilliseconds)
+    setTimerObject({ ...timerObject, timer })
     
+    checkOverflow({ ...timerObject, timer: timer + amountInMilliseconds }, setTimerObject, 1, TIMETYPES.mins)
+
     updateDocument(
         "clocks", 
         "b37722f7-00da-4d7c-b9f5-67325445c313", 
-        { ...timerObject, timer }, 
+        { ...timerObject, timer: timer + amountInMilliseconds }, 
         isClock
     )
 }
-export const addSecond = (timer, setTimer, timerObject, isClock = false, ammount = 1) => {
+export const addSecond = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 1) => {
     const amountInMilliseconds = ammount * 1000
     setTimer(timer => timer + amountInMilliseconds)
+    setTimerObject({ ...timerObject, timer })
+
+    checkOverflow({ ...timerObject, timer: timer + amountInMilliseconds }, setTimerObject, 1, TIMETYPES.secs)
     
     updateDocument(
         "clocks", 
         "b37722f7-00da-4d7c-b9f5-67325445c313", 
-        { ...timerObject, timer }, 
+        { ...timerObject, timer: timer + amountInMilliseconds }, 
         isClock
     )
 }
@@ -46,6 +54,10 @@ export const addMilliSecond = (timer, setTimer, timerObject, setTimerObject, isC
             { ...timerObject, timer }, 
             isClock
         )
+    }
+    if (timer === 86400000) {
+        checkOverflow(timerObject, setTimerObject, 1, TIMETYPES.hours)
+        setTimer(0)
     }
 }
 
@@ -65,7 +77,7 @@ const divideToBase = (ammount, type) => {
     dividedValuesObject[type] = tempAmount
     return dividedValuesObject
 }
-export const checkOverflow = (timerObject, setTimerObject, amount = 715600, type = TIMETYPES.mins) => {
+export const checkOverflow = (timerObject, setTimerObject, amount, type) => {
     const dividedValuesObject = divideToBase(amount, type)
     const usedTypes = Object.keys(dividedValuesObject)
     const types = [TIMETYPES.mins, TIMETYPES.hours, TIMETYPES.days, TIMETYPES.weeks, TIMETYPES.months, TIMETYPES.years]
@@ -80,9 +92,7 @@ export const checkOverflow = (timerObject, setTimerObject, amount = 715600, type
         }
     })
 
-    // setTimerObject(returnedObject)
-    console.log(dividedValuesObject)
-    console.log(returnedObject)
+    setTimerObject(returnedObject)
 }
 export const yearsOverflow = (amount, returnedObject) => {
     returnedObject.year = returnedObject.year + amount
