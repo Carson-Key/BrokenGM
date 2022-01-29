@@ -77,7 +77,7 @@ export const yearsOverflow = (amount, returnedObject) => {
 export const monthsOverflow = (amount, returnedObject) => {
     const newMonthOfYear = returnedObject.monthOfYear + amount
 
-    if (newMonthOfYear > 12) {
+    if (newMonthOfYear > 11) {
         returnedObject.year = returnedObject.year + 1
         returnedObject.monthOfYear = newMonthOfYear - 12
     } else {
@@ -100,7 +100,7 @@ export const daysOverflow = (amount, returnedObject) => {
     const daysInCurrentMonth = returnedObject.daysInMonths[returnedObject.monthOfYear]
     const newDayOfMonth = returnedObject.dayOfMonth + amount
 
-    if (newDayOfWeek > 7) {
+    if (newDayOfWeek > 6) {
         returnedObject.dayOfWeek = newDayOfWeek - 7
     } else {
         returnedObject.dayOfWeek = newDayOfWeek
