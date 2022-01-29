@@ -55,7 +55,7 @@ export const addMilliSecond = (timer, setTimer, timerObject, setTimerObject, isC
             isClock
         )
     }
-    if (timer === 86400000) {
+    if (timer > 86400000) {
         checkOverflow(timerObject, setTimerObject, 1, TIMETYPES.hours)
         setTimer(0)
     }
