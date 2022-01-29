@@ -62,5 +62,5 @@ export const divideToBase = (ammount, type) => {
     })
 
     dividedValuesObject[type] = tempAmount
-    console.log(dividedValuesObject)
+    return dividedValuesObject
 }
