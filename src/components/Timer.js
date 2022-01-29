@@ -1,7 +1,6 @@
 // Packages
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 // Helpers
-import { splitNumberToReverseArray, defaultAccessArray } from '../helpers/misc'
 
 const Timer = (props) => {
     const { 
@@ -11,28 +10,12 @@ const Timer = (props) => {
         isLoading
     } = props
 
-    const [dividedTimer, setDividedTimer] = useState(splitNumberToReverseArray(timer))
-
-    const getTimerSection = (indexOne, indexTwo) => {
-        return (
-            defaultAccessArray(dividedTimer, indexTwo, "0") + 
-            defaultAccessArray(dividedTimer, indexOne, "0")
-        )
-    }
-
     useEffect(() => {
         if (!isLoading) {
-            if (timer === 0) {
-                setDividedTimer([])
-            } 
-            if (!isLoading) {
-                setDividedTimer(splitNumberToReverseArray(timer))
-            }
             let interval = null
             if (isActive) {
               interval = setInterval(() => {
-                setTimer(timer => timer + 1)
-                setDividedTimer(splitNumberToReverseArray(timer))
+                setTimer(timer => timer + 10)
               }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)
@@ -47,10 +30,9 @@ const Timer = (props) => {
         return (
             <h1>
                 {
-                    getTimerSection(6, 7) + ":" + 
-                    getTimerSection(4, 5) + ":" + 
-                    getTimerSection(2, 3) + ":" + 
-                    getTimerSection(0, 1)
+                    ("0" + Math.floor((timer / 60000) % 60)).slice(-2) + ":" +
+                    ("0" + Math.floor((timer / 1000) % 60)).slice(-2) + ":" +
+                    ("0" + ((timer / 10) % 100)).slice(-2)
                 }
             </h1>
         )
