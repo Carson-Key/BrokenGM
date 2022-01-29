@@ -7,30 +7,30 @@ export const TIMETYPES = {
     years: "years"
 }
 export const TIMECONVERSTIONS = {
-    mins: [
+    [TIMETYPES.mins]: [
         {type: TIMETYPES.years, con: 525600}, 
         {type: TIMETYPES.months, con: 43800}, 
         {type: TIMETYPES.weeks, con: 10080}, 
         {type: TIMETYPES.days, con: 1440}, 
         {type: TIMETYPES.hours, con: 60}
     ],
-    hours: [
+    [TIMETYPES.hours]: [
         {type: TIMETYPES.years, con: 8760}, 
         {type: TIMETYPES.months, con: 730}, 
         {type: TIMETYPES.weeks, con: 168}, 
         {type: TIMETYPES.days, con: 24}
     ],
-    days: [
+    [TIMETYPES.days]: [
         {type: TIMETYPES.years, con: 365}, 
         {type: TIMETYPES.months, con: 30}, 
         {type: TIMETYPES.weeks, con: 7}
     ],
-    weeks: [
+    [TIMETYPES.weeks]: [
         {type: TIMETYPES.years, con: 52}, 
         {type: TIMETYPES.months, con: 4}
     ],
-    months: [
+    [TIMETYPES.months]: [
         {type: TIMETYPES.years, con: 12}
     ],
-    years: []
+    [TIMETYPES.years]: []
 }
