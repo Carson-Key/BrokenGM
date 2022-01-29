@@ -2,46 +2,23 @@
 import { updateDocument } from './firestore'
 import { defaultAccessArray } from './misc'
 // Objects
-import { TIMECONVERSTIONS, TIMETYPES, OVERFLOWOBJECT } from './objects.js'
+import { TIMECONVERSTIONS, TIMETYPES, OVERFLOWOBJECT, ADDUNITINMILI } from './objects.js'
 
-export const addHour = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 1) => {
-    const amountInMilliseconds = ammount * 3600000
-    setTimer(timer => timer + amountInMilliseconds)
+export const addUnit = (timer, setTimer, timerObject, setTimerObject, type, ammount = 1, isClock = false) => {
+    const amountInMilliseconds = ammount * ADDUNITINMILI[type]
+    let newTimerObject = { ...timerObject }
 
-    checkOverflow({ ...timerObject, timer: timer + amountInMilliseconds }, setTimerObject, 1, TIMETYPES.hours)
+    if (type === TIMETYPES.secs || type === TIMETYPES.mins || type === TIMETYPES.hours) {
+        newTimerObject = { ...timerObject, timer: timer + amountInMilliseconds }
+        setTimer(timer => timer + amountInMilliseconds)
+    }
+
+    checkOverflow(newTimerObject, setTimerObject, ammount, type)
     
     updateDocument(
         "clocks", 
         "b37722f7-00da-4d7c-b9f5-67325445c313", 
-        { ...timerObject, timer: timer + amountInMilliseconds }, 
-        isClock
-    )
-}
-export const addMinute = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 1) => {
-    const amountInMilliseconds = ammount * 60000
-    setTimer(timer => timer + amountInMilliseconds)
-    setTimerObject({ ...timerObject, timer })
-    
-    checkOverflow({ ...timerObject, timer: timer + amountInMilliseconds }, setTimerObject, 1, TIMETYPES.mins)
-
-    updateDocument(
-        "clocks", 
-        "b37722f7-00da-4d7c-b9f5-67325445c313", 
-        { ...timerObject, timer: timer + amountInMilliseconds }, 
-        isClock
-    )
-}
-export const addSecond = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 1) => {
-    const amountInMilliseconds = ammount * 1000
-    setTimer(timer => timer + amountInMilliseconds)
-    setTimerObject({ ...timerObject, timer })
-
-    checkOverflow({ ...timerObject, timer: timer + amountInMilliseconds }, setTimerObject, 1, TIMETYPES.secs)
-    
-    updateDocument(
-        "clocks", 
-        "b37722f7-00da-4d7c-b9f5-67325445c313", 
-        { ...timerObject, timer: timer + amountInMilliseconds }, 
+        newTimerObject, 
         isClock
     )
 }

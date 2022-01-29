@@ -5,7 +5,6 @@ import Container from "../components/Container"
 import Timer from "../components/Timer"
 // Helpers
 import { getDocument } from "../helpers/firestore"
-import { addHour } from '../helpers/timer'
 
 const Clock = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -38,7 +37,6 @@ const Clock = () => {
                 setTimerObject={setTimerObject}
             />
             <button disabled={isLoading} onClick={() => {setIsActive(!isActive)}}>start/stop</button>
-            <button disabled={isLoading} onClick={() => {addHour(timer, setTimer, timerObject, setTimerObject, isClock, 6)}}>add 6 hours</button>
         </Container>
 	)
 }

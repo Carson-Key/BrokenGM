@@ -53,3 +53,12 @@ export const OVERFLOWOBJECT = {
     [TIMETYPES.months]: (amount, returnedObject) => {monthsOverflow(amount, returnedObject)},
     [TIMETYPES.years]: (amount, returnedObject) => {yearsOverflow(amount, returnedObject)}
 }
+export const ADDUNITINMILI = {
+    [TIMETYPES.secs]: 1000,
+    [TIMETYPES.mins]: 60000,
+    [TIMETYPES.hours]: 3600000,
+    [TIMETYPES.days]: 1,
+    [TIMETYPES.weeks]: 1,
+    [TIMETYPES.months]: 1,
+    [TIMETYPES.years]: 1
+}
