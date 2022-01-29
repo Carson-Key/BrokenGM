@@ -9,3 +9,15 @@ export const defaultAccessArray = (array, index, defaultValue = null) => {
         return defaultValue
     }
 }
+
+export const getNumberSuffix = (number) => {
+    if (number === 1) {
+        return "st"
+    } else if (number === 2) {
+        return "nd"
+    } else if (number === 3) {
+        return "rd"
+    } else {
+        return "th"
+    }
+}
