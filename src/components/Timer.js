@@ -32,7 +32,7 @@ const Timer = (props) => {
             }
             return () => clearInterval(interval)
         }
-    }, [isActive, timer, setTimer, isLoading])
+    }, [isActive, timer, setTimer, isLoading, isClock])
 
     if (isLoading) {
         return (<h1>Loading...</h1>)
