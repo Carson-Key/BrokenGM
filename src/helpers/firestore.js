@@ -18,3 +18,10 @@ export async function setDocument(collection, document, dataToAdd, documentExsis
 		await setDoc(userDoc, dataToAdd)
 	}
 }
+export async function updateDocument(collection, document, dataToAdd, documentExsists = true) {
+    const userDoc = doc(db, collection, document)
+
+	if (documentExsists) {
+		await setDoc(userDoc, dataToAdd, { merge: true })
+	}
+}
