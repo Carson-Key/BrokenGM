@@ -48,7 +48,7 @@ export const addMilliSecond = (timer, setTimer, timerObject, setTimerObject, isC
     }
 }
 
-export const divideToBase = (ammount, type) => {
+const divideToBase = (ammount, type) => {
     let dividedValuesObject = {}
     let tempAmount = ammount
     const converstions = TIMECONVERSTIONS[type]
