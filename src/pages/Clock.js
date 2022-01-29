@@ -5,6 +5,7 @@ import Container from "../components/Container"
 import Timer from "../components/Timer"
 // Helpers
 import { getDocument } from "../helpers/firestore"
+import { checkOverflow } from '../helpers/timer'
 
 const Clock = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +24,10 @@ const Clock = () => {
 
     useEffect(() => {
         getClockData()
-    }, [])
+        if (!isLoading) {
+            checkOverflow(timerObject, setTimerObject)
+        }
+    }, [isLoading])
 
     return (
         <Container>
