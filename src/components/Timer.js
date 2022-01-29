@@ -11,7 +11,8 @@ const Timer = (props) => {
         isActive,
         isLoading,
         isClock,
-        timerObject
+        timerObject,
+        setTimerObject
     } = props
 
     useEffect(() => {
@@ -19,14 +20,14 @@ const Timer = (props) => {
             let interval = null
             if (isActive) {
                 interval = setInterval(() => {
-                    addMilliSecond(timer, setTimer, timerObject, isClock)
+                    addMilliSecond(timer, setTimer, timerObject, setTimerObject, isClock)
                 }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)
             }
             return () => clearInterval(interval)
         }
-    }, [isActive, timer, setTimer, isLoading, isClock, timerObject])
+    }, [isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject])
 
     if (isLoading) {
         return (<h1>Loading...</h1>)
