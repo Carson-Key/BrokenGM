@@ -1,7 +1,7 @@
 // Packages
 import { useEffect } from 'react'
 // Helpers
-import { updateDocument } from '../helpers/firestore'
+import { addMilliSecond } from '../helpers/timer'
 
 const Timer = (props) => {
     const { 
@@ -17,15 +17,7 @@ const Timer = (props) => {
             let interval = null
             if (isActive) {
                 interval = setInterval(() => {
-                    setTimer(timer => timer + 10)
-                    if (timer % 60000 === 0) {
-                        updateDocument(
-                            "clocks", 
-                            "b37722f7-00da-4d7c-b9f5-67325445c313", 
-                            { timer: timer }, 
-                            isClock
-                        )
-                    }
+                    addMilliSecond(timer, setTimer, isClock)
                 }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)
