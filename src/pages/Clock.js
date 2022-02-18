@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 // Components
 import Container from "../components/Container"
 import Timer from "../components/Timer"
+import TimerController from "../components/TimerController"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 
@@ -36,7 +37,7 @@ const Clock = () => {
                 timerObject={timerObject}
                 setTimerObject={setTimerObject}
             />
-            <button disabled={isLoading} onClick={() => {setIsActive(!isActive)}}>start/stop</button>
+            <TimerController disabled={isLoading} setIsActive={setIsActive} isActive={isActive} />
         </Container>
 	)
 }
