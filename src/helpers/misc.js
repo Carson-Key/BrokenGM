@@ -11,11 +11,15 @@ export const defaultAccessArray = (array, index, defaultValue = null) => {
 }
 
 export const getNumberSuffix = (number) => {
-    if (number === 1) {
+    const lastDidgetOfNumber = number % 10
+
+    if (number === 11 || number === 12 || number === 13) {
+        return "th"
+    } else if (lastDidgetOfNumber === 1) {
         return "st"
-    } else if (number === 2) {
+    } else if (lastDidgetOfNumber === 2) {
         return "nd"
-    } else if (number === 3) {
+    } else if (lastDidgetOfNumber === 3) {
         return "rd"
     } else {
         return "th"
