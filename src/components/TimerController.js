@@ -31,6 +31,7 @@ const TimerController = (props) => {
                     TNTKeys.map((TNTKey, i) => {
                         return (
                             <button 
+                                key={i}
                                 disabled={isLoading} 
                                 onClick={() => {
                                     if (changeTimerValue) {
