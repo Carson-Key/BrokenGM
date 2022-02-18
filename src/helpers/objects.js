@@ -17,6 +17,40 @@ export const TIMETYPES = {
     months: "months",
     years: "years"
 }
+export const TIMENAMESANDTYPES = {
+    mils: {
+        name: "Miliseconds",
+        type: TIMETYPES.mils
+    },
+    secs: {
+        name: "Seconds",
+        type: TIMETYPES.secs
+    },
+    mins: {
+        name: "Minutes",
+        type: TIMETYPES.mins
+    },
+    hours: {
+        name: "Hours",
+        type: TIMETYPES.hours
+    },
+    days: {
+        name: "Days",
+        type: TIMETYPES.days
+    },
+    weeks: {
+        name: "Weeks",
+        type: TIMETYPES.weeks
+    },
+    months: {
+        name: "Months",
+        type: TIMETYPES.months
+    },
+    years: {
+        name: "Years",
+        type: TIMETYPES.years
+    }
+}
 export const TIMECONVERSTIONS = {
     [TIMETYPES.mins]: [
         {type: TIMETYPES.years, con: 525600}, 
