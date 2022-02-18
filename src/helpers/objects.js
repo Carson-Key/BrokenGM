@@ -18,14 +18,6 @@ export const TIMETYPES = {
     years: "years"
 }
 export const TIMENAMESANDTYPES = {
-    mils: {
-        name: "Miliseconds",
-        type: TIMETYPES.mils
-    },
-    secs: {
-        name: "Seconds",
-        type: TIMETYPES.secs
-    },
     mins: {
         name: "Minutes",
         type: TIMETYPES.mins
