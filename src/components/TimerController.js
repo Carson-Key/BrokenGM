@@ -37,19 +37,22 @@ const TimerController = (props) => {
     }
 
     return (
-        <section className="flex justify-evenly my-6">
-            <button 
-                disabled={isLoading} 
-                className={"text-white text-3xl rounded px-3 py-2 " + timerStateButtonColor}
-                onClick={() => {
-                    toggleTimerStateButtonCSS()
-                    setIsActive(!isActive)
-                }}
-            >
-                {timerStateButtonText}
-            </button>
-            <div className="my-auto">
+        <section className="mx-auto my-6 w-fit">
+            <center>
+                <button 
+                    disabled={isLoading} 
+                    className={"text-white text-3xl rounded px-3 py-2 mb-6 " + timerStateButtonColor}
+                    onClick={() => {
+                        toggleTimerStateButtonCSS()
+                        setIsActive(!isActive)
+                    }}
+                >
+                    {timerStateButtonText}
+                </button>
+            </center>
+            <div className="my-auto flex text-3xl">
                 <input 
+                    className="bg-gray-100 px-3 py-2 rounded-l-md w-40"
                     type="text" 
                     name="Change Clock" 
                     placeholder="+/- Time"
@@ -58,28 +61,31 @@ const TimerController = (props) => {
                         setChangeTimerValue(event.target.value)
                     }}
                 />
-                {
-                    TNTKeys.map((TNTKey, i) => {
-                        return (
-                            <button 
-                                key={i}
-                                disabled={isLoading} 
-                                onClick={() => {
-                                    if (changeTimerValue) {
-                                        addUnit(
-                                            timer, setTimer, 
-                                            timerObject, setTimerObject, 
-                                            TIMENAMESANDTYPES[TNTKey].type, 
-                                            parseInt(changeTimerValue), isClock
-                                        )
-                                    }
-                                }}
-                            >
-                                {TIMENAMESANDTYPES[TNTKey].name}
-                            </button>
-                        )
-                    })
-                }
+                <div className="border-y border-r rounded-r-md px-3 py-2 divide divide-x">
+                    {
+                        TNTKeys.map((TNTKey, i) => {
+                            return (
+                                <button 
+                                    key={i}
+                                    className="px-2"
+                                    disabled={isLoading} 
+                                    onClick={() => {
+                                        if (changeTimerValue) {
+                                            addUnit(
+                                                timer, setTimer, 
+                                                timerObject, setTimerObject, 
+                                                TIMENAMESANDTYPES[TNTKey].type, 
+                                                parseInt(changeTimerValue), isClock
+                                            )
+                                        }
+                                    }}
+                                >
+                                    {TIMENAMESANDTYPES[TNTKey].name}
+                                </button>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </section>
 	)
