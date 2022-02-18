@@ -30,7 +30,13 @@ const Timer = (props) => {
     }, [isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject])
 
     if (isLoading) {
-        return (<h1>Loading...</h1>)
+        return (
+            <section className="h-full">
+                <h1 className="text-6xl w-fit mt-auto mx-auto">
+                    Loading...
+                </h1>
+            </section>
+        )
     } else {
         return (
             <section className="h-full">
