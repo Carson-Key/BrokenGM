@@ -16,7 +16,12 @@ const TimerController = (props) => {
 
     return (
         <>
-            <button disabled={isLoading} onClick={() => {setIsActive(!isActive)}}>start/stop</button>
+            <button 
+                disabled={isLoading} 
+                onClick={() => {setIsActive(!isActive)}}
+            >
+                start/stop
+            </button>
             <div>
                 <input 
                     type="text" 
