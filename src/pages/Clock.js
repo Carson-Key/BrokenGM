@@ -27,7 +27,7 @@ const Clock = () => {
     }, [])
 
     return (
-        <Container>
+        <Container className="mt-auto">
             <Timer 
                 timer={timer} 
                 setTimer={setTimer}
