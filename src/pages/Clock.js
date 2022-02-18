@@ -37,7 +37,11 @@ const Clock = () => {
                 timerObject={timerObject}
                 setTimerObject={setTimerObject}
             />
-            <TimerController disabled={isLoading} setIsActive={setIsActive} isActive={isActive} />
+            <TimerController 
+                disabled={isLoading} 
+                setIsActive={setIsActive} 
+                isActive={isActive} 
+            />
         </Container>
 	)
 }
