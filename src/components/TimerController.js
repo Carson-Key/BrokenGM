@@ -1,5 +1,10 @@
 const TimerController = (props) => {
-    const { isLoading, setIsActive, isActive } = props
+    const { 
+        isLoading, isClock,
+        isActive, setIsActive,
+        timer, setTimer, 
+        timerObject, setTimerObject, 
+    } = props
 
     return (
         <>
