@@ -6,12 +6,12 @@ const TimerController = (props) => {
             <button disabled={isLoading} onClick={() => {setIsActive(!isActive)}}>start/stop</button>
             <div>
                 <input type="text" name="Change Clock" placeholder="+/- Time"/>
-                <button>Minutes</button>
-                <button>Hours</button>
-                <button>Days</button>
-                <button>Week</button>
-                <button>Months</button>
-                <button>Years</button>
+                <button disabled={isLoading}>Minutes</button>
+                <button disabled={isLoading}>Hours</button>
+                <button disabled={isLoading}>Days</button>
+                <button disabled={isLoading}>Week</button>
+                <button disabled={isLoading}>Months</button>
+                <button disabled={isLoading}>Years</button>
             </div>
         </>
 	)
