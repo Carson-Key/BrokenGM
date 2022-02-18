@@ -13,14 +13,19 @@ const TimerController = (props) => {
     } = props
     const TNTKeys = Object.keys(TIMENAMESANDTYPES)
     const [changeTimerValue, setChangeTimerValue] = useState("")
+    const [timerStateButtonText, setTimerStateButtonText] = useState("Start")
+    const [timerStateButtonColor, setTimerStateButtonColor] = useState("bg-green-500")
 
     return (
         <>
             <button 
                 disabled={isLoading} 
-                onClick={() => {setIsActive(!isActive)}}
+                className={"text-white text-xl rounded px-2 py-1 " + timerStateButtonColor}
+                onClick={() => {
+                    setIsActive(!isActive)
+                }}
             >
-                start/stop
+                {timerStateButtonText}
             </button>
             <div>
                 <input 
