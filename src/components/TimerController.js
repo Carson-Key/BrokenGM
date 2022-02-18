@@ -40,7 +40,7 @@ const TimerController = (props) => {
         <>
             <button 
                 disabled={isLoading} 
-                className={"text-white text-xl rounded px-2 py-1 " + timerStateButtonColor}
+                className={"text-white text-3xl rounded px-3 py-2 " + timerStateButtonColor}
                 onClick={() => {
                     toggleTimerStateButtonCSS()
                     setIsActive(!isActive)
