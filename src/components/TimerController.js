@@ -37,7 +37,7 @@ const TimerController = (props) => {
     }
 
     return (
-        <div className="flex justify-evenly my-6">
+        <section className="flex justify-evenly my-6">
             <button 
                 disabled={isLoading} 
                 className={"text-white text-3xl rounded px-3 py-2 " + timerStateButtonColor}
@@ -81,7 +81,7 @@ const TimerController = (props) => {
                     })
                 }
             </div>
-        </div>
+        </section>
 	)
 }
 
