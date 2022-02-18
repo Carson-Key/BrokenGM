@@ -116,9 +116,8 @@ export const hoursOverflow = (amount, returnedObject) => {
     const newTimerValue = returnedObject.timer + (amount * 3600000)
     
     if (newTimerValue > 86400000) {
-        returnedObject.dayOfMonth = returnedObject.dayOfMonth + 1
-        returnedObject.dayOfWeek = returnedObject.dayOfWeek + 1
-        returnedObject.timer = newTimerValue - returnedObject.timer
+        daysOverflow(1, returnedObject)
+        returnedObject.timer = newTimerValue - 86400000
     } else {
         returnedObject.timer = newTimerValue
     }
