@@ -28,7 +28,7 @@ const Timer = (props) => {
             }
             return () => clearInterval(interval)
         }
-    }, [isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject])
+    }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject])
 
     if (isLoading) {
         return (
