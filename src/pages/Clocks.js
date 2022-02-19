@@ -65,7 +65,7 @@ const Clocks = () => {
                 condition={clocks.length !== 0}
                 returnComponent={
                     <CenterScreen>
-                        <h1 className="text-4xl w-fit mt-auto mx-auto">
+                        <h1 className="text-4xl w-screen text-center mt-auto mx-auto">
                             You Don't Have Any Clocks
                         </h1>
                     </CenterScreen>    
