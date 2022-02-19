@@ -32,17 +32,28 @@ const Timer = (props) => {
 
     return (
         <section className="h-full">
-            <h1 className="text-6xl w-fit mt-auto mx-auto">
-                {
-                    capitalizeFirstLetter(timerObject.daysOfWeek[timerObject.dayOfWeek])
-                    
-                }, The {
+            <h1 className="text-center md:text-none md:flex text-6xl w-fit mt-auto mx-auto pt-1">
+                <p>
+                    {
+                        capitalizeFirstLetter(
+                            timerObject.daysOfWeek[timerObject.dayOfWeek]
+                        ) + ","
+                    }
+                </p>
+                <p className="lg:mx-2">
+                {" The " +
                     timerObject.dayOfMonth}{getNumberSuffix(timerObject.dayOfMonth)
-                } of {
-                    capitalizeFirstLetter(timerObject.monthsOfYear[timerObject.monthOfYear])
-                }, {timerObject.year} {timerObject.yearSuffix}
+                + " of " +
+                    capitalizeFirstLetter(
+                        timerObject.monthsOfYear[timerObject.monthOfYear]
+                    )
+                + ", "}
+                </p>
+                <p>
+                    {timerObject.year} {timerObject.yearSuffix}
+                </p>
             </h1>
-            <h1 className="text-5xl w-fit mx-auto">
+            <h1 className="text-5xl w-fit mx-auto pt-6">
                 {
                     ("0" + Math.floor((timer / 3600000) % 60)).slice(-2) + ":" +
                     ("0" + Math.floor((timer / 60000) % 60)).slice(-2) + ":" +
