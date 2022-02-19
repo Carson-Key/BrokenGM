@@ -51,44 +51,33 @@ const Clock = () => {
     }, [id, isLoading, uid])
 
     return (
-        <ConditionalRender 
-            condition={!isTimeout && isLoading}
-            returnComponent={
-                <CenterScreen>
-                    <h1 className="text-6xl w-screen text-center mt-auto mx-auto">
-                        Request Timed Out
-                    </h1>
-                </CenterScreen>
-            }
-        >
-            <IsLoading isLoading={isLoading}>
-                <Container className="mt-auto">
-                    <Timer 
+        <IsLoading isLoading={isLoading}>
+            <Container className="mt-auto">
+                <Timer 
+                    id={id}
+                    timer={timer} 
+                    setTimer={setTimer}
+                    isActive={isActive}
+                    isLoading={isLoading}
+                    isClock={isClock}
+                    timerObject={timerObject}
+                    setTimerObject={setTimerObject}
+                />
+                <ConditionalRender condition={isAdmin}>
+                    <TimerController 
                         id={id}
-                        timer={timer} 
-                        setTimer={setTimer}
-                        isActive={isActive}
-                        isLoading={isLoading}
+                        isLoading={isLoading} 
                         isClock={isClock}
-                        timerObject={timerObject}
+                        isActive={isActive}
+                        setIsActive={setIsActive}
+                        timer={timer}
+                        setTimer={setTimer}
+                        timerObject={timerObject} 
                         setTimerObject={setTimerObject}
                     />
-                    <ConditionalRender condition={isAdmin}>
-                        <TimerController 
-                            id={id}
-                            isLoading={isLoading} 
-                            isClock={isClock}
-                            isActive={isActive}
-                            setIsActive={setIsActive}
-                            timer={timer}
-                            setTimer={setTimer}
-                            timerObject={timerObject} 
-                            setTimerObject={setTimerObject}
-                        />
-                    </ConditionalRender>
-                </Container>
-            </IsLoading>
-        </ConditionalRender>
+                </ConditionalRender>
+            </Container>
+        </IsLoading>
 	)
 }
 
