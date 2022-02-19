@@ -30,38 +30,28 @@ const Timer = (props) => {
         }
     }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject])
 
-    if (isLoading) {
-        return (
-            <section className="h-full">
-                <h1 className="text-6xl w-fit mt-auto mx-auto">
-                    Loading...
-                </h1>
-            </section>
-        )
-    } else {
-        return (
-            <section className="h-full">
-                <h1 className="text-6xl w-fit mt-auto mx-auto">
-                    {
-                        capitalizeFirstLetter(timerObject.daysOfWeek[timerObject.dayOfWeek])
-                        
-                    }, The {
-                        timerObject.dayOfMonth}{getNumberSuffix(timerObject.dayOfMonth)
-                    } of {
-                        capitalizeFirstLetter(timerObject.monthsOfYear[timerObject.monthOfYear])
-                    }, {timerObject.year} {timerObject.yearSuffix}
-                </h1>
-                <h1 className="text-5xl w-fit mx-auto">
-                    {
-                        ("0" + Math.floor((timer / 3600000) % 60)).slice(-2) + ":" +
-                        ("0" + Math.floor((timer / 60000) % 60)).slice(-2) + ":" +
-                        ("0" + Math.floor((timer / 1000) % 60)).slice(-2) + ":" +
-                        ("0" + ((timer / 10) % 100)).slice(-2)
-                    }
-                </h1>
-            </section>
-        )
-    }
+    return (
+        <section className="h-full">
+            <h1 className="text-6xl w-fit mt-auto mx-auto">
+                {
+                    capitalizeFirstLetter(timerObject.daysOfWeek[timerObject.dayOfWeek])
+                    
+                }, The {
+                    timerObject.dayOfMonth}{getNumberSuffix(timerObject.dayOfMonth)
+                } of {
+                    capitalizeFirstLetter(timerObject.monthsOfYear[timerObject.monthOfYear])
+                }, {timerObject.year} {timerObject.yearSuffix}
+            </h1>
+            <h1 className="text-5xl w-fit mx-auto">
+                {
+                    ("0" + Math.floor((timer / 3600000) % 60)).slice(-2) + ":" +
+                    ("0" + Math.floor((timer / 60000) % 60)).slice(-2) + ":" +
+                    ("0" + Math.floor((timer / 1000) % 60)).slice(-2) + ":" +
+                    ("0" + ((timer / 10) % 100)).slice(-2)
+                }
+            </h1>
+        </section>
+    )
 }
 
 export default Timer

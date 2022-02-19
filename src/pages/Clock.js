@@ -5,8 +5,10 @@ import { useParams } from 'react-router-dom'
 import Container from "../components/Container"
 import Timer from "../components/Timer"
 import TimerController from "../components/TimerController"
+import IsLoading from '../components/IsLoading'
 // Helpers
 import { getDocument } from "../helpers/firestore"
+import ConditionalRender from '../components/ConditionalRender'
 
 const Clock = () => {
     const { id } = useParams()
@@ -29,29 +31,31 @@ const Clock = () => {
     }, [id])
 
     return (
-        <Container className="mt-auto">
-            <Timer 
-                id={id}
-                timer={timer} 
-                setTimer={setTimer}
-                isActive={isActive}
-                isLoading={isLoading}
-                isClock={isClock}
-                timerObject={timerObject}
-                setTimerObject={setTimerObject}
-            />
-            <TimerController 
-                id={id}
-                isLoading={isLoading} 
-                isClock={isClock}
-                isActive={isActive}
-                setIsActive={setIsActive}
-                timer={timer}
-                setTimer={setTimer}
-                timerObject={timerObject} 
-                setTimerObject={setTimerObject}
-            />
-        </Container>
+        <IsLoading isLoading={isLoading}>
+            <Container className="mt-auto">
+                <Timer 
+                    id={id}
+                    timer={timer} 
+                    setTimer={setTimer}
+                    isActive={isActive}
+                    isLoading={isLoading}
+                    isClock={isClock}
+                    timerObject={timerObject}
+                    setTimerObject={setTimerObject}
+                />
+                <TimerController 
+                    id={id}
+                    isLoading={isLoading} 
+                    isClock={isClock}
+                    isActive={isActive}
+                    setIsActive={setIsActive}
+                    timer={timer}
+                    setTimer={setTimer}
+                    timerObject={timerObject} 
+                    setTimerObject={setTimerObject}
+                />
+            </Container>
+        </IsLoading>
 	)
 }
 

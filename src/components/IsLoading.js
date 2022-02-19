@@ -11,7 +11,7 @@ const IsLoading = (props) => {
 
     return (
         <ConditionalRender
-            condition={isLoading}
+            condition={!isLoading}
             returnComponent={<Loading />}
         >
             {children}
