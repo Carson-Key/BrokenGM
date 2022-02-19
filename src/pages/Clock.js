@@ -16,17 +16,17 @@ const Clock = () => {
     const [isActive, setIsActive] = useState(false)
     const [isClock, setIsClock] = useState(false)
 
-    async function getClockData() {
-        let clockData = await (await getDocument("clocks", id))
-        setTimer(clockData.data().timer)
-        setTimerObject(clockData.data())
-        setIsClock(clockData.exists())
-        setIsLoading(false)
-    }
-
     useEffect(() => {
+        const getClockData = async () => {
+            let clockData = await (await getDocument("clocks", id))
+            setTimer(clockData.data().timer)
+            setTimerObject(clockData.data())
+            setIsClock(clockData.exists())
+            setIsLoading(false)
+        }
+
         getClockData()
-    }, [])
+    }, [id])
 
     return (
         <Container className="mt-auto">
