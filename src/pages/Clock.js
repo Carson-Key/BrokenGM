@@ -8,7 +8,6 @@ import TimerController from "../components/TimerController"
 import IsLoading from '../components/IsLoading'
 // Helpers
 import { getDocument } from "../helpers/firestore"
-import ConditionalRender from '../components/ConditionalRender'
 
 const Clock = () => {
     const { id } = useParams()
