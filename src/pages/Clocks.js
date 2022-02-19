@@ -22,8 +22,9 @@ const Clocks = () => {
     useEffect(() => {
         const getClocks = () => {
             if (!loadedUID) {
-                getCurrentUser(setUID)
-                setLoadedUID(true)
+                getCurrentUser(setUID, () => {
+                    setLoadedUID(true)
+                })
             }
             if (loadedUID && !loadedClocksArray) {
                 getDocument("users", uid).then((data) => {

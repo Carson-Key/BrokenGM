@@ -10,10 +10,11 @@ async function createUserEntry(user) {
 	setDocument("users", user.uid, {clocks: [], relations: []}, !userDoc)
 }
 
-export const getCurrentUser = (setState) => {
+export const getCurrentUser = (setState, functionOnUserLoad = () => {}) => {
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			setState(user.uid)
+			functionOnUserLoad()
 		} else {
 			setState(0)
 		}
