@@ -4,16 +4,20 @@ import { defaultAccessArray } from './misc'
 // Objects
 import { TIMECONVERSTIONS, TIMETYPES, OVERFLOWOBJECT, ADDUNITINMILI } from './objects.js'
 
-export const addUnit = (timer, setTimer, timerObject, setTimerObject, type, ammount = 1, isClock = false) => {
-    const amountInMilliseconds = ammount * ADDUNITINMILI[type]
+export const addUnit = (timer, setTimer, timerObject, setTimerObject, type, amount = 1, isClock = false) => {
+    const amountInMilliseconds = amount * ADDUNITINMILI[type]
     let newTimerObject = { ...timerObject }
 
     if (type === TIMETYPES.secs || type === TIMETYPES.mins || type === TIMETYPES.hours) {
-        newTimerObject = { ...timerObject, timer: timer + amountInMilliseconds }
-        setTimer(timer => timer + amountInMilliseconds)
+        if ((timer + amountInMilliseconds) > 86400000) {
+            setTimer(timer => (timer + amountInMilliseconds) - 86400000)
+        } else {
+            setTimer(timer => timer + amountInMilliseconds)
+        }
+        checkOverflow(newTimerObject, setTimerObject, amount, TIMETYPES.hours)
+    } else {
+        checkOverflow(newTimerObject, setTimerObject, amount, type)
     }
-
-    checkOverflow(newTimerObject, setTimerObject, ammount, type)
     
     updateDocument(
         "clocks", 
@@ -57,7 +61,7 @@ const divideToBase = (ammount, type) => {
 export const checkOverflow = (timerObject, setTimerObject, amount, type) => {
     const dividedValuesObject = divideToBase(amount, type)
     const usedTypes = Object.keys(dividedValuesObject)
-    const types = [TIMETYPES.mins, TIMETYPES.hours, TIMETYPES.days, TIMETYPES.weeks, TIMETYPES.months, TIMETYPES.years]
+    const types = [TIMETYPES.days, TIMETYPES.weeks, TIMETYPES.months, TIMETYPES.years]
 
     let returnedObject = { ...timerObject }
 
@@ -112,16 +116,17 @@ export const daysOverflow = (amount, returnedObject) => {
         returnedObject.dayOfMonth = newDayOfMonth
     }
 }
-export const hoursOverflow = (amount, returnedObject) => {
-    const newTimerValue = returnedObject.timer + (amount * 3600000)
+export const hoursOverflow = (amount, returnedObject, miliConversion = 3600000) => {
+    const newTimerValue = returnedObject.timer + (amount * miliConversion)
+    const miliSecondsInDay = 86400000
     
-    if (newTimerValue > 86400000) {
+    if (newTimerValue > miliSecondsInDay) {
         daysOverflow(1, returnedObject)
-        returnedObject.timer = newTimerValue - 86400000
+        returnedObject.timer = newTimerValue - miliSecondsInDay
     } else {
         returnedObject.timer = newTimerValue
     }
 }
 export const minsOverflow = (amount, returnedObject) => {
-    returnedObject.timer = returnedObject.timer + (amount * 60000)
+    hoursOverflow(amount, returnedObject, 60000)
 }
