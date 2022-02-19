@@ -14,7 +14,7 @@ export const addUnit = (timer, setTimer, timerObject, setTimerObject, type, amou
         } else {
             setTimer(timer => timer + amountInMilliseconds)
         }
-        checkOverflow(newTimerObject, setTimerObject, amount, TIMETYPES.hours)
+        checkOverflow(newTimerObject, setTimerObject, amount, type)
     } else {
         checkOverflow(newTimerObject, setTimerObject, amount, type)
     }
@@ -61,7 +61,7 @@ const divideToBase = (ammount, type) => {
 export const checkOverflow = (timerObject, setTimerObject, amount, type) => {
     const dividedValuesObject = divideToBase(amount, type)
     const usedTypes = Object.keys(dividedValuesObject)
-    const types = [TIMETYPES.days, TIMETYPES.weeks, TIMETYPES.months, TIMETYPES.years]
+    const types = [TIMETYPES.hours, TIMETYPES.days, TIMETYPES.weeks, TIMETYPES.months, TIMETYPES.years]
 
     let returnedObject = { ...timerObject }
 
@@ -120,7 +120,7 @@ export const hoursOverflow = (amount, returnedObject, miliConversion = 3600000) 
     const newTimerValue = returnedObject.timer + (amount * miliConversion)
     const miliSecondsInDay = 86400000
     
-    if (newTimerValue > miliSecondsInDay) {
+    if (newTimerValue >= miliSecondsInDay) {
         daysOverflow(1, returnedObject)
         returnedObject.timer = newTimerValue - miliSecondsInDay
     } else {
