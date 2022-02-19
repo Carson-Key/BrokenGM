@@ -4,7 +4,7 @@ import { defaultAccessArray } from './misc'
 // Objects
 import { TIMECONVERSTIONS, TIMETYPES, OVERFLOWOBJECT, ADDUNITINMILI } from './objects.js'
 
-export const addUnit = (timer, setTimer, timerObject, setTimerObject, type, amount = 1, isClock = false) => {
+export const addUnit = (id, timer, setTimer, timerObject, setTimerObject, type, amount = 1, isClock = false) => {
     const amountInMilliseconds = amount * ADDUNITINMILI[type]
     let newTimerObject = { ...timerObject }
 
@@ -21,17 +21,17 @@ export const addUnit = (timer, setTimer, timerObject, setTimerObject, type, amou
     
     updateDocument(
         "clocks", 
-        "b37722f7-00da-4d7c-b9f5-67325445c313", 
+        id, 
         newTimerObject, 
         isClock
     )
 }
-export const addMilliSecond = (timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 10) => {
+export const addMilliSecond = (id, timer, setTimer, timerObject, setTimerObject, isClock = false, ammount = 10) => {
     setTimer(timer => timer + ammount)
     if (timer % 60000 === 0) {
         updateDocument(
             "clocks", 
-            "b37722f7-00da-4d7c-b9f5-67325445c313", 
+            id, 
             { ...timerObject, timer }, 
             isClock
         )

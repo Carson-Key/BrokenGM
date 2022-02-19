@@ -6,6 +6,7 @@ import { getNumberSuffix, capitalizeFirstLetter } from '../helpers/misc'
 
 const Timer = (props) => {
     const { 
+        id,
         timer, 
         setTimer,
         isActive,
@@ -20,7 +21,7 @@ const Timer = (props) => {
             let interval = null
             if (isActive) {
                 interval = setInterval(() => {
-                    addMilliSecond(timer, setTimer, timerObject, setTimerObject, isClock)
+                    addMilliSecond(id, timer, setTimer, timerObject, setTimerObject, isClock)
                 }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)

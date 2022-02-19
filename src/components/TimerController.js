@@ -6,6 +6,7 @@ import { addUnit } from "../helpers/timer"
 
 const TimerController = (props) => {
     const { 
+        id,
         isLoading, isClock,
         isActive, setIsActive,
         timer, setTimer, 
@@ -72,6 +73,7 @@ const TimerController = (props) => {
                                     onClick={() => {
                                         if (changeTimerValue) {
                                             addUnit(
+                                                id,
                                                 timer, setTimer, 
                                                 timerObject, setTimerObject, 
                                                 TIMENAMESANDTYPES[TNTKey].type, 

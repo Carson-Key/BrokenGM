@@ -8,7 +8,7 @@ const PageRoutes = () => {
     return (
         <Routes>
             <Route path='/login' element={<Relations />} />
-            <Route path='/clock' element={<Clock />} />
+            <Route path='/clock/:id' element={<Clock />} />
             <Route path='/' element={<Clock />} />
         </Routes>
 	)
