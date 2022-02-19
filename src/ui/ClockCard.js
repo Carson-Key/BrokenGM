@@ -1,19 +1,22 @@
 // Components
+import { Link } from 'react-router-dom'
 import Card from '../components/Card'
 import CardTitle from '../components/CardTitle'
 
 const ClockCard = (props) => {
-    const { title } = props
+    const { title, clockID } = props
 
     return (
-        <Card>
-            <CardTitle>
-                {title}
-            </CardTitle>
-            <div className="transition-all duration-500 ease-out scrollbar-hide overflow-scroll">
-                test
-			</div>
-        </Card>
+        <Link to={"clock/" + clockID}>
+            <Card className="h-fit">
+                <CardTitle>
+                    {title}
+                </CardTitle>
+                <div className="my-6 mx-auto w-fit">
+                    To Clock
+                </div>
+            </Card>
+        </Link>
 	)
 }
 
