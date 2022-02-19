@@ -4,11 +4,13 @@ import { useState } from "react/cjs/react.development"
 // Components
 import Container from "../components/Container"
 import IsLoading from '../components/IsLoading'
+import ConditionalRender from "../components/ConditionalRender"
 // UI
 import ClockCard from "../ui/ClockCard"
 // Helpers
 import { getCurrentUser } from "../helpers/auth"
 import { getDocument } from "../helpers/firestore"
+import CenterScreen from "../ui/CenterScreen"
 
 const Clocks = () => {
     const [uid, setUID] = useState("")
@@ -59,13 +61,24 @@ const Clocks = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
-                {
-                    clocks.map((clock, i) => {
-                        return <ClockCard key={i} title={clock.title} clockID={clock.id} />
-                    })
+            <ConditionalRender 
+                condition={clocks.length !== 0}
+                returnComponent={
+                    <CenterScreen>
+                        <h1 className="text-4xl w-fit mt-auto mx-auto">
+                            You Don't Have Any Clocks
+                        </h1>
+                    </CenterScreen>    
                 }
-            </Container>
+            >
+                <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
+                    {
+                        clocks.map((clock, i) => {
+                            return <ClockCard key={i} title={clock.title} clockID={clock.id} />
+                        })
+                    }
+                </Container>
+            </ConditionalRender>
         </IsLoading>
 	)
 }
