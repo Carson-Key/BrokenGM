@@ -22,7 +22,7 @@ const Navigation = (props) => {
                 // Extremely Large Computer
                 " 2xl:text-5xl"
             }>
-                <li className="py-2 lg:py-0"><Link to="/clock"><p className="px-3 lg:px-4" onClick={closeDrawerMenu}>Clock</p></Link></li>
+                <li className="py-2 lg:py-0"><Link to="/clocks"><p className="px-3 lg:px-4" onClick={closeDrawerMenu}>Clocks</p></Link></li>
                 <li className="py-2 lg:py-0"><Link to="/relations"><p className="px-3 lg:px-4" onClick={closeDrawerMenu}>Relations</p></Link></li>
             </ul>
 		</nav>

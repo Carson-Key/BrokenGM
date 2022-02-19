@@ -1,0 +1,31 @@
+export const splitNumberToReverseArray = (number) => {
+    return (number + '').split('').reverse()
+}
+
+export const defaultAccessArray = (array, index, defaultValue = null) => {
+    if (array[index]) {
+        return array[index]
+    } else {
+        return defaultValue
+    }
+}
+
+export const getNumberSuffix = (number) => {
+    const lastDidgetOfNumber = number % 10
+
+    if (number === 11 || number === 12 || number === 13) {
+        return "th"
+    } else if (lastDidgetOfNumber === 1) {
+        return "st"
+    } else if (lastDidgetOfNumber === 2) {
+        return "nd"
+    } else if (lastDidgetOfNumber === 3) {
+        return "rd"
+    } else {
+        return "th"
+    }
+}
+
+export const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
