@@ -61,7 +61,7 @@ const Clocks = () => {
             <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
                 {
                     clocks.map((clock, i) => {
-                        return <ClockCard key={i} title={clock.title} />
+                        return <ClockCard key={i} title={clock.title} clockID={clock.id} />
                     })
                 }
             </Container>

@@ -7,7 +7,7 @@ const ClockCard = (props) => {
     const { title, clockID } = props
 
     return (
-        <Link to={"clock/" + clockID}>
+        <Link to={"/clock/" + clockID}>
             <Card className="h-fit">
                 <CardTitle>
                     {title}
