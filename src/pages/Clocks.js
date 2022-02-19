@@ -1,12 +1,14 @@
-// Components
+// Packages
 import { useEffect } from "react"
 import { useState } from "react/cjs/react.development"
+// Components
 import Container from "../components/Container"
-import { getCurrentUser } from "../helpers/auth"
-import { getDocument } from "../helpers/firestore"
 import IsLoading from '../components/IsLoading'
 // UI
 import ClockCard from "../ui/ClockCard"
+// Helpers
+import { getCurrentUser } from "../helpers/auth"
+import { getDocument } from "../helpers/firestore"
 
 const Clocks = () => {
     const [uid, setUID] = useState(0)
