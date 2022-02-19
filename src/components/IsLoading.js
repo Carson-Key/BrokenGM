@@ -1,3 +1,5 @@
+// Components
+import ConditionalRender from "./ConditionalRender"
 // UI
 import Loading from "../ui/Loading"
 
@@ -7,15 +9,14 @@ const IsLoading = (props) => {
         children
     } = props
 
-    if (isLoading) {
-        return (
-            <Loading />
-        )
-    } else {
-        return (
-            children
-        )
-    }
+    return (
+        <ConditionalRender
+            condition={isLoading}
+            returnComponent={<Loading />}
+        >
+            {children}
+        </ConditionalRender>
+    )
 }
 
 export default IsLoading
