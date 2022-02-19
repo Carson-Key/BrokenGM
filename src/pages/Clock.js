@@ -7,8 +7,6 @@ import Timer from "../components/Timer"
 import TimerController from "../components/TimerController"
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
-// UI
-import CenterScreen from '../ui/CenterScreen'
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
@@ -21,7 +19,6 @@ const Clock = () => {
     const [isActive, setIsActive] = useState(false)
     const [isClock, setIsClock] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
-    const [isTimeout, setIsTimeout] = useState(false)
     const [uid, setUID] = useState("")
 
     useEffect(() => {
@@ -42,12 +39,6 @@ const Clock = () => {
         if (isLoading) {
             getClockData()
         }
-        setTimeout(() => {
-            if (isLoading) {
-                setIsLoading(false)
-                setIsTimeout(true)
-            }
-        }, 15000)
     }, [id, isLoading, uid])
 
     return (
