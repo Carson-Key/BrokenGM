@@ -6,8 +6,10 @@ import Container from "../components/Container"
 import Timer from "../components/Timer"
 import TimerController from "../components/TimerController"
 import IsLoading from '../components/IsLoading'
+import ConditionalRender from '../components/ConditionalRender'
 // Helpers
 import { getDocument } from "../helpers/firestore"
+import { getCurrentUser } from '../helpers/auth'
 
 const Clock = () => {
     const { id } = useParams()
@@ -16,18 +18,28 @@ const Clock = () => {
     const [timerObject, setTimerObject] = useState(0)
     const [isActive, setIsActive] = useState(false)
     const [isClock, setIsClock] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [uid, setUID] = useState("")
 
     useEffect(() => {
         const getClockData = async () => {
-            let clockData = await (await getDocument("clocks", id))
-            setTimer(clockData.data().timer)
-            setTimerObject(clockData.data())
-            setIsClock(clockData.exists())
-            setIsLoading(false)
+            getDocument("clocks", id).then((data) => {
+                setTimer(data.data().timer)
+                setTimerObject(data.data())
+                setIsClock(data.exists())
+                getCurrentUser(setUID, (uid) => {
+                    if (data.data().admins.includes(uid)) {
+                        setIsAdmin(true)
+                    }
+                })
+                setIsLoading(false)
+            })
         }
 
-        getClockData()
-    }, [id])
+        if (isLoading) {
+            getClockData()
+        }
+    }, [id, isLoading, uid])
 
     return (
         <IsLoading isLoading={isLoading}>
@@ -42,17 +54,19 @@ const Clock = () => {
                     timerObject={timerObject}
                     setTimerObject={setTimerObject}
                 />
-                <TimerController 
-                    id={id}
-                    isLoading={isLoading} 
-                    isClock={isClock}
-                    isActive={isActive}
-                    setIsActive={setIsActive}
-                    timer={timer}
-                    setTimer={setTimer}
-                    timerObject={timerObject} 
-                    setTimerObject={setTimerObject}
-                />
+                <ConditionalRender condition={isAdmin}>
+                    <TimerController 
+                        id={id}
+                        isLoading={isLoading} 
+                        isClock={isClock}
+                        isActive={isActive}
+                        setIsActive={setIsActive}
+                        timer={timer}
+                        setTimer={setTimer}
+                        timerObject={timerObject} 
+                        setTimerObject={setTimerObject}
+                    />
+                </ConditionalRender>
             </Container>
         </IsLoading>
 	)

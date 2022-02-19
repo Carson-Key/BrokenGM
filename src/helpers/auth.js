@@ -14,7 +14,7 @@ export const getCurrentUser = (setState, functionOnUserLoad = () => {}) => {
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			setState(user.uid)
-			functionOnUserLoad()
+			functionOnUserLoad(user.uid)
 		} else {
 			setState(0)
 		}
