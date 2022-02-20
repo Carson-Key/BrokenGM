@@ -1,5 +1,7 @@
 // Packages
 import { useContext, useEffect } from 'react'
+// Components
+import ConditionalRender from './ConditionalRender'
 // UI
 import Notification from '../ui/Notification'
 // Context
@@ -20,18 +22,14 @@ const NotificationHandler = () => {
         }
     }, [notification, setNotification])
 
-    if (notification.occurs) {
-        return (
+    return (
+        <ConditionalRender condition={notification.occurs}>
             <Notification 
                 className={notificationClassNameGenerator(notification.type)}
                 message={notification.message}
             />
-        ) 
-    } else {
-        return (
-            <></>
-        )
-    }
+        </ConditionalRender>
+    )
 }
 
 export default NotificationHandler
