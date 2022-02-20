@@ -14,7 +14,7 @@ export const notificationClassNameGenerator = (type) => {
 }
 
 export const fireBaseError = (setNotification, code, message) => {
-    console.log("Firebase Error " + code + ": " + message)
+    console.log("Firebase Error with Code: " + code + ", and Message: " + message)
     setNotification(
         {
             type: 'SET_NOTIFICATION', 
