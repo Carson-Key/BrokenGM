@@ -1,6 +1,5 @@
 // Packages
-import { useEffect } from "react"
-import { useState } from "react/cjs/react.development"
+import { useEffect, useState } from "react"
 // Components
 import Container from "../components/Container"
 import IsLoading from '../components/IsLoading'
