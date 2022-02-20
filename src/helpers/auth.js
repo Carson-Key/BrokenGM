@@ -4,6 +4,7 @@ import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth"
 import { auth, provider } from './firebase'
 // Helpers
 import { getDocument, setDocument } from './firestore'
+import { fireBaseError } from './notifications'
 
 async function createUserEntry(user) {
 	let userDoc = await getDocument("users", user.uid)
@@ -31,16 +32,18 @@ export const isCurrentUser = (setState) => {
 	})
 }
 
-export const signOutFunc = () => {
-	signOut(auth).then(() => {
-	}).catch((error) => {
-		console.log(error)
-	})
+export const signOutFunc = (setNotification) => {
+	signOut(auth)
+		.then(() => {
+		}).catch((error) => {
+			fireBaseError(setNotification, error.code, error.message)
+		})
 }
-export const signIn = () => {
+export const signIn = (setNotification) => {
 	signInWithPopup(auth, provider)
 		.then((result) => {
 			createUserEntry(result.user)
 		}).catch((error) => {
+			fireBaseError(setNotification, error.code, error.message)
 		})
 }

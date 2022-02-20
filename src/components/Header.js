@@ -1,14 +1,17 @@
 // Packages
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 // UI
 import Banner from '../ui/Banner'
 import Navigation from '../ui/Navigation'
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { signIn, signOutFunc, isCurrentUser } from '../helpers/auth'
 
 const Header = () => {
 	let navigate = useNavigate()
+	const setNotification = useContext(NotificationContext)[1]
     const [drawerMenuIsOpen, setDrawerMenuIsOpen] = useState(false)
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
 	const [authButtonText, setAuthButtontext] = useState("Login")
@@ -24,10 +27,10 @@ const Header = () => {
 
 	const invokeAuthFunction = () => {
 		if (authButtonText === "Signout") {
-			signOutFunc()
+			signOutFunc(setNotification)
 			navigate("/login")
 		} else {
-			signIn()
+			signIn(setNotification)
 			navigate("/")
 		}
 	}
