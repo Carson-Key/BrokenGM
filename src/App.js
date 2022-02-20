@@ -1,8 +1,7 @@
 // Packages
 import { BrowserRouter as Router } from 'react-router-dom'
-// UI 
-import Header from './components/Header'
 // Components
+import Header from './components/Header'
 import PageRoutes from './components/PageRoutes'
 
 const App = () => {

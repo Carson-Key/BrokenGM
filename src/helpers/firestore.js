@@ -1,5 +1,7 @@
-import { db } from './firebase'
+// Packages
 import { doc, getDoc, setDoc } from "firebase/firestore" 
+// Firebase
+import { db } from './firebase'
 
 export async function getDocument(collection, document) {
 	const userDoc = doc(db, collection, document)

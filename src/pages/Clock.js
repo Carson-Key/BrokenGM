@@ -2,11 +2,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
-import Container from "../ui/Container"
 import Timer from "../components/Timer"
 import TimerController from "../components/TimerController"
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
+// UI
+import Container from "../ui/Container"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'

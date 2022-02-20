@@ -1,8 +1,9 @@
 // Packages
 import { useState } from 'react'
+// Helpers
+import { addUnit } from "../helpers/timer"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
-import { addUnit } from "../helpers/timer"
 
 const TimerController = (props) => {
     const { 
@@ -42,7 +43,7 @@ const TimerController = (props) => {
             <center>
                 <button 
                     disabled={isLoading} 
-                    className={"text-white text-3xl rounded px-3 py-2 mb-6 " + timerStateButtonColor}
+                    className={"text-white text-md md:text-3xl rounded px-3 py-2 mb-6 " + timerStateButtonColor}
                     onClick={() => {
                         toggleTimerStateButtonCSS()
                         setIsActive(!isActive)
@@ -51,9 +52,9 @@ const TimerController = (props) => {
                     {timerStateButtonText}
                 </button>
             </center>
-            <div className="my-auto flex text-3xl">
+            <div className="my-auto text-center flex text-md md:text-3xl">
                 <input 
-                    className="bg-gray-100 px-3 py-2 rounded-l-md w-40"
+                    className="bg-gray-100 px-1 py-1 md:px-3 rounded-l-md w-10 md:w-40"
                     type="text" 
                     name="Change Clock" 
                     placeholder="+/- Time"
@@ -62,7 +63,7 @@ const TimerController = (props) => {
                         setChangeTimerValue(event.target.value)
                     }}
                 />
-                <div className="border-y border-r rounded-r-md px-3 py-2 divide divide-x">
+                <div className="border-y border-r rounded-r-md px-1 py-1 md:px-3 md:py-2 divide divide-x">
                     {
                         TNTKeys.map((TNTKey, i) => {
                             return (

@@ -1,10 +1,10 @@
 // Packages
 import { useEffect, useState } from "react"
 // Components
-import Container from "../ui/Container"
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from "../components/ConditionalRender"
 // UI
+import Container from "../ui/Container"
 import ClockCard from "../ui/ClockCard"
 // Helpers
 import { getCurrentUser } from "../helpers/auth"

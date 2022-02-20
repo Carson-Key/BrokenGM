@@ -1,4 +1,4 @@
-// Components
+// UI
 import Container from "../ui/Container"
 
 const Relations = () => {

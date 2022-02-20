@@ -1,4 +1,4 @@
-// Components
+// UI
 import CenterScreen from "../ui/CenterScreen"
 
 const Login = () => {

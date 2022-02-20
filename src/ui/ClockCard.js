@@ -1,5 +1,6 @@
-// Components
+// Packages
 import { Link } from 'react-router-dom'
+// Components
 import Card from './Card'
 import CardTitle from './CardTitle'
 
