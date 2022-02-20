@@ -1,5 +1,6 @@
 // Packages
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 // UI
 import Banner from '../ui/Banner'
 import Navigation from '../ui/Navigation'
@@ -7,6 +8,7 @@ import Navigation from '../ui/Navigation'
 import { signIn, signOutFunc, isCurrentUser } from '../helpers/auth'
 
 const Header = () => {
+	let navigate = useNavigate()
     const [drawerMenuIsOpen, setDrawerMenuIsOpen] = useState(false)
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
 	const [authButtonText, setAuthButtontext] = useState("Login")
@@ -18,13 +20,15 @@ const Header = () => {
 		} else {
 			setAuthButtontext("Login")
 		}
-	}, [isUserLoggedIn])
+	}, [isUserLoggedIn, navigate])
 
 	const invokeAuthFunction = () => {
 		if (authButtonText === "Signout") {
 			signOutFunc()
+			navigate("/login")
 		} else {
 			signIn()
+			navigate("/")
 		}
 	}
 
