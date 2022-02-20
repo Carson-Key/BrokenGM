@@ -40,7 +40,7 @@ const Header = () => {
     }
 
 	return (
-		<header className="flex justify-between w-full h-14 text-white bg-purple-500 lg:h-20 lg:text-2xl xl:h-24 xl:text-3xl 2xl:h-28 2xl:text-4xl">
+		<header className="flex justify-between w-full h-14 text-white bg-purple-500 lg:h-20 lg:text-2xl xl:h-24 xl:text-3xl 2xl:h-28 2xl:text-4xl z-30">
 			<div className="flex w-full">
 				<Banner 
 					toggleDrawerMenu={toggleDrawerMenu} 
