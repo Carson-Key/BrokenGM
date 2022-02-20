@@ -12,7 +12,7 @@ const PageRoutes = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/clock/:id' element={<Clock />} />
             <Route path='/clocks' element={<Clocks />} />
-            <Route path='/Relations' element={<Relations />} />
+            <Route path='/relations' element={<Relations />} />
             <Route path='/' element={<Clock />} />
         </Routes>
 	)
