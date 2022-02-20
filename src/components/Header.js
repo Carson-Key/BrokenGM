@@ -1,8 +1,8 @@
 // Packages
 import { useEffect, useState } from 'react'
 // UI
-import Banner from './Banner'
-import Navigation from './Navigation'
+import Banner from '../ui/Banner'
+import Navigation from '../ui/Navigation'
 // Helpers
 import { signIn, signOutFunc, isCurrentUser } from '../helpers/auth'
 

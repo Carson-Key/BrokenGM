@@ -1,7 +1,7 @@
 // Components
 import { Link } from 'react-router-dom'
-import Card from '../components/Card'
-import CardTitle from '../components/CardTitle'
+import Card from './Card'
+import CardTitle from './CardTitle'
 
 const ClockCard = (props) => {
     const { title, clockID } = props

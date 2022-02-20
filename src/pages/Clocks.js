@@ -1,7 +1,7 @@
 // Packages
 import { useEffect, useState } from "react"
 // Components
-import Container from "../components/Container"
+import Container from "../ui/Container"
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from "../components/ConditionalRender"
 // UI

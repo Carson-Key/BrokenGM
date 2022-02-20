@@ -1,7 +1,7 @@
 // Packages
 import { BrowserRouter as Router } from 'react-router-dom'
 // UI 
-import Header from './ui/Header'
+import Header from './components/Header'
 // Components
 import PageRoutes from './components/PageRoutes'
 

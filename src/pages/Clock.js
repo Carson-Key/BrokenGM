@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
-import Container from "../components/Container"
+import Container from "../ui/Container"
 import Timer from "../components/Timer"
 import TimerController from "../components/TimerController"
 import IsLoading from '../components/IsLoading'
