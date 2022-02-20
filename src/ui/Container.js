@@ -5,10 +5,12 @@ const Container = (props) => {
 	const { children, className } = props
 
 	return (
-		<main className={"mb-auto " + className}>
+		<>
 			<NotificationHandler />
-			{children}
-		</main>
+			<main className={"mb-auto " + className}>
+				{children}
+			</main>
+		</>
 	)
 }
 
