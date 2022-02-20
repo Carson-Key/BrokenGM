@@ -1,14 +1,24 @@
 // Packages
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 // UI
 import Notification from '../ui/Notification'
 // Context
-import { NotificationContext } from '../contexts/Notification'
+import { NotificationContext, initialState } from '../contexts/Notification'
 // Helpers
 import { notificationClassNameGenerator } from '../helpers/notifications'
 
 const NotificationHandler = () => {
-    const notification = useContext(NotificationContext)[0]
+    const [notification, setNotification] = useContext(NotificationContext)
+
+    useEffect(() => {
+        if (notification.occurs) {
+            setTimeout(() => {
+                setNotification(
+                    { type: 'SET_NOTIFICATION', payload: initialState }
+                )
+            }, 15000)
+        }
+    }, [notification, setNotification])
 
     if (notification.occurs) {
         return (

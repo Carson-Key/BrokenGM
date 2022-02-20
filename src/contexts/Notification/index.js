@@ -3,7 +3,7 @@ import React, { createContext, useReducer } from "react"
 // Contexts
 import NotificationReducer from './reducers'
 
-const initialState = {
+export const initialState = {
     occures: false,
     type: "",
     message: ""
