@@ -2,8 +2,10 @@ const Notification = (props) => {
     const { message, className } = props
 
     return (
-        <div className={"w-fit py-2 px-1 " + className}>
-            <p>{message}</p>
+        <div className="absolute top-14 w-screen">
+            <div className={"w-fit rounded-lg text-xl px-5 py-2 mt-1 mx-auto " + className}>
+                <p>{message}</p>
+            </div>
         </div>
     )
 }
