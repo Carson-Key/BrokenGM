@@ -7,7 +7,7 @@ import { getDocument, setDocument } from './firestore'
 
 async function createUserEntry(user) {
 	let userDoc = await getDocument("users", user.uid)
-	setDocument("users", user.uid, {clocks: [], relations: []}, !userDoc)
+	setDocument("users", user.uid, {clocks: [], relations: [], campaigns: []}, !userDoc)
 }
 
 export const getCurrentUser = (setState, functionOnUserLoad = () => {}) => {
