@@ -12,3 +12,13 @@ export const notificationClassNameGenerator = (type) => {
         return "text-white bg-gray-400"
     }
 }
+
+export const fireBaseError = (setNotification, code, message) => {
+    console.log("Firebase Error " + code + ": " + message)
+    setNotification(
+        {
+            type: 'SET_NOTIFICATION', 
+            payload: {occurs: true, message: message, type: NOTIFICATIONTYPES.error}
+        }
+    )
+}
