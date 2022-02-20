@@ -1,5 +1,5 @@
 // Packages
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
 import Timer from "../components/Timer"
@@ -8,12 +8,15 @@ import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
 // UI
 import Container from "../ui/Container"
+// Contexts
+import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
 
 const Clock = () => {
     const { id } = useParams()
+    const setNotification = useContext(NotificationContext)[1]
     const [isLoading, setIsLoading] = useState(true)
     const [timer, setTimer] = useState(0)
     const [timerObject, setTimerObject] = useState(0)
@@ -24,7 +27,7 @@ const Clock = () => {
 
     useEffect(() => {
         const getClockData = async () => {
-            getDocument("clocks", id).then((data) => {
+            getDocument("clocks", id, setNotification).then((data) => {
                 setTimer(data.data().timer)
                 setTimerObject(data.data())
                 setIsClock(data.exists())
@@ -40,7 +43,7 @@ const Clock = () => {
         if (isLoading) {
             getClockData()
         }
-    }, [id, isLoading, uid])
+    }, [id, isLoading, uid, setNotification])
 
     return (
         <IsLoading isLoading={isLoading}>
