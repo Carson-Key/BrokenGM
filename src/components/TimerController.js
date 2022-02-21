@@ -1,7 +1,10 @@
 // Packages
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
+import { updateDocument } from "../helpers/firestore"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
 
@@ -13,6 +16,7 @@ const TimerController = (props) => {
         timer, setTimer, 
         timerObject, setTimerObject, 
     } = props
+    const setNotification = useContext(NotificationContext)[1]
     const timerStateObject = {
         start: {
             text: "Start",
@@ -51,6 +55,19 @@ const TimerController = (props) => {
                 >
                     {timerStateButtonText}
                 </button>
+                <button 
+                    disabled={isLoading} 
+                    className={"ml-3 text-white text-md md:text-3xl rounded px-3 py-2 mb-6 bg-blue-500"}
+                    onClick={() => {
+                        updateDocument(
+                            "clocks", id, 
+                            {...timerObject, timer}, 
+                            setNotification, isClock
+                        )
+                    }}
+                >
+                    Save Timer
+                </button>
             </center>
             <div className="my-auto text-center flex text-md md:text-3xl">
                 <input 
@@ -78,6 +95,7 @@ const TimerController = (props) => {
                                                 timer, setTimer, 
                                                 timerObject, setTimerObject, 
                                                 TIMENAMESANDTYPES[TNTKey].type, 
+                                                setNotification,
                                                 parseInt(changeTimerValue), isClock
                                             )
                                         }

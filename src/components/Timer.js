@@ -1,5 +1,7 @@
 // Packages
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addMilliSecond } from '../helpers/timer'
 import { getNumberSuffix, capitalizeFirstLetter } from '../helpers/misc'
@@ -15,20 +17,21 @@ const Timer = (props) => {
         timerObject,
         setTimerObject
     } = props
+    const setNotification = useContext(NotificationContext)[1]
 
     useEffect(() => {
         if (!isLoading) {
             let interval = null
             if (isActive) {
                 interval = setInterval(() => {
-                    addMilliSecond(id, timer, setTimer, timerObject, setTimerObject, isClock)
+                    addMilliSecond(id, timer, setTimer, timerObject, setNotification, setTimerObject, isClock)
                 }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)
             }
             return () => clearInterval(interval)
         }
-    }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject])
+    }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject, setNotification])
 
     return (
         <section className="h-full">

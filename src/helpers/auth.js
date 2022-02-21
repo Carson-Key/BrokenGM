@@ -6,9 +6,9 @@ import { auth, provider } from './firebase'
 import { getDocument, setDocument } from './firestore'
 import { fireBaseError } from './notifications'
 
-async function createUserEntry(user) {
+async function createUserEntry(user, setNotification) {
 	let userDoc = await getDocument("users", user.uid)
-	setDocument("users", user.uid, {clocks: [], relations: [], campaigns: []}, !userDoc)
+	setDocument("users", user.uid, {clocks: [], relations: [], campaigns: []}, setNotification, !userDoc)
 }
 
 export const getCurrentUser = (setState, functionOnUserLoad = () => {}) => {
@@ -42,7 +42,7 @@ export const signOutFunc = (setNotification) => {
 export const signIn = (setNotification) => {
 	signInWithPopup(auth, provider)
 		.then((result) => {
-			createUserEntry(result.user)
+			createUserEntry(result.user, setNotification)
 		}).catch((error) => {
 			fireBaseError(setNotification, error.code, error.message)
 		})
