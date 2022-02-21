@@ -1,5 +1,7 @@
 // Packages
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
 // Objects
@@ -13,6 +15,7 @@ const TimerController = (props) => {
         timer, setTimer, 
         timerObject, setTimerObject, 
     } = props
+    const setNotification = useContext(NotificationContext)[1]
     const timerStateObject = {
         start: {
             text: "Start",
@@ -78,6 +81,7 @@ const TimerController = (props) => {
                                                 timer, setTimer, 
                                                 timerObject, setTimerObject, 
                                                 TIMENAMESANDTYPES[TNTKey].type, 
+                                                setNotification,
                                                 parseInt(changeTimerValue), isClock
                                             )
                                         }
