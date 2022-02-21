@@ -4,6 +4,7 @@ import { useState, useContext } from 'react'
 import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
+import { updateDocument } from "../helpers/firestore"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
 
@@ -53,6 +54,19 @@ const TimerController = (props) => {
                     }}
                 >
                     {timerStateButtonText}
+                </button>
+                <button 
+                    disabled={isLoading} 
+                    className={"ml-3 text-white text-md md:text-3xl rounded px-3 py-2 mb-6 bg-blue-500"}
+                    onClick={() => {
+                        updateDocument(
+                            "clocks", id, 
+                            {...timerObject, timer}, 
+                            setNotification, isClock
+                        )
+                    }}
+                >
+                    Save Timer
                 </button>
             </center>
             <div className="my-auto text-center flex text-md md:text-3xl">
