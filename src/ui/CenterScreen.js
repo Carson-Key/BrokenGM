@@ -1,5 +1,5 @@
-// Components
-import Container from "../components/Container"
+// UI
+import Container from "./Container"
 
 const CenterScreen = (props) => {
     const { children } = props

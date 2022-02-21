@@ -1,10 +1,8 @@
+// Helpers
 import { 
-    yearsOverflow,
-    monthsOverflow,
-    weeksOverflow,
-    daysOverflow,
-    hoursOverflow,
-    minsOverflow
+    yearsOverflow, monthsOverflow, 
+    weeksOverflow, daysOverflow,
+    hoursOverflow, minsOverflow
  } from './timer'
 
 export const TIMETYPES = {

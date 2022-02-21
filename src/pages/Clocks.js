@@ -1,17 +1,20 @@
 // Packages
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 // Components
-import Container from "../components/Container"
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from "../components/ConditionalRender"
 // UI
+import Container from "../ui/Container"
 import ClockCard from "../ui/ClockCard"
+// Contexts
+import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getCurrentUser } from "../helpers/auth"
 import { getDocument } from "../helpers/firestore"
 import CenterScreen from "../ui/CenterScreen"
 
 const Clocks = () => {
+    const setNotification = useContext(NotificationContext)[1]
     const [uid, setUID] = useState("")
     const [clocks, setClocks] = useState([])
     const [clocksArray, setClocksArray] = useState([])
@@ -28,7 +31,7 @@ const Clocks = () => {
                 })
             }
             if (loadedUID && !loadedClocksArray) {
-                getDocument("users", uid).then((data) => {
+                getDocument("users", uid, setNotification).then((data) => {
                     if (data.data().clocks.length === 0) {
                         setIsLoading(false)
                     } else {
@@ -40,7 +43,7 @@ const Clocks = () => {
             if (loadedClocksArray && !loadedClocks) {
                 let tempClockArray = []
                 clocksArray.forEach((clock, i) => {
-                    getDocument("clocks", clock).then((data) => {
+                    getDocument("clocks", clock, setNotification).then((data) => {
                         tempClockArray[i] = {title: data.data().name, id: clock}
                         if (i === (clocksArray.length - 1)) {
                             setClocks(tempClockArray)
