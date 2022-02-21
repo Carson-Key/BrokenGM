@@ -22,7 +22,7 @@ export const addUnit = (id, timer, setTimer, timerObject, setTimerObject, type, 
     updateDocument(
         "clocks", 
         id, 
-        newTimerObject, 
+        { ...newTimerObject, timer }, 
         setNotification,
         isClock
     )
