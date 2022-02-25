@@ -7,7 +7,7 @@ const Relation = () => {
     const { id } = useParams()
     
     return (
-        <Container className="mt-auto">
+        <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
             {id}
         </Container>
 	)
