@@ -5,7 +5,7 @@ import IsLoading from '../components/IsLoading'
 import ConditionalRender from "../components/ConditionalRender"
 // UI
 import Container from "../ui/Container"
-import ClockCard from "../ui/ClockCard"
+import RelationCard from "../ui/RelationCard"
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
@@ -76,7 +76,7 @@ const Relations = () => {
                 <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
                     {
                         relations.map((clock, i) => {
-                            return <ClockCard key={i} title={clock.title} clockID={clock.id} />
+                            return <RelationCard key={i} title={clock.title} clockID={clock.id} />
                         })
                     }
                 </Container>
