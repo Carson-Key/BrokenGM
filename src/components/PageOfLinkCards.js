@@ -14,7 +14,7 @@ import { getDocument } from "../helpers/firestore"
 import CenterScreen from "../ui/CenterScreen"
 
 const PageOflinkCards = (props) => {
-    const { noCardText, cardInnerText, docID } = props
+    const { noCardText, cardInnerText, docID, toPath } = props
     const setNotification = useContext(NotificationContext)[1]
     const [uid, setUID] = useState("")
     const [cards, setCards] = useState([])
@@ -81,7 +81,7 @@ const PageOflinkCards = (props) => {
                                 <GenericLinkCard 
                                     key={i} 
                                     title={cards.title} 
-                                    linkPath={cards.id} 
+                                    linkPath={"/" + toPath + "/" + cards.id} 
                                     innerText={cardInnerText}
                                 />
                             )

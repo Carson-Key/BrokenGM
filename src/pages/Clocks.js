@@ -7,6 +7,7 @@ const Clocks = () => {
             noCardText="You Don't Have Any Clocks"
             cardInnerText="To Clock page"
             docID="clocks"
+            toPath="clock"
         />
     )
 }

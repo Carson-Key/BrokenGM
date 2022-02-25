@@ -7,6 +7,7 @@ const Relations = () => {
             noCardText="You Don't Have Any Relations"
             cardInnerText="To Relation page"
             docID="relations"
+            toPath="relation"
         />
     )
 }
