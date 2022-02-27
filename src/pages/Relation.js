@@ -45,9 +45,11 @@ const Relation = () => {
         <IsLoading isLoading={isLoading}>
             <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
                 {
-                    relations.map((relation) => {
+                    relations.map((relation, i) => {
+                        let relationMinusName = {...relation}
+                        delete relationMinusName.name
                         return (
-                            <RelationCard name={relation.name} innerText={relation.hopp} />
+                            <RelationCard key={i} name={relation.name} relation={relationMinusName} />
                         )
                     })
                 }
