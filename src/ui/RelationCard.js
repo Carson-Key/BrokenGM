@@ -1,6 +1,8 @@
 // Components
 import Card from './Card'
 import CardTitle from './CardTitle'
+// Helepr
+import { formatCharacterName } from '../helpers/relation'
 
 const RelationCard = (props) => {
     const { name, relation } = props
@@ -15,7 +17,7 @@ const RelationCard = (props) => {
                 {
                     relationKeys.map((character, i) => {
                         return (
-                            <p key={i}>{character}</p>
+                            <p key={i}>{formatCharacterName(character)}</p>
                         )
                     })
                 }
