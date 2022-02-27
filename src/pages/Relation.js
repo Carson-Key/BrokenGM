@@ -6,6 +6,7 @@ import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
 // UI
 import Container from "../ui/Container"
+import RelationCard from '../ui/RelationCard'
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
@@ -42,11 +43,11 @@ const Relation = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="mt-auto">
+            <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
                 {
                     relations.map((relation) => {
                         return (
-                            <p>{relation.name}</p>
+                            <RelationCard name={relation.name} innerText={relation.hopp} />
                         )
                     })
                 }
