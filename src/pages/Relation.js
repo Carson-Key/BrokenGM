@@ -2,8 +2,6 @@
 import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
-import Timer from "../components/Timer"
-import TimerController from "../components/TimerController"
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
 // UI
