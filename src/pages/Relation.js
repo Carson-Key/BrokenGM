@@ -49,7 +49,13 @@ const Relation = () => {
                         let relationMinusName = {...relation}
                         delete relationMinusName.name
                         return (
-                            <RelationCard key={i} name={relation.name} relation={relationMinusName} />
+                            <RelationCard 
+                                key={i} 
+                                isRelation={isRelation}
+                                isAdmin={isAdmin}
+                                name={relation.name} 
+                                relation={relationMinusName} 
+                            />
                         )
                     })
                 }
