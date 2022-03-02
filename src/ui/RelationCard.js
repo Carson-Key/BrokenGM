@@ -21,7 +21,9 @@ const RelationCard = (props) => {
                                 <p key={i}>{formatCharacterName(character)}</p>
                                 <div 
                                     className="rounded-lg h-3 w-full bg-gradient-to-r from-red-500 via-grey-500 to-green-500"
-                                ></div>
+                                >
+                                    <div className="bg-black h-3 w-1 mx-auto"></div>
+                                </div>
                             </div>
                         )
                     })
