@@ -22,7 +22,7 @@ const RelationCard = (props) => {
                             <div className="my-3">
                                 <p key={i}>{formatCharacterName(character)}</p>
                                 <div 
-                                    className="rounded-lg h-3 w-full bg-gradient-to-r from-red-500 via-grey-500 to-green-500"
+                                    className="rounded-lg h-3 w-full bg-gradient-to-r from-red-500 to-green-500"
                                 >
                                     <div 
                                         className={
