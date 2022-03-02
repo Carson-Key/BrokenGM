@@ -86,3 +86,7 @@ export const ADDUNITINMILI = {
     [TIMETYPES.months]: 1,
     [TIMETYPES.years]: 1
 }
+
+export const RELATIONINDICATORCLASSES = {
+    "-100": "mx-0"
+}

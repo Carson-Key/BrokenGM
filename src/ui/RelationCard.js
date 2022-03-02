@@ -3,6 +3,8 @@ import Card from './Card'
 import CardTitle from './CardTitle'
 // Helepr
 import { formatCharacterName } from '../helpers/relation'
+import { RELATIONINDICATORCLASSES } from '../helpers/objects'
+import { defaultAccessArray } from '../helpers/misc'
 
 const RelationCard = (props) => {
     const { name, relation } = props
@@ -22,7 +24,14 @@ const RelationCard = (props) => {
                                 <div 
                                     className="rounded-lg h-3 w-full bg-gradient-to-r from-red-500 via-grey-500 to-green-500"
                                 >
-                                    <div className="bg-black h-3 w-1 mx-auto"></div>
+                                    <div 
+                                        className={
+                                            "bg-black h-3 w-1 " + 
+                                            defaultAccessArray(
+                                                RELATIONINDICATORCLASSES, relation[character], "hidden"
+                                            )
+                                        }
+                                    ></div>
                                 </div>
                             </div>
                         )
