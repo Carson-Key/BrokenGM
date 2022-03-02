@@ -13,11 +13,11 @@ const RelationCard = (props) => {
             <CardTitle>
                 {name}
             </CardTitle>
-            <div className="my-3 mx-4 w-72">
+            <div className="my-3 mx-4 w-72 divide-y">
                 {
                     relationKeys.map((character, i) => {
                         return (
-                            <div>
+                            <div className="my-3">
                                 <p key={i}>{formatCharacterName(character)}</p>
                                 <div 
                                     className="rounded-lg h-3 w-full bg-gradient-to-r from-red-500 via-grey-500 to-green-500"
