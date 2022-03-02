@@ -26,7 +26,7 @@ const RelationCard = (props) => {
                                 >
                                     <div 
                                         className={
-                                            "bg-black h-3 w-1 px-0.5 " + 
+                                            "bg-black h-3 w-1 px-0.5 rounded-lg " + 
                                             defaultAccessArray(
                                                 RELATIONINDICATORCLASSES, relation[character], "hidden"
                                             )
