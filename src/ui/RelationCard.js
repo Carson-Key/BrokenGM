@@ -9,11 +9,11 @@ const RelationCard = (props) => {
     const relationKeys = Object.keys(relation).sort()
 
     return (
-        <Card className="h-fit">
+        <Card className="h-80 overflow-scroll">
             <CardTitle>
                 {name}
             </CardTitle>
-            <div className="my-6 mx-auto w-fit">
+            <div className="my-3 mx-4 w-72">
                 {
                     relationKeys.map((character, i) => {
                         return (
