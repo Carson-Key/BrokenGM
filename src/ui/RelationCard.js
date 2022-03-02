@@ -17,7 +17,12 @@ const RelationCard = (props) => {
                 {
                     relationKeys.map((character, i) => {
                         return (
-                            <p key={i}>{formatCharacterName(character)}</p>
+                            <div>
+                                <p key={i}>{formatCharacterName(character)}</p>
+                                <div 
+                                    className="rounded h-2 w-full bg-gradient-to-r from-red-500 via-grey-500 to-green-500"
+                                ></div>
+                            </div>
                         )
                     })
                 }
