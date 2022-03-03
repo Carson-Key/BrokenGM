@@ -1,9 +1,7 @@
 const AddCharacterRelation = (props) => {
-    const { relationKeys, relation, isAdmin, setRelations, index, relations, id, isRelation } = props
-
     return (
-        <div className="my-3 text-center">
-            <p>Add New Character</p>
+        <div className="py-2 text-center">
+            <button>Add New Character</button>
         </div>
     )
 }
