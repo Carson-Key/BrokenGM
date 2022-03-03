@@ -7,7 +7,7 @@ import CharacterRelationIndicator from './CharacterRelationIndicator'
 import { formatCharacterName } from '../helpers/relation'
 
 const RelationOfCharacter = (props) => {
-    const { relationKeys, relation, isAdmin, setRelations, index, relations } = props
+    const { relationKeys, relation, isAdmin, setRelations, index, relations, id, isRelation } = props
 
     return (
         relationKeys.map((character, i) => {
@@ -20,6 +20,8 @@ const RelationOfCharacter = (props) => {
                     />
                     <ConditionalRender condition={isAdmin}>
                         <CharacterRelationController 
+                            id={id}
+                            isRelation={isRelation}
                             index={index}
                             character={character}
                             relation={relation}

@@ -50,6 +50,7 @@ const Relation = () => {
                         return (
                             <RelationCard 
                                 key={i} 
+                                id={id}
                                 isRelation={isRelation}
                                 isAdmin={isAdmin}
                                 name={relation.name} 

@@ -1,5 +1,6 @@
 // Helper
 import { capitalizeFirstLetter } from "./misc"
+import { updateDocument } from './firestore'
 
 export const formatCharacterName = (name) => {
     let brokenName = name.split('_')
@@ -11,8 +12,18 @@ export const formatCharacterName = (name) => {
 
     return joinedName
 }
-export const changeRelationValue = (value, index, character, relations, setRelations) => {
+export const changeRelationValue = (
+    value, index, character, relations, setRelations, setNotification, id, isRelation
+) => {
     let tempRelations = [...relations]
     tempRelations[index][character] = tempRelations[index][character] + value
+
     setRelations(tempRelations)
+    updateDocument(
+        "relations", 
+        id, 
+        {npcs: tempRelations}, 
+        setNotification,
+        isRelation
+    )
 }

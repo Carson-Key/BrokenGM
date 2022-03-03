@@ -1,10 +1,13 @@
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
 // Helpers
-import { useState } from "react/cjs/react.development"
+import { useState, useContext } from "react/cjs/react.development"
 import { changeRelationValue } from "../helpers/relation"
 
 const CharacterRelationController = (props) => {
-    const { index, character, relation, setRelations, relations } = props
+    const { id, index, character, relation, setRelations, relations, isRelation } = props
     const [changeByValue, setChangeByValue] = useState()
+    const setNotification = useContext(NotificationContext)[1]
 
     return (
         <div className="mt-2 mx-auto w-fit text-center flex text-md">
@@ -12,7 +15,11 @@ const CharacterRelationController = (props) => {
                 <button 
                     className="px-2"
                     onClick={() => {
-                        changeRelationValue(changeByValue, index, character, relations, setRelations)
+                        changeRelationValue(
+                            changeByValue, index, character, 
+                            relations, setRelations,
+                            setNotification, id, isRelation
+                        )
                     }}
                 >
                     +
@@ -31,7 +38,11 @@ const CharacterRelationController = (props) => {
                 <button 
                     className="px-2"
                     onClick={() => {
-                        changeRelationValue((changeByValue * -1), index, character, relations, setRelations)
+                        changeRelationValue(
+                            (changeByValue * -1), index, character, 
+                            relations, setRelations,
+                            setNotification, id, isRelation
+                        )
                     }}
                 >
                     -
