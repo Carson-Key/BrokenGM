@@ -28,7 +28,7 @@ const CharacterRelationController = (props) => {
             <input 
                 className="bg-gray-100 text-center px-1 py-1 w-12"
                 type="text" 
-                name="Change Clock" 
+                name="Change Relation" 
                 placeholder={relation[character]}
                 onChange={(event) => {
                     setChangeByValue(parseInt(event.target.value))
