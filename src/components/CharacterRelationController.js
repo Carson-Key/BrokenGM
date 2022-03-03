@@ -1,7 +1,7 @@
 // Contexts
 import { NotificationContext } from '../contexts/Notification'
 // Helpers
-import { useState, useContext } from "react/cjs/react.development"
+import { useState, useContext } from "react"
 import { changeRelationValue } from "../helpers/relation"
 
 const CharacterRelationController = (props) => {
