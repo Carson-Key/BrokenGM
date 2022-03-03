@@ -1,4 +1,5 @@
-import { GrAddCircle } from "react-icons/gr";
+// Packages
+import { GrAddCircle } from 'react-icons/gr'
 
 const AddCharacterRelation = (props) => {
     return (
