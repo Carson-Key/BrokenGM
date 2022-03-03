@@ -5,7 +5,7 @@ import Card from './Card'
 import CardTitle from './CardTitle'
 
 const RelationCard = (props) => {
-    const { name, relation, isAdmin } = props
+    const { name, relation, isAdmin, setRelations, relations, index } = props
     const relationKeys = Object.keys(relation).sort()
 
     return (
@@ -18,6 +18,9 @@ const RelationCard = (props) => {
                     relation={relation}
                     relationKeys={relationKeys}
                     isAdmin={isAdmin}
+                    index={index}
+                    relations={relations}
+                    setRelations={setRelations}
                 />
             </div>
         </Card>

@@ -53,7 +53,10 @@ const Relation = () => {
                                 isRelation={isRelation}
                                 isAdmin={isAdmin}
                                 name={relation.name} 
+                                index={i}
                                 relation={relationMinusName} 
+                                relations={relations}
+                                setRelations={setRelations}
                             />
                         )
                     })

@@ -11,3 +11,8 @@ export const formatCharacterName = (name) => {
 
     return joinedName
 }
+export const changeRelationValue = (value, index, character, relations, setRelations) => {
+    let tempRelations = [...relations]
+    tempRelations[index][character] = tempRelations[index][character] + value
+    setRelations(tempRelations)
+}
