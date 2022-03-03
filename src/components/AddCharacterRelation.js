@@ -1,9 +1,15 @@
 // Packages
 import { GrAddCircle } from 'react-icons/gr'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
+// Helpers
+import { addCharacterRelation } from '../helpers/relation'
 
 const AddCharacterRelation = (props) => {
+    const { id, index, setRelations, relations, isRelation } = props
     const [nameToAdd, setNameToAdd] = useState("")
+    const setNotification = useContext(NotificationContext)[1]
 
     return (
         <div className="w-full">
@@ -17,7 +23,19 @@ const AddCharacterRelation = (props) => {
                         setNameToAdd(event.target.value)
                     }}
                 />
-                <GrAddCircle className="inline h-9 mx-1 mb-1" />
+                <button
+                    onClick={
+                        () => {
+                            addCharacterRelation(
+                                nameToAdd, index, 
+                                relations, setRelations, 
+                                setNotification, id, isRelation
+                            )
+                        }
+                    }
+                >
+                    <GrAddCircle className="inline h-9 mx-1 mb-1" />
+                </button>
             </div>
         </div>
     )

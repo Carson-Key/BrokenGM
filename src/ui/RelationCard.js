@@ -25,7 +25,13 @@ const RelationCard = (props) => {
                     relations={relations}
                     setRelations={setRelations}
                 />
-                <AddCharacterRelation />
+                <AddCharacterRelation 
+                    id={id}
+                    index={index}
+                    setRelations={setRelations}
+                    relations={relations}
+                    isRelation={isRelation}
+                />
             </div>
         </Card>
 	)
