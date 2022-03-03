@@ -1,5 +1,5 @@
 // Components
-import RelationOfCharacter from '../components/RelationOfCharacters'
+import RelationOfCharacter from './RelationOfCharacters'
 // UI
 import Card from './Card'
 import CardTitle from './CardTitle'

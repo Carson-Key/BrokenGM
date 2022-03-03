@@ -288,5 +288,5 @@ export const RELATIONINDICATORCLASSES = {
     "97": "mx-98.25pr",
     "98": "mx-98.25pr",
     "99": "mx-98.25pr",
-    "100": "mx-99pr",
+    "100": "mx-98.5pr",
 }

@@ -1,7 +1,7 @@
 // Components
-import CharacterRelationController from './CharacterRelationController'
+import CharacterRelationController from '../components/CharacterRelationController'
 // UI
-import CharacterRelationIndicator from '../ui/CharacterRelationIndicator'
+import CharacterRelationIndicator from './CharacterRelationIndicator'
 // Helpers
 import { formatCharacterName } from '../helpers/relation'
 
