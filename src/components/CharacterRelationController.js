@@ -7,7 +7,7 @@ const CharacterRelationController = (props) => {
                 <button 
                     className="px-2"
                 >
-                    -
+                    +
                 </button>
             </div>
             <input 
@@ -20,7 +20,7 @@ const CharacterRelationController = (props) => {
                 <button 
                     className="px-2"
                 >
-                    +
+                    -
                 </button>
             </div>
         </div>
