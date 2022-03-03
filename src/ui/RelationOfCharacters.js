@@ -1,12 +1,13 @@
 // Components
 import CharacterRelationController from '../components/CharacterRelationController'
+import ConditionalRender from '../components/ConditionalRender'
 // UI
 import CharacterRelationIndicator from './CharacterRelationIndicator'
 // Helpers
 import { formatCharacterName } from '../helpers/relation'
 
 const RelationOfCharacter = (props) => {
-    const { relationKeys, relation } = props
+    const { relationKeys, relation, isAdmin } = props
 
     return (
         relationKeys.map((character, i) => {
@@ -17,10 +18,12 @@ const RelationOfCharacter = (props) => {
                         character={character}
                         relation={relation}
                     />
-                    <CharacterRelationController 
-                        character={character}
-                        relation={relation}
-                    />
+                    <ConditionalRender condition={isAdmin}>
+                        <CharacterRelationController 
+                            character={character}
+                            relation={relation}
+                        />
+                    </ConditionalRender>
                 </div>
             )
         })
