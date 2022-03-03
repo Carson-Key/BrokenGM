@@ -1,5 +1,6 @@
 // Components
 import RelationOfCharacter from './RelationOfCharacters'
+import AddCharacterRelation from '../components/AddCharacterRelation'
 // UI
 import Card from './Card'
 import CardTitle from './CardTitle'
@@ -24,6 +25,7 @@ const RelationCard = (props) => {
                     relations={relations}
                     setRelations={setRelations}
                 />
+                <AddCharacterRelation />
             </div>
         </Card>
 	)
