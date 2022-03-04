@@ -6,22 +6,17 @@ import Relation from '../pages/Relation'
 import Login from '../pages/Login'
 import Clock from '../pages/Clock'
 import Clocks from '../pages/Clocks'
-// Component
-import RerouteToLogin from './RerouteToLogin'
 
 const PageRoutes = () => {
     return (
-        <>
-            <Routes>
-                <Route path='/login' element={<Login />} />
-                <Route path='/clock/:id' element={<Clock />} />
-                <Route path='/clocks' element={<Clocks />} />
-                <Route path='/relation/:id' element={<Relation />} />
-                <Route path='/relations' element={<Relations />} />
-                <Route path='/' element={<Clocks />} />
-            </Routes>
-            <RerouteToLogin />
-        </>
+        <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/clock/:id' element={<Clock />} />
+            <Route path='/clocks' element={<Clocks />} />
+            <Route path='/relation/:id' element={<Relation />} />
+            <Route path='/relations' element={<Relations />} />
+            <Route path='/' element={<Clocks />} />
+        </Routes>
 	)
 }
 
