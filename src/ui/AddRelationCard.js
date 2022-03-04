@@ -1,5 +1,4 @@
 // Packages
-import { GrAddCircle } from 'react-icons/gr'
 import { useState, useContext } from 'react'
 // UI
 import Card from './Card'
