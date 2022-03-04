@@ -1,6 +1,7 @@
 // Helpers
 import { capitalizeFirstLetter } from "./misc"
 import { updateDocument } from './firestore'
+import { fireError } from './notifications'
 
 export const formatCharacterName = (name) => {
     let brokenName = name.split('_')
@@ -25,17 +26,24 @@ export const reverseFormatCharacterName = (name) => {
 export const changeRelationValue = (
     value, index, character, relations, setRelations, setNotification, id, isRelation
 ) => {
-    let tempRelations = [...relations]
-    tempRelations[index][character] = tempRelations[index][character] + value
-
-    setRelations(tempRelations)
-    updateDocument(
-        "relations", 
-        id, 
-        {npcs: tempRelations}, 
-        setNotification,
-        isRelation
-    )
+    if (!isNaN(value)) {
+        let tempRelations = [...relations]
+        tempRelations[index][character] = tempRelations[index][character] + value
+    
+        setRelations(tempRelations)
+        updateDocument(
+            "relations", 
+            id, 
+            {npcs: tempRelations}, 
+            setNotification,
+            isRelation
+        )
+    } else {
+        fireError(
+            setNotification, 
+            "Bad User Input", "Illegal character, please only use numbers"
+        )
+    }
 }
 export const addCharacterRelation = (
     name, index, relations, setRelations, setNotification, id, isRelation
