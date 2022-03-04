@@ -5,6 +5,7 @@ import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
 import { updateDocument } from "../helpers/firestore"
+import { fireError } from "../helpers/notifications"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
 
@@ -89,7 +90,7 @@ const TimerController = (props) => {
                                     className="px-2"
                                     disabled={isLoading} 
                                     onClick={() => {
-                                        if (changeTimerValue) {
+                                        if (changeTimerValue && !isNaN(parseInt(changeTimerValue))) {
                                             addUnit(
                                                 id,
                                                 timer, setTimer, 
@@ -97,6 +98,11 @@ const TimerController = (props) => {
                                                 TIMENAMESANDTYPES[TNTKey].type, 
                                                 setNotification,
                                                 parseInt(changeTimerValue), isClock
+                                            )
+                                        } else {
+                                            fireError(
+                                                setNotification, 
+                                                "Bad User Input", "Illegal character, please only use numbers"
                                             )
                                         }
                                     }}

@@ -1,12 +1,15 @@
-// UI
-import Container from "../ui/Container"
+// Components
+import PageOfLinkCards from '../components/PageOfLinkCards'
 
 const Relations = () => {
     return (
-        <Container>
-            Relations Page
-        </Container>
-	)
+        <PageOfLinkCards 
+            noCardText="You Don't Have Any Relations"
+            cardInnerText="To Relation page"
+            docID="relations"
+            toPath="relation"
+        />
+    )
 }
 
 export default Relations

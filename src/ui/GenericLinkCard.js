@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom'
 import Card from './Card'
 import CardTitle from './CardTitle'
 
-const ClockCard = (props) => {
-    const { title, clockID } = props
+const GenericLinkCard = (props) => {
+    const { title, linkPath, innerText } = props
 
     return (
-        <Link to={"/clock/" + clockID}>
+        <Link to={linkPath}>
             <Card className="h-fit">
                 <CardTitle>
                     {title}
                 </CardTitle>
                 <div className="my-6 mx-auto w-fit">
-                    To Clock
+                    {innerText}
                 </div>
             </Card>
         </Link>
 	)
 }
 
-export default ClockCard
+export default GenericLinkCard
