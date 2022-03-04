@@ -22,6 +22,15 @@ export const fireError = (setNotification, code, message) => {
         }
     )
 }
+export const firePing = (setNotification, code, message) => {
+    console.log("Ping: " + code + ", with Message: " + message)
+    setNotification(
+        {
+            type: 'SET_NOTIFICATION', 
+            payload: {occurs: true, message: message, type: NOTIFICATIONTYPES.ping}
+        }
+    )
+}
 
 export const fireBaseError = (setNotification, code, message) => {
     console.log("Firebase Error with Code: " + code + ", and Message: " + message)
