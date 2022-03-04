@@ -6,6 +6,7 @@ import IsLoading from '../components/IsLoading'
 // UI
 import Container from "../ui/Container"
 import RelationCard from '../ui/RelationCard'
+import AddRelationCard from '../ui/AddRelationCard'
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
@@ -62,6 +63,7 @@ const Relation = () => {
                         )
                     })
                 }
+                <AddRelationCard />
             </Container>
         </IsLoading>
 	)
