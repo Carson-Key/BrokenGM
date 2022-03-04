@@ -42,3 +42,18 @@ export async function updateDocument(collection, document, dataToAdd, setNotific
 		fireBaseError(setNotification, error.code, error.message)
 	}
 }
+export async function updateDocumentWithPromise(collection, document, dataToAdd, setNotification, documentExsists = true) {
+	try {
+		const userDoc = doc(db, collection, document)
+
+		if (documentExsists) {
+			return setDoc(userDoc, dataToAdd, { merge: true })
+		}
+	} catch (error) {
+		return {
+			then: () => {
+				fireBaseError(setNotification, error.code, error.message)
+			}
+		}
+	}
+}
