@@ -52,3 +52,18 @@ export const addCharacterRelation = (
         isRelation
     )
 }
+export const addRelation = (
+    newRelation, relations, setRelations, setNotification, id, isRelation
+) => {
+    let tempRelations = [...relations]
+    tempRelations.push(newRelation)
+
+    setRelations(tempRelations)
+    updateDocument(
+        "relations", 
+        id, 
+        {npcs: tempRelations}, 
+        setNotification,
+        isRelation
+    )
+}

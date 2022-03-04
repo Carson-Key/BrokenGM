@@ -1,12 +1,18 @@
 // Packages
 import { GrAddCircle } from 'react-icons/gr'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 // UI
 import Card from './Card'
 import CardTitle from './CardTitle'
+// Contexts
+import { NotificationContext } from '../contexts/Notification'
+// Helpers
+import { addRelation } from '../helpers/relation'
 
 const RelationCard = (props) => {
+    const { id, setRelations, relations, isRelation } = props
     const [nameToAdd, setNameToAdd] = useState("")
+    const setNotification = useContext(NotificationContext)[1]
 
     return (
         <Card className="h-80">
@@ -27,7 +33,11 @@ const RelationCard = (props) => {
                         <button
                             onClick={
                                 () => {
-                                    console.log(nameToAdd)
+                                    addRelation(
+                                        {name: nameToAdd},
+                                        relations, setRelations, 
+                                        setNotification, id, isRelation
+                                    )
                                 }
                             }
                         >

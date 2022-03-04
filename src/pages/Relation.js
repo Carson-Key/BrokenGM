@@ -63,7 +63,12 @@ const Relation = () => {
                         )
                     })
                 }
-                <AddRelationCard />
+                <AddRelationCard
+                    id={id}
+                    setRelations={setRelations}
+                    relations={relations}
+                    isRelation={isRelation}
+                />
             </Container>
         </IsLoading>
 	)
