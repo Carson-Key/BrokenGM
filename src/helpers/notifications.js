@@ -13,6 +13,16 @@ export const notificationClassNameGenerator = (type) => {
     }
 }
 
+export const fireError = (setNotification, code, message) => {
+    console.log("Error: " + code + ", with Message: " + message)
+    setNotification(
+        {
+            type: 'SET_NOTIFICATION', 
+            payload: {occurs: true, message: message, type: NOTIFICATIONTYPES.error}
+        }
+    )
+}
+
 export const fireBaseError = (setNotification, code, message) => {
     console.log("Firebase Error with Code: " + code + ", and Message: " + message)
     setNotification(
