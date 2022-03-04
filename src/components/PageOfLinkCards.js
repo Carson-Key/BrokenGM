@@ -76,12 +76,12 @@ const PageOflinkCards = (props) => {
             >
                 <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
                     {
-                        cards.map((cards, i) => {
+                        cards.map((card, i) => {
                             return (
                                 <GenericLinkCard 
                                     key={i} 
-                                    title={cards.title} 
-                                    linkPath={"/" + toPath + "/" + cards.id} 
+                                    title={card.title} 
+                                    linkPath={"/" + toPath + "/" + card.id} 
                                     innerText={cardInnerText}
                                 />
                             )
