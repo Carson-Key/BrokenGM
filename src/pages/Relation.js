@@ -18,6 +18,7 @@ const Relation = () => {
     const setNotification = useContext(NotificationContext)[1]
     const [isLoading, setIsLoading] = useState(true)
     const [relations, setRelations] = useState([])
+    const [playerCharacters, setPlayerCharacters] = useState([])
     const [isRelation, setIsRelation] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [uid, setUID] = useState("")
@@ -26,6 +27,7 @@ const Relation = () => {
         const getClockData = async () => {
             getDocument("relations", id, setNotification).then((data) => {
                 setRelations(data.data().npcs)
+                setPlayerCharacters(data.data().playerCharacters)
                 setIsRelation(data.exists())
                 getCurrentUser(setUID, (uid) => {
                     if (data.data().admins.includes(uid)) {
@@ -65,6 +67,7 @@ const Relation = () => {
                 }
                 <AddRelationCard
                     id={id}
+                    playerCharacters={playerCharacters}
                     setRelations={setRelations}
                     relations={relations}
                     isRelation={isRelation}

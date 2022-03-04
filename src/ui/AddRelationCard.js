@@ -10,7 +10,7 @@ import { NotificationContext } from '../contexts/Notification'
 import { addRelation } from '../helpers/relation'
 
 const RelationCard = (props) => {
-    const { id, setRelations, relations, isRelation } = props
+    const { id, setRelations, relations, isRelation, playerCharacters } = props
     const [nameToAdd, setNameToAdd] = useState("")
     const setNotification = useContext(NotificationContext)[1]
 
@@ -50,7 +50,7 @@ const RelationCard = (props) => {
                                 onClick={
                                     () => {
                                         addRelation(
-                                            {name: nameToAdd},
+                                            {...playerCharacters, name: nameToAdd},
                                             relations, setRelations, 
                                             setNotification, id, isRelation
                                         )
