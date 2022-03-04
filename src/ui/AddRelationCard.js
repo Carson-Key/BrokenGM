@@ -20,9 +20,9 @@ const RelationCard = (props) => {
                 Add New Relation
             </CardTitle>
             <div className="text-3xl my-3 mx-4 w-72 overflow-scroll h-64 divide-y">
-                <div className="flex items-center justify-center mx-auto w-fit mt-auto h-full ">
+                <div className="flex flex-col items-center justify-center mx-auto w-fit mt-auto h-full ">
                     <input 
-                            className="border rounded-lg border-slate-400 text-center h-9 px-2 py-2 w-48 inline"
+                            className="border rounded-lg border-slate-400 text-center h-9 px-2 py-2 w-48"
                             type="text" 
                             name="Add Character"
                             placeholder="John Doe"
@@ -30,19 +30,36 @@ const RelationCard = (props) => {
                                 setNameToAdd(event.target.value)
                             }}
                         />
-                        <button
-                            onClick={
-                                () => {
-                                    addRelation(
-                                        {name: nameToAdd},
-                                        relations, setRelations, 
-                                        setNotification, id, isRelation
-                                    )
+                        <div className="flex">
+                            <button
+                                className="my-3 mx-2 text-base rounded-lg border bg-blue-500 text-white px-2 py-1"
+                                onClick={
+                                    () => {
+                                        addRelation(
+                                            {name: nameToAdd},
+                                            relations, setRelations, 
+                                            setNotification, id, isRelation
+                                        )
+                                    }
                                 }
-                            }
-                        >
-                            <GrAddCircle className="inline h-9 mx-1 mb-1" />
-                        </button>
+                            >
+                                Add Blank
+                            </button>
+                            <button
+                                className="my-3 mx-2 text-base rounded-lg border bg-green-500 text-white px-2 py-1"
+                                onClick={
+                                    () => {
+                                        addRelation(
+                                            {name: nameToAdd},
+                                            relations, setRelations, 
+                                            setNotification, id, isRelation
+                                        )
+                                    }
+                                }
+                            >
+                                Add w/ Players
+                            </button>
+                        </div>
                 </div>
             </div>
         </Card>
