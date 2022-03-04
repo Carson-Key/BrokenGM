@@ -41,7 +41,7 @@ const PageOflinkCards = (props) => {
                     }
                 })
             }
-            if (loadedCardsArray && !loadedCards) {
+            if (loadedCardsArray && !loadedCards && Object.values(cards).every(x => !x)) {
                 let tempCardsArray = []
                 cardsArray.forEach((card, i) => {
                     getDocument(docID, card, setNotification).then((data) => {
