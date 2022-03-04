@@ -5,7 +5,7 @@ import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
 import { updateDocumentWithPromise } from "../helpers/firestore"
-import { fireError } from "../helpers/notifications"
+import { fireError, firePing } from "../helpers/notifications"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
 
@@ -65,7 +65,7 @@ const TimerController = (props) => {
                             {...timerObject, timer}, 
                             setNotification, isClock
                         ).then(() => {
-                            console.log("did")
+                            firePing(setNotification, "Successful save to Firestore", "You have successfully saved the clock")
                         })
                     }}
                 >
