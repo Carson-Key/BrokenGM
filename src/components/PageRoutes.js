@@ -18,7 +18,7 @@ const PageRoutes = () => {
 
     useEffect(() => {
         isCurrentUser(setIsUser)
-    })
+    }, [])
 
     return (
         <IsLoading IsLoading={isUser !== "Loading"}>
