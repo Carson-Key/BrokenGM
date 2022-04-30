@@ -41,7 +41,7 @@ const PageOflinkCards = (props) => {
                     }
                 })
             }
-            if (loadedCardsArray && !loadedCards) {
+            if (loadedCardsArray && !loadedCards && Object.values(cards).every(x => !x)) {
                 let tempCardsArray = []
                 cardsArray.forEach((card, i) => {
                     getDocument(docID, card, setNotification).then((data) => {
@@ -76,12 +76,12 @@ const PageOflinkCards = (props) => {
             >
                 <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1">
                     {
-                        cards.map((cards, i) => {
+                        cards.map((card, i) => {
                             return (
                                 <GenericLinkCard 
                                     key={i} 
-                                    title={cards.title} 
-                                    linkPath={"/" + toPath + "/" + cards.id} 
+                                    title={card.title} 
+                                    linkPath={"/" + toPath + "/" + card.id} 
                                     innerText={cardInnerText}
                                 />
                             )

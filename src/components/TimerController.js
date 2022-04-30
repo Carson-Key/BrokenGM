@@ -4,8 +4,8 @@ import { useState, useContext } from 'react'
 import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
-import { updateDocument } from "../helpers/firestore"
-import { fireError } from "../helpers/notifications"
+import { updateDocumentWithPromise } from "../helpers/firestore"
+import { fireError, firePing } from "../helpers/notifications"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
 
@@ -60,11 +60,13 @@ const TimerController = (props) => {
                     disabled={isLoading} 
                     className={"ml-3 text-white text-md md:text-3xl rounded px-3 py-2 mb-6 bg-blue-500"}
                     onClick={() => {
-                        updateDocument(
+                        updateDocumentWithPromise(
                             "clocks", id, 
                             {...timerObject, timer}, 
                             setNotification, isClock
-                        )
+                        ).then(() => {
+                            firePing(setNotification, "Successful save to Firestore", "You have successfully saved the clock")
+                        })
                     }}
                 >
                     Save Timer
