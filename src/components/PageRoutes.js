@@ -18,7 +18,7 @@ const PageRoutes = () => {
 
     useEffect(() => {
         isCurrentUser(setIsUser)
-    })
+    }, [])
 
     return (
         <IsLoading IsLoading={isUser !== "Loading"}>
@@ -26,8 +26,7 @@ const PageRoutes = () => {
                 condition={isUser}
                 returnComponent={
                     <Routes>
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/' element={<Login />} />
+                        <Route path='/*' element={<Login />} />
                     </Routes>
                 } 
             >
