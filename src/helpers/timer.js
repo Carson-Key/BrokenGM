@@ -39,11 +39,10 @@ export const addMilliSecond = (id, timer, setTimer, timerObject, setTimerObject,
                 isClock
             )
         } else {
-            const newTimerObject = getDocument("clocks", id, setNotification)
-            if (newTimerObject) {
-                setTimerObject(newTimerObject)
-                setTimer(newTimerObject.timer)
-            }
+            getDocument("clocks", id, setNotification).then((data) => {
+                setTimerObject(data.data())
+                setTimer(data.data().timer)
+            })
         }
     }
     if (timer > 86400000) {

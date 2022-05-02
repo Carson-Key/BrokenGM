@@ -39,18 +39,18 @@ const Timer = (props) => {
             <h1 className="text-center md:text-none md:flex text-6xl w-fit mt-auto mx-auto pt-1">
                 <p>
                     {
-                        capitalizeFirstLetter(
-                            timerObject.daysOfWeek[timerObject.dayOfWeek]
-                        ) + ","
+                        // capitalizeFirstLetter(
+                        //     timerObject.daysOfWeek[timerObject.dayOfWeek]
+                        // ) + ","
                     }
                 </p>
                 <p className="lg:mx-2">
                 {" The " +
-                    timerObject.dayOfMonth}{getNumberSuffix(timerObject.dayOfMonth)
+                    // timerObject.dayOfMonth}{getNumberSuffix(timerObject.dayOfMonth)
                 + " of " +
-                    capitalizeFirstLetter(
-                        timerObject.monthsOfYear[timerObject.monthOfYear]
-                    )
+                    // capitalizeFirstLetter(
+                    //     timerObject.monthsOfYear[timerObject.monthOfYear]
+                    // )
                 + ", "}
                 </p>
                 <p>

@@ -13,13 +13,15 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
+// Objects
+import { EMPTYTIMEROBJECT } from '../helpers/objects'
 
 const Clock = () => {
     const { id } = useParams()
     const setNotification = useContext(NotificationContext)[1]
     const [isLoading, setIsLoading] = useState(true)
     const [timer, setTimer] = useState(0)
-    const [timerObject, setTimerObject] = useState(0)
+    const [timerObject, setTimerObject] = useState(EMPTYTIMEROBJECT)
     const [isActive, setIsActive] = useState(false)
     const [isClock, setIsClock] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
