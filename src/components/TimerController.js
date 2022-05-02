@@ -34,7 +34,6 @@ const TimerController = (props) => {
     const [timerStateButtonColor, setTimerStateButtonColor] = useState(timerStateObject.start.css)
 
     useEffect(() => {
-        console.log(isActive)
         if (isActive) {
             setTimerStateButtonText(timerStateObject.stop.text)
             setTimerStateButtonColor(timerStateObject.stop.css)
