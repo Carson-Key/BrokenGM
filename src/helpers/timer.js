@@ -1,5 +1,5 @@
 // Helpers
-import { updateDocument } from './firestore'
+import { updateDocument, getDocument } from './firestore'
 import { defaultAccessArray } from './misc'
 // Objects
 import { TIMECONVERSTIONS, TIMETYPES, OVERFLOWOBJECT, ADDUNITINMILI } from './objects.js'
@@ -27,16 +27,24 @@ export const addUnit = (id, timer, setTimer, timerObject, setTimerObject, type, 
         isClock
     )
 }
-export const addMilliSecond = (id, timer, setTimer, timerObject, setTimerObject, setNotification, isClock = false, ammount = 10) => {
+export const addMilliSecond = (id, timer, setTimer, timerObject, setTimerObject, setNotification, isAdmin, isClock = false, ammount = 10) => {
     setTimer(timer => timer + ammount)
     if (timer % 60000 === 0) {
-        updateDocument(
-            "clocks", 
-            id, 
-            { ...timerObject, timer }, 
-            setNotification,
-            isClock
-        )
+        if (isAdmin) {
+            updateDocument(
+                "clocks", 
+                id, 
+                { ...timerObject, timer }, 
+                setNotification,
+                isClock
+            )
+        } else {
+            const newTimerObject = getDocument("clocks", id, setNotification)
+            if (newTimerObject) {
+                setTimerObject(newTimerObject)
+                setTimer(newTimerObject.timer)
+            }
+        }
     }
     if (timer > 86400000) {
         checkOverflow(timerObject, setTimerObject, 1, TIMETYPES.hours)

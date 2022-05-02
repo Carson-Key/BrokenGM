@@ -55,6 +55,7 @@ const Clock = () => {
                     setTimer={setTimer}
                     isActive={isActive}
                     isLoading={isLoading}
+                    isAdmin={isAdmin}
                     isClock={isClock}
                     timerObject={timerObject}
                     setTimerObject={setTimerObject}
