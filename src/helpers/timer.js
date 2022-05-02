@@ -41,7 +41,7 @@ export const addMilliSecond = (id, timer, setTimer, timerObject, setTimerObject,
         } else {
             getDocument("clocks", id, setNotification).then((data) => {
                 setTimerObject(data.data())
-                setTimer(data.data().timer)
+                setTimer(data.data().timer + 10)
             })
         }
     }
