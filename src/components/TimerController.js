@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
-import { updateDocumentWithPromise } from "../helpers/firestore"
+import { updateDocument, updateDocumentWithPromise } from "../helpers/firestore"
 import { fireError, firePing } from "../helpers/notifications"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
@@ -61,7 +61,13 @@ const TimerController = (props) => {
                     className={"text-white text-md md:text-3xl rounded px-3 py-2 mb-6 " + timerStateButtonColor}
                     onClick={() => {
                         toggleTimerStateButtonCSS()
-                        setIsActive(!isActive)
+                        const newIsActive = !isActive
+                        setIsActive(newIsActive)
+                        updateDocument(
+                            "clocks", id, 
+                            {...timerObject, isActive: newIsActive}, 
+                            setNotification, isClock
+                        )
                     }}
                 >
                     {timerStateButtonText}
