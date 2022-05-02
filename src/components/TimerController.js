@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import { NotificationContext } from '../contexts/Notification'
 // Helpers
 import { addUnit } from "../helpers/timer"
-import { updateDocument, updateDocumentWithPromise } from "../helpers/firestore"
+import { updateDocumentWithPromise } from "../helpers/firestore"
 import { fireError, firePing } from "../helpers/notifications"
 // Objects
 import { TIMENAMESANDTYPES } from "../helpers/objects"
@@ -34,6 +34,7 @@ const TimerController = (props) => {
     const [timerStateButtonColor, setTimerStateButtonColor] = useState(timerStateObject.start.css)
 
     useEffect(() => {
+        console.log(isActive)
         if (isActive) {
             setTimerStateButtonText(timerStateObject.stop.text)
             setTimerStateButtonColor(timerStateObject.stop.css)
@@ -61,13 +62,13 @@ const TimerController = (props) => {
                     className={"text-white text-md md:text-3xl rounded px-3 py-2 mb-6 " + timerStateButtonColor}
                     onClick={() => {
                         toggleTimerStateButtonCSS()
-                        const newIsActive = !isActive
-                        setIsActive(newIsActive)
-                        updateDocument(
+                        updateDocumentWithPromise(
                             "clocks", id, 
-                            {...timerObject, isActive: newIsActive}, 
+                            {...timerObject, timer, isActive: !isActive}, 
                             setNotification, isClock
-                        )
+                        ).then(() => {
+                            setIsActive(!isActive)
+                        })
                     }}
                 >
                     {timerStateButtonText}
