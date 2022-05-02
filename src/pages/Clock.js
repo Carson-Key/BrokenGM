@@ -29,6 +29,7 @@ const Clock = () => {
         const getClockData = async () => {
             getDocument("clocks", id, setNotification).then((data) => {
                 setTimer(data.data().timer)
+                setIsActive(data.data().isActive)
                 setTimerObject(data.data())
                 setIsClock(data.exists())
                 getCurrentUser(setUID, (uid) => {
