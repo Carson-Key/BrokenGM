@@ -12,6 +12,7 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
+import ConditionalRender from '../components/ConditionalRender'
 
 const Relation = () => {
     const { id } = useParams()
@@ -65,13 +66,15 @@ const Relation = () => {
                         )
                     })
                 }
-                <AddRelationCard
-                    id={id}
-                    playerCharacters={playerCharacters}
-                    setRelations={setRelations}
-                    relations={relations}
-                    isRelation={isRelation}
-                />
+                <ConditionalRender condition={isAdmin}>
+                    <AddRelationCard
+                        id={id}
+                        playerCharacters={playerCharacters}
+                        setRelations={setRelations}
+                        relations={relations}
+                        isRelation={isRelation}
+                    />
+                </ConditionalRender>
             </Container>
         </IsLoading>
 	)
