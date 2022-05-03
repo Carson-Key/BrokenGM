@@ -13,6 +13,7 @@ const Timer = (props) => {
         setTimer,
         isActive,
         isLoading,
+        isAdmin,
         isClock,
         timerObject,
         setTimerObject
@@ -24,14 +25,14 @@ const Timer = (props) => {
             let interval = null
             if (isActive) {
                 interval = setInterval(() => {
-                    addMilliSecond(id, timer, setTimer, timerObject, setNotification, setTimerObject, isClock)
+                    addMilliSecond(id, timer, setTimer, timerObject, setTimerObject, setNotification, isAdmin, isClock)
                 }, 10)
             } else if (!isActive && timer !== 0) {
                 clearInterval(interval)
             }
             return () => clearInterval(interval)
         }
-    }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject, setNotification])
+    }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject, setNotification, isAdmin])
 
     return (
         <section className="h-full">

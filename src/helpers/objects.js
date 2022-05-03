@@ -3,7 +3,23 @@ import {
     yearsOverflow, monthsOverflow, 
     weeksOverflow, daysOverflow,
     hoursOverflow, minsOverflow
- } from './timer'
+} from './timer'
+
+export const EMPTYTIMEROBJECT = {
+    admins: [],
+    dayOfMonth: 0,
+    dayOfWeek: 0,
+    daysInMonths: [],
+    daysOfWeek: [],
+    isActive: false,
+    monthOfYear: 7,
+    monthsOfYear: [] ,
+    name: "",
+    players: [],
+    timer: 0,
+    year: 0,
+    yearSuffix: ""
+}
 
 export const TIMETYPES = {
     mils: "mils",

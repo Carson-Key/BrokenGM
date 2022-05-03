@@ -1,5 +1,5 @@
 // Packages
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 // Contexts
 import { NotificationContext } from '../contexts/Notification'
 // Helpers
@@ -33,6 +33,16 @@ const TimerController = (props) => {
     const [timerStateButtonText, setTimerStateButtonText] = useState(timerStateObject.start.text)
     const [timerStateButtonColor, setTimerStateButtonColor] = useState(timerStateObject.start.css)
 
+    useEffect(() => {
+        if (isActive) {
+            setTimerStateButtonText(timerStateObject.stop.text)
+            setTimerStateButtonColor(timerStateObject.stop.css)
+        } else {
+            setTimerStateButtonText(timerStateObject.start.text)
+            setTimerStateButtonColor(timerStateObject.start.css)
+        }
+    }, [isActive, timerStateObject.stop, timerStateObject.start])
+
     const toggleTimerStateButtonCSS = () => {
         if (timerStateButtonText === "Start") {
             setTimerStateButtonText(timerStateObject.stop.text)
@@ -51,7 +61,13 @@ const TimerController = (props) => {
                     className={"text-white text-md md:text-3xl rounded px-3 py-2 mb-6 " + timerStateButtonColor}
                     onClick={() => {
                         toggleTimerStateButtonCSS()
-                        setIsActive(!isActive)
+                        updateDocumentWithPromise(
+                            "clocks", id, 
+                            {...timerObject, timer, isActive: !isActive}, 
+                            setNotification, isClock
+                        ).then(() => {
+                            setIsActive(!isActive)
+                        })
                     }}
                 >
                     {timerStateButtonText}
