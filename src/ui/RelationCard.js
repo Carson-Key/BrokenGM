@@ -1,6 +1,7 @@
 // Components
 import RelationOfCharacter from './RelationOfCharacters'
 import AddCharacterRelation from '../components/AddCharacterRelation'
+import ConditionalRender from '../components/ConditionalRender'
 // UI
 import Card from './Card'
 import CardTitle from './CardTitle'
@@ -25,13 +26,15 @@ const RelationCard = (props) => {
                     relations={relations}
                     setRelations={setRelations}
                 />
-                <AddCharacterRelation 
-                    id={id}
-                    index={index}
-                    setRelations={setRelations}
-                    relations={relations}
-                    isRelation={isRelation}
-                />
+                <ConditionalRender condition={isAdmin}>
+                    <AddCharacterRelation 
+                        id={id}
+                        index={index}
+                        setRelations={setRelations}
+                        relations={relations}
+                        isRelation={isRelation}
+                    />
+                </ConditionalRender>
             </div>
         </Card>
 	)
