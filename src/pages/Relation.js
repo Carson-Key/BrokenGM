@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
+import ConditionalRender from '../components/ConditionalRender'
 // UI
 import Container from "../ui/Container"
 import RelationCard from '../ui/RelationCard'
@@ -12,7 +13,6 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
-import ConditionalRender from '../components/ConditionalRender'
 
 const Relation = () => {
     const { id } = useParams()
