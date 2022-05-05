@@ -24,7 +24,7 @@ const VotingSystem = (props) => {
                     <button disabled className="w-8 mr-2"></button>
                 }
             >
-                <button className="w-8 mr-2" onClick={() => {
+                <button className="text-center w-8 mr-2" onClick={() => {
                     setCurrentVote(currentVote - 1)
                 }}><MdKeyboardArrowLeft /></button>
             </ConditionalRender>
@@ -38,7 +38,7 @@ const VotingSystem = (props) => {
                             <button disabled className="w-8 mr-2"></button>
                         }
                     >
-                        <button className="w-8 ml-2" onClick={() => {
+                        <button className="text-center w-8 ml-2" onClick={() => {
                             const newData = {
                                 description: "",
                                 locked: false,
@@ -63,7 +63,7 @@ const VotingSystem = (props) => {
                     </ConditionalRender>
                 }
             >
-                <button className="w-8 ml-2" onClick={() => {
+                <button className="text-center w-8 ml-2" onClick={() => {
                     setCurrentVote(currentVote + 1)
                 }}><MdKeyboardArrowRight /></button>
             </ConditionalRender>
