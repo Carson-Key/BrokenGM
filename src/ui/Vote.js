@@ -1,6 +1,7 @@
+// UI
+import IndividualArchivedVote from './IndividualArchivedVote'
 // Helpers
 import { returnChildOfObject } from '../helpers/misc'
-import { formatCharacterName } from '../helpers/voting'
 
 const Vote = (props) => {
     const { votingSystemObject, currentVote } = props
@@ -29,18 +30,12 @@ const Vote = (props) => {
                         return null
                     } else {
                         return (
-                            <div key={i} className="text-center py-2 px-4 mx-2">
-                                <h2 className="font-bold">
-                                    {formatCharacterName(vote)}
-                                </h2>
-                                <p>
-                                    {formatCharacterName(returnChildOfObject(
-                                        votingSystemObject, 
-                                        [currentVote, vote], 
-                                        "Loading..."
-                                    ))}
-                                </p>
-                            </div>
+                            <IndividualArchivedVote 
+                                key={i}
+                                votingSystemObject = {votingSystemObject}
+                                currentVote = {currentVote}
+                                vote={vote}
+                            />
                         )
                     }
                 })}
