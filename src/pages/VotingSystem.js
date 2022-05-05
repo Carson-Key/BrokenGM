@@ -9,14 +9,17 @@ import Container from '../ui/Container'
 import Vote from '../ui/Vote'
 // Helpers
 import { getRealtimeDBOnce } from '../helpers/database'
+import ConditionalRender from '../components/ConditionalRender';
 
 const VotingSystem = () => {
     const { id } = useParams()
     const [votingSystemObject, setVotingSystemObject] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [currentVote, setCurrentVote] = useState(0)
+    const [amountOfVotes, setAmountOfVotes] = useState(0)
 
     useEffect(() => {
+        console.log(amountOfVotes)
         setVotingSystemObject(getRealtimeDBOnce(
             id + "/votingsystem", 
             (data) => {
@@ -25,24 +28,30 @@ const VotingSystem = () => {
                     setVotingSystemObject(data)
                     const dataAsArray = Object.keys(data)
                     if (dataAsArray.length > 3) {
-                        setCurrentVote(dataAsArray[dataAsArray.length - 4])
+                        setCurrentVote(dataAsArray.length - 4)
+                        setAmountOfVotes(dataAsArray.length - 3)
                     } else {
-                        // there are no votes
+                        setAmountOfVotes(0)
                     }
                 }
             }
         ))
-    }, [id])
+    }, [id, amountOfVotes])
 
     return (
         <IsLoading isLoading={isLoading}>
             <Container className="mt-auto flex flex-wrap">
-                <button><MdKeyboardArrowLeft /></button>
-                <Vote 
-                    votingSystemObject={votingSystemObject} 
-                    currentVote={currentVote}
-                />
-                <button><MdKeyboardArrowRight /></button>
+                <ConditionalRender
+                    condition={amountOfVotes !== 0}
+                    returnComponent={<p>There are no votes in this system</p>}
+                >
+                    <button><MdKeyboardArrowLeft /></button>
+                    <Vote 
+                        votingSystemObject={votingSystemObject} 
+                        currentVote={currentVote}
+                    />
+                    <button><MdKeyboardArrowRight /></button>
+                </ConditionalRender>
             </Container>
         </IsLoading>
 	)
