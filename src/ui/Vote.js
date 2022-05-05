@@ -5,13 +5,15 @@ const Vote = (props) => {
     const { votingSystemObject, currentVote } = props
 
     return (
-        <p className="mx-auto">{
-            returnChildOfObject(
-                votingSystemObject, 
-                [currentVote, "description"], 
-                "Loading..."
-            )
-        }</p>
+        <section className="mx-auto">
+            <p className="text-center">{
+                returnChildOfObject(
+                    votingSystemObject, 
+                    [currentVote, "description"], 
+                    "Loading..."
+                )
+            }</p>
+        </section>
 	)
 }
 
