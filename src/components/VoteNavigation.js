@@ -1,17 +1,27 @@
 // Packages
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { IoAddCircleOutline } from "react-icons/io5";
 // Components
 import ConditionalRender from '../components/ConditionalRender';
+// Helpers
+import { returnChildOfObject } from '../helpers/misc'
+import { updateRealtimeDB } from '../helpers/database'
 
 const VotingSystem = (props) => {
-    const { children, currentVote, setCurrentVote, amountOfVotes } = props
+    const { 
+        id, children, 
+        currentVote, setCurrentVote, 
+        amountOfVotes, setAmountOfVotes,
+        isAdmin, votes, setVotes,
+        votingSystemObject, setVotingSystemObject
+    } = props
 
     return (
         <>
             <ConditionalRender
                 condition={currentVote !== 0}
                 returnComponent={
-                    <button className="w-8 mr-2"></button>
+                    <button disabled className="w-8 mr-2"></button>
                 }
             >
                 <button className="w-8 mr-2" onClick={() => {
@@ -22,7 +32,34 @@ const VotingSystem = (props) => {
             <ConditionalRender
                 condition={currentVote !== amountOfVotes - 1}
                 returnComponent={
-                    <button className="w-8 ml-2"></button>
+                    <ConditionalRender
+                        condition={isAdmin}
+                        returnComponent={
+                            <button disabled className="w-8 mr-2"></button>
+                        }
+                    >
+                        <button className="w-8 ml-2" onClick={() => {
+                            const newData = {
+                                description: "",
+                                ...returnChildOfObject(
+                                    votingSystemObject, 
+                                    ["defaultVoters"], 
+                                    {}
+                                )
+                            }
+                            const newVotes = {
+                                ...votes,
+                                [amountOfVotes]: newData
+                            }
+                            setVotingSystemObject({
+                                ...votingSystemObject, 
+                                votes: newVotes
+                            })
+                            setVotes(newVotes)
+                            setAmountOfVotes(amountOfVotes + 1)
+                            updateRealtimeDB(newData, ["votingsystems/" + id + "/votes/" + amountOfVotes + "/"])
+                        }}><IoAddCircleOutline /></button>
+                    </ConditionalRender>
                 }
             >
                 <button className="w-8 ml-2" onClick={() => {

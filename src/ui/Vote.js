@@ -6,13 +6,13 @@ import IndividualArchivedVote from './IndividualArchivedVote'
 import { returnChildOfObject } from '../helpers/misc'
 
 const Vote = (props) => {
-    const { votingSystemObject, currentVote } = props
+    const { currentVote, votes } = props
     const votingSystemArray = Object.keys(returnChildOfObject(
-        votingSystemObject, 
+        votes, 
         [currentVote], 
         {}
     ) ? returnChildOfObject(
-        votingSystemObject, 
+        votes, 
         [currentVote], 
         {}
     ) : {})
@@ -21,24 +21,24 @@ const Vote = (props) => {
         <section className="mx-auto">
             <h2 className="text-center">{
                 returnChildOfObject(
-                    votingSystemObject, 
+                    votes, 
                     [currentVote, "description"], 
                     "Loading..."
                 )
             }</h2>
             <VoteResults 
-                votingSystemObject={votingSystemObject}
+                votes={votes}
                 currentVote={currentVote}
             />
             <section className="flex flex-col my-4 justify-center divide-y overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
-                    if (vote === "locked" || vote === "description") {
+                    if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                         return null
                     } else {
                         return (
                             <IndividualArchivedVote 
                                 key={i}
-                                votingSystemObject = {votingSystemObject}
+                                votes = {votes}
                                 currentVote = {currentVote}
                                 vote={vote}
                             />

@@ -7,14 +7,14 @@ import { defaultAccessArray, getHighestValueKey, returnChildOfObject } from '../
 import { formatCharacterName } from '../helpers/voting'
 
 const VoteResults = (props) => {
-    const { votingSystemObject, currentVote } = props
+    const { votes, currentVote } = props
     const [voteResult, setVoteResult] = useState("Unknown")
     const votingSystemArray = Object.keys(returnChildOfObject(
-        votingSystemObject, 
+        votes, 
         [currentVote], 
         {}
     ) ? returnChildOfObject(
-        votingSystemObject, 
+        votes, 
         [currentVote], 
         {}
     ) : {})
@@ -22,11 +22,11 @@ const VoteResults = (props) => {
     useEffect(() => {
         let tally = {unknown: 0}
         votingSystemArray.forEach((vote, i) => {
-            if (vote === "locked" || vote === "description") {
+            if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                 // I have no clue why using not equals doesn't work
             } else {
                 const talliedVote = returnChildOfObject(
-                    votingSystemObject, 
+                    votes, 
                     [currentVote, vote], 
                     0
                 )
@@ -34,7 +34,7 @@ const VoteResults = (props) => {
             }
         })
         setVoteResult(getHighestValueKey(tally))
-    }, [votingSystemArray, votingSystemObject, currentVote])
+    }, [votingSystemArray, votes, currentVote])
 
     return (
         <section className="text-center my-2">

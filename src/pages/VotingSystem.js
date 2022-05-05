@@ -4,38 +4,49 @@ import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
 import VoteNavigation from '../components/VoteNavigation'
+import ConditionalRender from '../components/ConditionalRender'
 // UI
 import Container from '../ui/Container'
 import Vote from '../ui/Vote'
 // Helpers
 import { getRealtimeDBOnce } from '../helpers/database'
-import ConditionalRender from '../components/ConditionalRender';
+import { getCurrentUser } from '../helpers/auth'
+import { returnChildOfObject } from '../helpers/misc'
 
 const VotingSystem = () => {
     const { id } = useParams()
     const [votingSystemObject, setVotingSystemObject] = useState({})
+    const [votes, setVotes] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [currentVote, setCurrentVote] = useState(0)
     const [amountOfVotes, setAmountOfVotes] = useState(0)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const setUID = useState("")[1]
 
     useEffect(() => {
         setVotingSystemObject(getRealtimeDBOnce(
-            id + "/votingsystem", 
+            "votingsystems/" + id, 
             (data) => {
                 if (data) {
-                    setIsLoading(false) 
+                    getCurrentUser(setUID, (uid) => {
+                        if (Object.keys(returnChildOfObject(data, ["admins"], {})).includes(uid)) {
+                            setIsAdmin(true)
+                        }
+                    })
                     setVotingSystemObject(data)
-                    const dataAsArray = Object.keys(data)
-                    if (dataAsArray.length > 3) {
-                        setCurrentVote(dataAsArray.length - 4)
-                        setAmountOfVotes(dataAsArray.length - 3)
+                    setVotes(data.votes)
+                    const votesAsArray = Object.keys(data.votes)
+                    if (votesAsArray.length > 0) {
+                        setCurrentVote(votesAsArray.length - 1)
+                        setAmountOfVotes(votesAsArray.length)
                     } else {
                         setAmountOfVotes(0)
                     }
+                    setIsLoading(false) 
                 }
             }
         ))
-    }, [id, amountOfVotes])
+    }, [id, amountOfVotes, setUID])
 
     return (
         <IsLoading isLoading={isLoading}>
@@ -45,12 +56,18 @@ const VotingSystem = () => {
                     returnComponent={<p>There are no votes in this system</p>}
                 >
                     <VoteNavigation
+                        id={id}
                         currentVote={currentVote} 
                         setCurrentVote={setCurrentVote} 
                         amountOfVotes={amountOfVotes}
+                        isAdmin={isAdmin}
+                        votes={votes} setVotes={setVotes}
+                        votingSystemObject={votingSystemObject} 
+                        setVotingSystemObject={setVotingSystemObject}
+                        setAmountOfVotes={setAmountOfVotes}
                     >
                         <Vote 
-                            votingSystemObject={votingSystemObject} 
+                            votes={votes}
                             currentVote={currentVote}
                         />
                     </VoteNavigation>

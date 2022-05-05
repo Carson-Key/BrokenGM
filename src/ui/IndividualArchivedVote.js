@@ -5,7 +5,7 @@ import { returnChildOfObject } from '../helpers/misc'
 import { formatCharacterName } from '../helpers/voting'
 
 const IndividualArchivedVote = (props) => {
-    const { votingSystemObject, currentVote, vote } = props
+    const { votes, currentVote, vote } = props
 
     return (
         <div className="text-center py-2 px-4 mx-2">
@@ -14,7 +14,7 @@ const IndividualArchivedVote = (props) => {
             </h3>
             <IndividualArchivedVoteDecision vote={vote}>
                 {formatCharacterName(returnChildOfObject(
-                    votingSystemObject, 
+                    votes, 
                     [currentVote, vote], 
                     "Loading..."
                 ))}
