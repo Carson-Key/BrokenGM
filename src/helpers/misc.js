@@ -29,3 +29,20 @@ export const getNumberSuffix = (number) => {
 export const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+export const returnChildOfObject = (
+    object = {}, 
+    keys = [], 
+    returnIfNull = null
+) => {
+    if (keys.length === 1) {
+        return object[keys[0]]
+    } else {
+        return object ? 
+            returnChildOfObject(
+                object[keys[0]], 
+                keys.slice(1), 
+                returnIfNull
+            ) : returnIfNull
+    }
+}
