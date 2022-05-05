@@ -2,10 +2,16 @@
 import { returnChildOfObject } from '../helpers/misc'
 
 const Vote = (props) => {
-    const { votingSystemObject } = props
+    const { votingSystemObject, currentVote } = props
 
     return (
-        <p className="mx-auto">{returnChildOfObject(votingSystemObject, [0, "description"], "Loading...")}</p>
+        <p className="mx-auto">{
+            returnChildOfObject(
+                votingSystemObject, 
+                [currentVote, "description"], 
+                "Loading..."
+            )
+        }</p>
 	)
 }
 

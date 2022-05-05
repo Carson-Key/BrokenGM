@@ -1,6 +1,7 @@
 // Packages
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 // Components
 import IsLoading from '../components/IsLoading'
 // UI
@@ -13,6 +14,7 @@ const VotingSystem = () => {
     const { id } = useParams()
     const [votingSystemObject, setVotingSystemObject] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [currentVote, setCurrentVote] = useState(0)
 
     useEffect(() => {
         setVotingSystemObject(getRealtimeDBOnce(
@@ -21,6 +23,12 @@ const VotingSystem = () => {
                 if (data) {
                     setIsLoading(false) 
                     setVotingSystemObject(data)
+                    const dataAsArray = Object.keys(data)
+                    if (dataAsArray.length > 3) {
+                        setCurrentVote(dataAsArray[dataAsArray.length - 4])
+                    } else {
+                        // there are no votes
+                    }
                 }
             }
         ))
@@ -29,7 +37,12 @@ const VotingSystem = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <Container className="mt-auto flex flex-wrap">
-                <Vote votingSystemObject={votingSystemObject} />
+                <button><MdKeyboardArrowLeft /></button>
+                <Vote 
+                    votingSystemObject={votingSystemObject} 
+                    currentVote={currentVote}
+                />
+                <button><MdKeyboardArrowRight /></button>
             </Container>
         </IsLoading>
 	)
