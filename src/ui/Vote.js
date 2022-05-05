@@ -17,13 +17,13 @@ const Vote = (props) => {
 
     return (
         <section className="mx-auto">
-            <p className="text-center">{
+            <h2 className="text-center">{
                 returnChildOfObject(
                     votingSystemObject, 
                     [currentVote, "description"], 
                     "Loading..."
                 )
-            }</p>
+            }</h2>
             <section className="flex flex-col my-4 justify-center divide-y">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description") {
