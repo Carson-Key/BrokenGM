@@ -1,9 +1,9 @@
 // Packages
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 // Components
 import IsLoading from '../components/IsLoading'
+import VoteNavigation from '../components/VoteNavigation'
 // UI
 import Container from '../ui/Container'
 import Vote from '../ui/Vote'
@@ -44,24 +44,16 @@ const VotingSystem = () => {
                     condition={amountOfVotes !== 0}
                     returnComponent={<p>There are no votes in this system</p>}
                 >
-                    <ConditionalRender
-                        condition={currentVote !== 0}
+                    <VoteNavigation
+                        currentVote={currentVote} 
+                        setCurrentVote={setCurrentVote} 
+                        amountOfVotes={amountOfVotes}
                     >
-                        <button onClick={() => {
-                            setCurrentVote(currentVote - 1)
-                        }}><MdKeyboardArrowLeft /></button>
-                    </ConditionalRender>
-                    <Vote 
-                        votingSystemObject={votingSystemObject} 
-                        currentVote={currentVote}
-                    />
-                    <ConditionalRender
-                        condition={currentVote !== amountOfVotes - 1}
-                    >
-                        <button onClick={() => {
-                            setCurrentVote(currentVote + 1)
-                        }}><MdKeyboardArrowRight /></button>
-                    </ConditionalRender>
+                        <Vote 
+                            votingSystemObject={votingSystemObject} 
+                            currentVote={currentVote}
+                        />
+                    </VoteNavigation>
                 </ConditionalRender>
             </Container>
         </IsLoading>
