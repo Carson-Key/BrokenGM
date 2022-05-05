@@ -41,6 +41,7 @@ const VotingSystem = (props) => {
                         <button className="w-8 ml-2" onClick={() => {
                             const newData = {
                                 description: "",
+                                locked: false,
                                 ...returnChildOfObject(
                                     votingSystemObject, 
                                     ["defaultVoters"], 
