@@ -11,10 +11,10 @@ const VotingSystem = (props) => {
             <ConditionalRender
                 condition={currentVote !== 0}
                 returnComponent={
-                    <button className="w-3"></button>
+                    <button className="w-8 mr-2"></button>
                 }
             >
-                <button className="w-3" onClick={() => {
+                <button className="w-8 mr-2" onClick={() => {
                     setCurrentVote(currentVote - 1)
                 }}><MdKeyboardArrowLeft /></button>
             </ConditionalRender>
@@ -22,10 +22,10 @@ const VotingSystem = (props) => {
             <ConditionalRender
                 condition={currentVote !== amountOfVotes - 1}
                 returnComponent={
-                    <button className="w-3"></button>
+                    <button className="w-8 ml-2"></button>
                 }
             >
-                <button className="w-3" onClick={() => {
+                <button className="w-8 ml-2" onClick={() => {
                     setCurrentVote(currentVote + 1)
                 }}><MdKeyboardArrowRight /></button>
             </ConditionalRender>

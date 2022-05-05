@@ -1,5 +1,6 @@
 // Helpers
 import { returnChildOfObject } from '../helpers/misc'
+import { formatCharacterName } from '../helpers/voting'
 
 const Vote = (props) => {
     const { votingSystemObject, currentVote } = props
@@ -22,18 +23,25 @@ const Vote = (props) => {
                     "Loading..."
                 )
             }</p>
-            <section>
+            <section className="flex flex-col my-4 justify-center divide-y">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description") {
-                        return <></>
+                        return null
                     } else {
-                        return (<p key={i} className="text-center">
-                            {vote}: {returnChildOfObject(
-                                votingSystemObject, 
-                                [currentVote, vote], 
-                                "Loading..."
-                            )}
-                        </p>)
+                        return (
+                            <div key={i} className="text-center py-2 px-4 mx-2">
+                                <h2 className="font-bold">
+                                    {formatCharacterName(vote)}
+                                </h2>
+                                <p>
+                                    {formatCharacterName(returnChildOfObject(
+                                        votingSystemObject, 
+                                        [currentVote, vote], 
+                                        "Loading..."
+                                    ))}
+                                </p>
+                            </div>
+                        )
                     }
                 })}
             </section>
