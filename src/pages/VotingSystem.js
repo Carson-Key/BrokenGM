@@ -19,7 +19,6 @@ const VotingSystem = () => {
     const [amountOfVotes, setAmountOfVotes] = useState(0)
 
     useEffect(() => {
-        console.log(amountOfVotes)
         setVotingSystemObject(getRealtimeDBOnce(
             id + "/votingsystem", 
             (data) => {
@@ -45,12 +44,24 @@ const VotingSystem = () => {
                     condition={amountOfVotes !== 0}
                     returnComponent={<p>There are no votes in this system</p>}
                 >
-                    <button><MdKeyboardArrowLeft /></button>
+                    <ConditionalRender
+                        condition={currentVote !== 0}
+                    >
+                        <button onClick={() => {
+                            setCurrentVote(currentVote - 1)
+                        }}><MdKeyboardArrowLeft /></button>
+                    </ConditionalRender>
                     <Vote 
                         votingSystemObject={votingSystemObject} 
                         currentVote={currentVote}
                     />
-                    <button><MdKeyboardArrowRight /></button>
+                    <ConditionalRender
+                        condition={currentVote !== amountOfVotes - 1}
+                    >
+                        <button onClick={() => {
+                            setCurrentVote(currentVote + 1)
+                        }}><MdKeyboardArrowRight /></button>
+                    </ConditionalRender>
                 </ConditionalRender>
             </Container>
         </IsLoading>
