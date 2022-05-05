@@ -1,3 +1,5 @@
+// Components
+import VoteResults from '../components/VoteResults'
 // UI
 import IndividualArchivedVote from './IndividualArchivedVote'
 // Helpers
@@ -24,6 +26,10 @@ const Vote = (props) => {
                     "Loading..."
                 )
             }</h2>
+            <VoteResults 
+                votingSystemObject={votingSystemObject}
+                currentVote={currentVote}
+            />
             <section className="flex flex-col my-4 justify-center divide-y">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description") {
