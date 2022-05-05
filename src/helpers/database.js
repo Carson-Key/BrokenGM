@@ -15,9 +15,9 @@ export const updateRealtimeDB = (data, pathsToUpdate = []) => {
 
 export const getRealtimeDB = (path, onUpdate = () => {}) => {
     const entryRef = ref(realtimedb, path)
-    
+
     onValue(entryRef, (snapshot) => {
         const data = snapshot.val()
         onUpdate(data)
-    });
+    })
 }
