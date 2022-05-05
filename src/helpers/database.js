@@ -1,5 +1,5 @@
 // Packages
-import { ref, update, onValue } from "firebase/database"
+import { ref, update, onValue, get } from "firebase/database"
 // Firebase
 import { realtimedb } from './firebase'
 
@@ -19,5 +19,19 @@ export const getRealtimeDB = (path, onUpdate = () => {}) => {
     onValue(entryRef, (snapshot) => {
         const data = snapshot.val()
         onUpdate(data)
+    })
+}
+
+export const getRealtimeDBOnce = (path, onUpdate = () => {}) => {
+    const entryRef = ref(realtimedb, path)
+
+    get(entryRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            onUpdate(snapshot.val())
+        } else {
+            console.log("No data available")
+        }
+    }).catch((error) => {
+        console.error(error)
     })
 }
