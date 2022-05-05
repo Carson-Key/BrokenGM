@@ -8,7 +8,6 @@ import Container from '../ui/Container'
 import Vote from '../ui/Vote'
 // Helpers
 import { getRealtimeDBOnce } from '../helpers/database'
-import { returnChildOfObject } from '../helpers/misc'
 
 const VotingSystem = () => {
     const { id } = useParams()
