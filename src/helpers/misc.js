@@ -46,3 +46,10 @@ export const returnChildOfObject = (
             ) : returnIfNull
     }
 }
+
+export const getHighestValueKey = (object) => {
+    return Object.keys(object).reduce(
+        (key1, key2) => {
+            return object[key1] > object[key2] ? key1 : key2
+        });
+  }
