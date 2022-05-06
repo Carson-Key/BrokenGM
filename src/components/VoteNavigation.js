@@ -33,7 +33,11 @@ const VotingSystem = (props) => {
                 condition={currentVote !== amountOfVotes - 1}
                 returnComponent={
                     <ConditionalRender
-                        condition={isAdmin}
+                        condition={isAdmin && returnChildOfObject(
+                            votes, 
+                            [currentVote, "locked"], 
+                            {}
+                        )}
                         returnComponent={
                             <button disabled className="w-8 mr-2"></button>
                         }
