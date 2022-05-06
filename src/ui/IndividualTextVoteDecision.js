@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 const IndividualTextVoteDecision = (props) => {
     const { children, colors } = props
     const [className, setClasseName] = useState("")
-    const [finalText, setfinalText] = useState(children)
     const colorObject = useState(colors ? colors : {
         yes: "text-white bg-green-400",
         no: "text-white bg-red-400",
@@ -22,13 +21,10 @@ const IndividualTextVoteDecision = (props) => {
         } else {
             setClasseName(colorObject.default)
         }
-        if (children.toLowerCase() === "" || children.toLowerCase() === '') {
-            setfinalText("Unknown")
-        }
     }, [children, colorObject])
 
     return (
-        <p className={"w-fit mx-auto py-1 px-3 rounded-xl " + className}>{finalText}</p>
+        <p className={"w-fit mx-auto py-1 px-3 rounded-xl " + className}>{children}</p>
 	)
 }
 
