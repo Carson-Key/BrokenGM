@@ -8,7 +8,11 @@ import { updateRealtimeDB } from '../helpers/database'
 const IndividualEditVoteDecision = (props) => {
     const { vote, colors, votes, id, currentVote } = props
     const [className, setClasseName] = useState("")
-    const [voteForColor, setVoteForColor] = useState(vote)
+    const [voteForColor, setVoteForColor] = useState(returnChildOfObject(
+        votes, 
+        [vote], 
+        "Loading..."
+    ))
     const colorObject = useState(colors ? colors : {
         yes: "text-white bg-green-400 placeholder:text-white",
         no: "text-white bg-red-400 placeholder:text-white",
