@@ -11,7 +11,7 @@ import { returnChildOfObject } from '../helpers/misc'
 import { getRealtimeDB, updateRealtimeDB } from '../helpers/database'
 
 const UnLockedVote = (props) => {
-    const { currentVote, id, isAdmin } = props
+    const { currentVote, id, isAdmin, voterKey } = props
     const [votes, setVotes] = useState({})
     const [votesArray, setVotesArray] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -71,9 +71,12 @@ const UnLockedVote = (props) => {
                             return (
                                 <IndividualVote 
                                     key={i}
+                                    isAdmin={isAdmin}
+                                    voterKey={voterKey}
                                     votes={votes}
                                     currentVote={currentVote}
                                     vote={vote}
+                                    id={id}
                                 />
                             )
                         }

@@ -21,6 +21,7 @@ const VotingSystem = () => {
     const [currentVote, setCurrentVote] = useState(0)
     const [amountOfVotes, setAmountOfVotes] = useState(0)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [voterKey, setVoterKey] = useState(null)
     const setUID = useState("")[1]
 
     useEffect(() => {
@@ -31,6 +32,8 @@ const VotingSystem = () => {
                     getCurrentUser(setUID, (uid) => {
                         if (Object.keys(returnChildOfObject(data, ["admins"], {})).includes(uid)) {
                             setIsAdmin(true)
+                        } else if (Object.keys(returnChildOfObject(data, ["voters"], {})).includes(uid)) {
+                            setVoterKey(returnChildOfObject(data, ["voters", uid], {}))
                         }
                     })
                     setVotingSystemObject(data)
@@ -68,6 +71,7 @@ const VotingSystem = () => {
                     >
                         <VoteDecider 
                             id={id}
+                            voterKey={voterKey}
                             isAdmin={isAdmin}
                             votes={votes}
                             currentVote={currentVote}
