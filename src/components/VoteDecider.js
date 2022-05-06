@@ -7,14 +7,14 @@ import Vote from '../ui/Vote'
 import { returnChildOfObject } from '../helpers/misc'
 
 const VoteDecider = (props) => {
-    const {votes, currentVote} = props
+    const { votes, currentVote, id } = props
 
     return (
         <ConditionalRender
             condition={returnChildOfObject(votes, [currentVote, "locked"], false)}
             returnComponent={
                 <UnLockedVote
-                    votes={votes}
+                    id={id}
                     currentVote={currentVote}
                 />
             }

@@ -67,6 +67,7 @@ const VotingSystem = () => {
                         setAmountOfVotes={setAmountOfVotes}
                     >
                         <VoteDecider 
+                            id={id}
                             votes={votes}
                             currentVote={currentVote}
                         />
