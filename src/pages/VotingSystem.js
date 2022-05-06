@@ -49,11 +49,7 @@ const VotingSystem = () => {
                         "votingsystems/" + id + "/votes/" + votesAsArray.length, 
                         (data) => {
                             if (data) {
-                                const newVotes = {...votes, [amountOfVotes]: data}
-                                setVotes(newVotes)
-                                setVotingSystemObject({...votingSystemObject, votes: newVotes})
-                                setCurrentVote(amountOfVotes)
-                                setAmountOfVotes(amountOfVotes + 1)
+                                window.location.reload(false);
                             }
                         }
                     )
