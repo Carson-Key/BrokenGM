@@ -1,7 +1,7 @@
 // Packages
 import { useState, useEffect } from 'react'
 // Components
-import VoteResults from './VoteResults'
+import VoteResultsUnlocked from './VoteResultsUnlocked'
 import ConditionalRender from './ConditionalRender'
 import IsLoading from './IsLoading'
 // UI
@@ -59,7 +59,7 @@ const UnLockedVote = (props) => {
                         }}
                     />
                 </ConditionalRender>
-                <VoteResults 
+                <VoteResultsUnlocked 
                     votes={votes}
                     currentVote={currentVote}
                 />

@@ -16,7 +16,7 @@ const IndividualTextVoteDecision = (props) => {
             setClasseName(colorObject.yes)
         } else if (children.toLowerCase() === "no") {
             setClasseName(colorObject.no)
-        } else if (children.toLowerCase() === "abstain" || children.toLowerCase() === "" || children.toLowerCase() === '') {
+        } else if (children.toLowerCase() === "abstain" || children.toLowerCase() === "" || children.toLowerCase() === '' || children.toLowerCase() === 'unknown') {
             setClasseName(colorObject.none)
         } else {
             setClasseName(colorObject.default)
