@@ -33,7 +33,12 @@ const VoteResults = (props) => {
                 tally[talliedVote] = defaultAccessArray(tally, talliedVote, 0) + 1
             }
         })
-        setVoteResult(getHighestValueKey(tally))
+        const largestVote = getHighestValueKey(tally)
+        if (largestVote === "" || largestVote === '') {
+            setVoteResult("Unknown")
+        } else {
+            setVoteResult(largestVote)
+        }
     }, [votingSystemArray, votes, currentVote])
 
     return (
