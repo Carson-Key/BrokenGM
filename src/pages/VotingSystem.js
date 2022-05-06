@@ -70,6 +70,9 @@ const VotingSystem = () => {
                         setAmountOfVotes={setAmountOfVotes}
                     >
                         <VoteDecider 
+                            votingSystemObject={votingSystemObject} 
+                            setVotingSystemObject={setVotingSystemObject}
+                            setVotes={setVotes}
                             id={id}
                             voterKey={voterKey}
                             isAdmin={isAdmin}

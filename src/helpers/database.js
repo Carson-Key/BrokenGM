@@ -37,5 +37,5 @@ export const getRealtimeDBOnce = (path, onUpdate = () => {}) => {
 }
 
 export const turnListenerOff = (path) => {
-    off(path)
+    off(ref(realtimedb, path))
 }

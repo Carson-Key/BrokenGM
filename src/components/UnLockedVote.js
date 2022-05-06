@@ -11,8 +11,8 @@ import { returnChildOfObject } from '../helpers/misc'
 import { getRealtimeDB, updateRealtimeDB, turnListenerOff } from '../helpers/database'
 
 const UnLockedVote = (props) => {
-    const { currentVote, id, isAdmin, voterKey } = props
-    const [votes, setVotes] = useState({})
+    const { currentVote, id, isAdmin, voterKey, votes, setVotes, votingSystemObject, setVotingSystemObject } = props
+    const [votesListened, setVotesListened] = useState({})
     const [votesArray, setVotesArray] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -22,7 +22,7 @@ const UnLockedVote = (props) => {
             (data) => {
                 if (data) {
                     setIsLoading(false)
-                    setVotes(data)
+                    setVotesListened(data)
                     setVotesArray(Object.keys(data))
                 }
             }
@@ -37,7 +37,7 @@ const UnLockedVote = (props) => {
                     returnComponent={
                         <h2 className="text-center">{
                             returnChildOfObject(
-                                votes, 
+                                votesListened, 
                                 ["description"], 
                                 "Loading..."
                             )
@@ -51,19 +51,18 @@ const UnLockedVote = (props) => {
                             name="description" 
                             placeholder="description"
                             value={returnChildOfObject(
-                                votes, 
+                                votesListened, 
                                 ["description"], 
                                 "Loading..."
                             )}
                             onChange={(event) => {
-                                turnListenerOff("votingsystems/" + id + "/votes/" + currentVote + "/description/")
                                 updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/description/"])
                             }}
                         />
                     </center>
                 </ConditionalRender>
                 <VoteResultsUnlocked 
-                    votes={votes}
+                    votes={votesListened}
                     currentVote={currentVote}
                 />
                 <ConditionalRender
@@ -73,7 +72,12 @@ const UnLockedVote = (props) => {
                         <button 
                             className="border broder-gray-300 rounded-md mt-2 px-2 py-1 text-white bg-sky-400"
                             onClick={() => {
+                                const newVotes = {...votes, [currentVote]: votesListened}
+                                setVotes(newVotes)
+                                setVotingSystemObject({...votingSystemObject, votes: newVotes})
+                                turnListenerOff("votingsystems/" + id + "/votes/" + currentVote)
                                 updateRealtimeDB(true, ["votingsystems/" + id + "/votes/" + currentVote + "/locked/"])
+                                window.location.reload(false);
                             }}
                         >
                             Finalize
@@ -90,7 +94,7 @@ const UnLockedVote = (props) => {
                                     key={i}
                                     isAdmin={isAdmin}
                                     voterKey={voterKey}
-                                    votes={votes}
+                                    votes={votesListened}
                                     currentVote={currentVote}
                                     vote={vote}
                                     id={id}
