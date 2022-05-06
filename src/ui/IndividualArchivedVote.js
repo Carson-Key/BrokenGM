@@ -15,9 +15,13 @@ const IndividualArchivedVote = (props) => {
             <IndividualArchivedVoteDecision vote={vote}>
                 {formatCharacterName(returnChildOfObject(
                     votes, 
-                    [currentVote, vote], 
+                    [vote], 
                     "Loading..."
-                ))}
+                ) ? returnChildOfObject(
+                    votes, 
+                    [vote], 
+                    "Loading..."
+                ) : "unknown")}
             </IndividualArchivedVoteDecision>
         </div>
 	)

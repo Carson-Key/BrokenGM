@@ -22,11 +22,11 @@ const IndividualVote = (props) => {
                             votes, 
                             [vote], 
                             "Loading..."
-                        ) === '' ? "unknown" : returnChildOfObject(
+                        ) ? returnChildOfObject(
                             votes, 
                             [vote], 
                             "Loading..."
-                        ))}
+                        ) : "unknown")}
                     </IndividualTextVoteDecision>
                 }
             >
