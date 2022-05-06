@@ -11,3 +11,12 @@ export const formatCharacterName = (name) => {
 
     return joinedName
 }
+export const reverseFormatCharacterName = (name) => {
+    let brokenName = name.split(' ')
+    brokenName.forEach((word, i) => {
+        brokenName[i] = word.toLowerCase()
+    })
+    const joinedName = brokenName.join('-')
+
+    return joinedName
+}

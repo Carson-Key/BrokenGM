@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 // Helpers
 import { returnChildOfObject } from '../helpers/misc'
-import { formatCharacterName } from '../helpers/voting'
+import { formatCharacterName, reverseFormatCharacterName } from '../helpers/voting'
 import { updateRealtimeDB } from '../helpers/database'
 
 const IndividualEditVoteDecision = (props) => {
@@ -38,14 +38,15 @@ const IndividualEditVoteDecision = (props) => {
             type="text"
             name={formatCharacterName(vote) + "'s vote"}
             placeholder="Type Your Vote Here"
-            value={returnChildOfObject(
+            value={formatCharacterName(returnChildOfObject(
                 votes, 
                 [vote], 
                 "Loading..."
-            )}
+            ))}
             onChange={(event) => {
-                setVoteForColor(event.target.value)
-                updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/" + vote + "/"])
+                const newData = reverseFormatCharacterName(event.target.value)
+                setVoteForColor(newData)
+                updateRealtimeDB(newData, ["votingsystems/" + id + "/votes/" + currentVote + "/" + vote + "/"])
             }}
         />
 	)
