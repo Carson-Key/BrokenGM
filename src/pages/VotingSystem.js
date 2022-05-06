@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom'
 import IsLoading from '../components/IsLoading'
 import VoteNavigation from '../components/VoteNavigation'
 import ConditionalRender from '../components/ConditionalRender'
+import VoteDecider from '../components/VoteDecider'
 // UI
 import Container from '../ui/Container'
-import Vote from '../ui/Vote'
 // Helpers
 import { getRealtimeDBOnce } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'
@@ -66,7 +66,7 @@ const VotingSystem = () => {
                         setVotingSystemObject={setVotingSystemObject}
                         setAmountOfVotes={setAmountOfVotes}
                     >
-                        <Vote 
+                        <VoteDecider 
                             votes={votes}
                             currentVote={currentVote}
                         />
