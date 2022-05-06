@@ -8,7 +8,7 @@ import IsLoading from './IsLoading'
 import IndividualVote from '../ui/IndividualVote'
 // Helpers
 import { returnChildOfObject } from '../helpers/misc'
-import { getRealtimeDB, updateRealtimeDB } from '../helpers/database'
+import { getRealtimeDB, updateRealtimeDB, turnListenerOff } from '../helpers/database'
 
 const UnLockedVote = (props) => {
     const { currentVote, id, isAdmin, voterKey } = props
@@ -44,25 +44,42 @@ const UnLockedVote = (props) => {
                         }</h2>
                     }
                 >
-                    <input 
-                        className="border broder-gray-300 rounded-md px-2 py-1"
-                        type="text"
-                        name="description" 
-                        placeholder="description"
-                        value={returnChildOfObject(
-                            votes, 
-                            ["description"], 
-                            "Loading..."
-                        )}
-                        onChange={(event) => {
-                            updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/description/"])
-                        }}
-                    />
+                    <center>
+                        <input 
+                            className="border broder-gray-300 rounded-md px-2 py-1"
+                            type="text"
+                            name="description" 
+                            placeholder="description"
+                            value={returnChildOfObject(
+                                votes, 
+                                ["description"], 
+                                "Loading..."
+                            )}
+                            onChange={(event) => {
+                                turnListenerOff("votingsystems/" + id + "/votes/" + currentVote + "/description/")
+                                updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/description/"])
+                            }}
+                        />
+                    </center>
                 </ConditionalRender>
                 <VoteResultsUnlocked 
                     votes={votes}
                     currentVote={currentVote}
                 />
+                <ConditionalRender
+                    condition={isAdmin}
+                >
+                    <center>
+                        <button 
+                            className="border broder-gray-300 rounded-md mt-2 px-2 py-1 text-white bg-sky-400"
+                            onClick={() => {
+                                updateRealtimeDB(true, ["votingsystems/" + id + "/votes/" + currentVote + "/locked/"])
+                            }}
+                        >
+                            Finalize
+                        </button>
+                    </center>
+                </ConditionalRender>
                 <section className="flex flex-col my-4 justify-center divide-y overflow-scroll">
                     {votesArray.map((vote, i) => {
                         if (vote === "locked" || vote === "description") {

@@ -1,5 +1,5 @@
 // Packages
-import { ref, update, onValue, get } from "firebase/database"
+import { ref, update, onValue, get, off } from "firebase/database"
 // Firebase
 import { realtimedb } from './firebase'
 
@@ -34,4 +34,8 @@ export const getRealtimeDBOnce = (path, onUpdate = () => {}) => {
     }).catch((error) => {
         console.error(error)
     })
+}
+
+export const turnListenerOff = (path) => {
+    off(path)
 }
