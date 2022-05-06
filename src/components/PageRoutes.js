@@ -7,6 +7,8 @@ import Relation from '../pages/Relation'
 import Login from '../pages/Login'
 import Clock from '../pages/Clock'
 import Clocks from '../pages/Clocks'
+import VotingSystems from '../pages/VotingSystems'
+import VotingSystem from '../pages/VotingSystem'
 // Components
 import ConditionalRender from './ConditionalRender'
 import IsLoading from './IsLoading'
@@ -36,6 +38,8 @@ const PageRoutes = () => {
                     <Route path='/clocks' element={<Clocks />} />
                     <Route path='/relation/:id' element={<Relation />} />
                     <Route path='/relations' element={<Relations />} />
+                    <Route path='/votingsystems' element={<VotingSystems />} />
+                    <Route path='/votingsystem/:id' element={<VotingSystem />} />
                     <Route path='/' element={<Clocks />} />
                 </Routes>
             </ConditionalRender>
