@@ -2,15 +2,16 @@
 import { useState, useEffect } from 'react'
 // Components
 import VoteResults from './VoteResults'
+import ConditionalRender from './ConditionalRender'
+import IsLoading from './IsLoading'
 // UI
 import IndividualVote from '../ui/IndividualVote'
 // Helpers
 import { returnChildOfObject } from '../helpers/misc'
-import { getRealtimeDB } from '../helpers/database'
-import IsLoading from './IsLoading'
+import { getRealtimeDB, updateRealtimeDB } from '../helpers/database'
 
 const UnLockedVote = (props) => {
-    const { currentVote, id } = props
+    const { currentVote, id, isAdmin } = props
     const [votes, setVotes] = useState({})
     const [votesArray, setVotesArray] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -31,13 +32,33 @@ const UnLockedVote = (props) => {
     return (
         <IsLoading IsLoading={isLoading}>
             <section className="mx-auto">
-                <h2 className="text-center">{
-                    returnChildOfObject(
-                        votes, 
-                        [currentVote, "description"], 
-                        "Loading..."
-                    )
-                }</h2>
+                <ConditionalRender
+                    condition={isAdmin}
+                    returnComponent={
+                        <h2 className="text-center">{
+                            returnChildOfObject(
+                                votes, 
+                                ["description"], 
+                                "Loading..."
+                            )
+                        }</h2>
+                    }
+                >
+                    <input 
+                        className="border broder-gray-300 rounded-md px-2 py-1"
+                        type="text"
+                        name="description" 
+                        placeholder="description"
+                        value={returnChildOfObject(
+                            votes, 
+                            ["description"], 
+                            "Loading..."
+                        )}
+                        onChange={(event) => {
+                            updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/description/"])
+                        }}
+                    />
+                </ConditionalRender>
                 <VoteResults 
                     votes={votes}
                     currentVote={currentVote}

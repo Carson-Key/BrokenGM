@@ -68,6 +68,7 @@ const VotingSystem = () => {
                     >
                         <VoteDecider 
                             id={id}
+                            isAdmin={isAdmin}
                             votes={votes}
                             currentVote={currentVote}
                         />
