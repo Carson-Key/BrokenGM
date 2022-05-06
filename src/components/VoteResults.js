@@ -34,11 +34,7 @@ const VoteResults = (props) => {
             }
         })
         const largestVote = getHighestValueKey(tally)
-        if (largestVote === "" || largestVote === '') {
-            setVoteResult("Unknown")
-        } else {
-            setVoteResult(largestVote)
-        }
+        setVoteResult(largestVote ? largestVote : "Unknown")
     }, [votingSystemArray, votes, currentVote])
 
     return (

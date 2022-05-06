@@ -14,10 +14,14 @@ const IndividualArchivedVote = (props) => {
             </h3>
             <IndividualArchivedVoteDecision vote={vote}>
                 {formatCharacterName(returnChildOfObject(
-                    votes, 
-                    [currentVote, vote], 
-                    "Loading..."
-                ))}
+                        votes, 
+                        [currentVote, vote], 
+                        "Loading..."
+                    ) ? returnChildOfObject(
+                        votes, 
+                        [currentVote, vote], 
+                        "Loading..."
+                    ) : "unknown")}
             </IndividualArchivedVoteDecision>
         </div>
 	)

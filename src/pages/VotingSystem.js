@@ -9,7 +9,7 @@ import VoteDecider from '../components/VoteDecider'
 // UI
 import Container from '../ui/Container'
 // Helpers
-import { getRealtimeDBOnce } from '../helpers/database'
+import { getRealtimeDBOnce, getRealtimeDB } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'
 import { returnChildOfObject } from '../helpers/misc'
 
@@ -45,6 +45,18 @@ const VotingSystem = () => {
                     } else {
                         setAmountOfVotes(0)
                     }
+                    getRealtimeDB(
+                        "votingsystems/" + id + "/votes/" + votesAsArray.length, 
+                        (data) => {
+                            if (data) {
+                                const newVotes = {...votes, [amountOfVotes]: data}
+                                setVotes(newVotes)
+                                setVotingSystemObject({...votingSystemObject, votes: newVotes})
+                                setCurrentVote(amountOfVotes)
+                                setAmountOfVotes(amountOfVotes + 1)
+                            }
+                        }
+                    )
                     setIsLoading(false) 
                 }
             }
