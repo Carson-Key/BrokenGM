@@ -30,7 +30,7 @@ const Vote = (props) => {
                 votes={votes}
                 currentVote={currentVote}
             />
-            <section className="flex flex-col my-4 justify-center divide-y overflow-scroll">
+            <section className="flex flex-col my-4 justify-center divide-y scrollbar-hide overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                         return null
