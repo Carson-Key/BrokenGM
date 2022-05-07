@@ -15,7 +15,7 @@ const RelationCard = (props) => {
             <CardTitle>
                 {name}
             </CardTitle>
-            <div className="my-3 mx-4 w-72 overflow-scroll h-64 divide-y">
+            <div className="my-3 mx-4 w-72 scrollbar-hide overflow-scroll h-64 divide-y">
                 <RelationOfCharacter
                     id={id}
                     isRelation={isRelation}

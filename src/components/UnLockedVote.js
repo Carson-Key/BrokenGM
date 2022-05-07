@@ -84,7 +84,7 @@ const UnLockedVote = (props) => {
                         </button>
                     </center>
                 </ConditionalRender>
-                <section className="flex flex-col my-4 justify-center divide-y overflow-scroll">
+                <section className="flex flex-col my-4 justify-center divide-y scrollbar-hide overflow-scroll">
                     {votesArray.map((vote, i) => {
                         if (vote === "locked" || vote === "description") {
                             return null
