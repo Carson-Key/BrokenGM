@@ -9,6 +9,7 @@ import ConditionalRender from '../components/ConditionalRender'
 // UI
 import Container from '../ui/Container'
 import VoteSystemScroling from '../ui/VoteSystemScroling'
+import VoteSystemGrid from '../ui/VoteSystemGrid'
 // Helpers
 import { getRealtimeDBOnce, getRealtimeDB } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'
@@ -82,7 +83,7 @@ const VotingSystem = () => {
                     </div>
                     <ConditionalRender
                         condition={voteDisplayStyle === "scrolling"}
-                        returnComponent={<p>There are no votes in this system</p>}
+                        returnComponent={<VoteSystemGrid votes={votes} />}
                     >
                         <VoteSystemScroling
                             id={id}
