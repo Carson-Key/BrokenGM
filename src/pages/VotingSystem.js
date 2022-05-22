@@ -3,11 +3,10 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
-import VoteNavigation from '../components/VoteNavigation'
 import ConditionalRender from '../components/ConditionalRender'
-import VoteDecider from '../components/VoteDecider'
 // UI
 import Container from '../ui/Container'
+import VoteSystemScroling from '../ui/VoteSystemScroling'
 // Helpers
 import { getRealtimeDBOnce, getRealtimeDB } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'
@@ -66,28 +65,20 @@ const VotingSystem = () => {
                     condition={amountOfVotes !== 0}
                     returnComponent={<p>There are no votes in this system</p>}
                 >
-                    <VoteNavigation
+                    <VoteSystemScroling
                         id={id}
-                        currentVote={currentVote} 
-                        setCurrentVote={setCurrentVote} 
-                        amountOfVotes={amountOfVotes}
                         isAdmin={isAdmin}
-                        votes={votes} setVotes={setVotes}
-                        votingSystemObject={votingSystemObject} 
-                        setVotingSystemObject={setVotingSystemObject}
+                        voterKey={voterKey}
+                        currentVote={currentVote}
+                        setCurrentVote={setCurrentVote}
+                        amountOfVotes={amountOfVotes}
                         setAmountOfVotes={setAmountOfVotes}
-                    >
-                        <VoteDecider 
-                            votingSystemObject={votingSystemObject} 
-                            setVotingSystemObject={setVotingSystemObject}
-                            setVotes={setVotes}
-                            id={id}
-                            voterKey={voterKey}
-                            isAdmin={isAdmin}
-                            votes={votes}
-                            currentVote={currentVote}
-                        />
-                    </VoteNavigation>
+                        votes={votes}
+                        setVotes={setVotes}
+                        votingSystemObject={votingSystemObject}
+                        setVotingSystemObject={setVotingSystemObject}
+
+                    />
                 </ConditionalRender>
             </Container>
         </IsLoading>
