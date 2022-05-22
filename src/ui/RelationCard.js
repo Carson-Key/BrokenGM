@@ -11,7 +11,7 @@ const RelationCard = (props) => {
     const relationKeys = Object.keys(relation).sort()
 
     return (
-        <Card className="relative flex flex-col h-80">
+        <Card className="flex flex-col h-80">
             <CardTitle>
                 {name}
             </CardTitle>
