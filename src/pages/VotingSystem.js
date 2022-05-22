@@ -64,7 +64,7 @@ const VotingSystem = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="mt-auto flex flex-col">
+            <Container className="flex flex-col h-full">
                 <ConditionalRender
                     condition={amountOfVotes !== 0}
                     returnComponent={<p>There are no votes in this system</p>}
