@@ -11,11 +11,11 @@ const RelationCard = (props) => {
     const relationKeys = Object.keys(relation).sort()
 
     return (
-        <Card className="h-80">
+        <Card className="relative flex flex-col h-80">
             <CardTitle>
                 {name}
             </CardTitle>
-            <div className="my-3 mx-4 w-72 scrollbar-hide overflow-scroll h-64 divide-y">
+            <div className="mx-4 w-72 scrollbar-hide overflow-scroll divide-y">
                 <RelationOfCharacter
                     id={id}
                     isRelation={isRelation}
