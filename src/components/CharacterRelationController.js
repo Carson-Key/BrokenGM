@@ -18,7 +18,7 @@ const CharacterRelationController = (props) => {
                         changeRelationValue(
                             changeByValue, index, character, 
                             relations, setRelations,
-                            setNotification, id, isRelation
+                            setNotification, id, isRelation, setChangeByValue
                         )
                     }}
                 >
@@ -30,6 +30,7 @@ const CharacterRelationController = (props) => {
                 type="text" 
                 name="Change Relation" 
                 placeholder={relation[character]}
+                value={changeByValue}
                 onChange={(event) => {
                     setChangeByValue(parseInt(event.target.value))
                 }}
@@ -41,7 +42,7 @@ const CharacterRelationController = (props) => {
                         changeRelationValue(
                             (changeByValue * -1), index, character, 
                             relations, setRelations,
-                            setNotification, id, isRelation
+                            setNotification, id, isRelation, setChangeByValue
                         )
                     }}
                 >

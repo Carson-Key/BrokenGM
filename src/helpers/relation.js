@@ -24,13 +24,14 @@ export const reverseFormatCharacterName = (name) => {
     return joinedName
 }
 export const changeRelationValue = (
-    value, index, character, relations, setRelations, setNotification, id, isRelation
+    value, index, character, relations, setRelations, setNotification, id, isRelation, setChangeByValue
 ) => {
     if (!isNaN(value)) {
         let tempRelations = [...relations]
         tempRelations[index][character] = tempRelations[index][character] + value
     
         setRelations(tempRelations)
+        setChangeByValue("")
         updateDocument(
             "relations", 
             id, 
