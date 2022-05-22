@@ -24,13 +24,14 @@ export const reverseFormatCharacterName = (name) => {
     return joinedName
 }
 export const changeRelationValue = (
-    value, index, character, relations, setRelations, setNotification, id, isRelation
+    value, index, character, relations, setRelations, setNotification, id, isRelation, setChangeByValue
 ) => {
     if (!isNaN(value)) {
         let tempRelations = [...relations]
         tempRelations[index][character] = tempRelations[index][character] + value
     
         setRelations(tempRelations)
+        setChangeByValue("")
         updateDocument(
             "relations", 
             id, 
@@ -46,12 +47,13 @@ export const changeRelationValue = (
     }
 }
 export const addCharacterRelation = (
-    name, index, relations, setRelations, setNotification, id, isRelation
+    name, index, relations, setRelations, setNotification, id, isRelation, setNameToAdd
 ) => {
     let tempRelations = [...relations]
     tempRelations[index][reverseFormatCharacterName(name)] = 0
 
     setRelations(tempRelations)
+    setNameToAdd("")
     updateDocument(
         "relations", 
         id, 
@@ -61,12 +63,13 @@ export const addCharacterRelation = (
     )
 }
 export const addRelation = (
-    newRelation, relations, setRelations, setNotification, id, isRelation
+    newRelation, relations, setRelations, setNotification, id, isRelation, setNameToAdd
 ) => {
     let tempRelations = [...relations]
     tempRelations.push(newRelation)
 
     setRelations(tempRelations)
+    setNameToAdd("")
     updateDocument(
         "relations", 
         id, 

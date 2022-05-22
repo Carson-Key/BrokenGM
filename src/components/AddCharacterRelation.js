@@ -17,6 +17,7 @@ const AddCharacterRelation = (props) => {
                 <input 
                     className="border rounded-lg border-slate-400 text-center h-9 px-1 py-1 w-40 inline"
                     type="text" 
+                    value={nameToAdd}
                     name="Add Character"
                     placeholder="John Doe"
                     onChange={(event) => {
@@ -29,7 +30,7 @@ const AddCharacterRelation = (props) => {
                             addCharacterRelation(
                                 nameToAdd, index, 
                                 relations, setRelations, 
-                                setNotification, id, isRelation
+                                setNotification, id, isRelation, setNameToAdd
                             )
                         }
                     }

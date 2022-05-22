@@ -1,13 +1,15 @@
 // Packages
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { BsFillGrid3X3GapFill } from "react-icons/bs"
+import { CgScrollH } from "react-icons/cg";
 // Components
 import IsLoading from '../components/IsLoading'
-import VoteNavigation from '../components/VoteNavigation'
 import ConditionalRender from '../components/ConditionalRender'
-import VoteDecider from '../components/VoteDecider'
 // UI
 import Container from '../ui/Container'
+import VoteSystemScroling from '../ui/VoteSystemScroling'
+import VoteSystemGrid from '../ui/VoteSystemGrid'
 // Helpers
 import { getRealtimeDBOnce, getRealtimeDB } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'
@@ -23,6 +25,7 @@ const VotingSystem = () => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [voterKey, setVoterKey] = useState(null)
     const setUID = useState("")[1]
+    const [voteDisplayStyle, setVoteDisplayStyle] = useState("scrolling")
 
     useEffect(() => {
         setVotingSystemObject(getRealtimeDBOnce(
@@ -61,33 +64,41 @@ const VotingSystem = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="mt-auto flex">
+            <Container className="flex flex-col h-full">
                 <ConditionalRender
                     condition={amountOfVotes !== 0}
                     returnComponent={<p>There are no votes in this system</p>}
                 >
-                    <VoteNavigation
-                        id={id}
-                        currentVote={currentVote} 
-                        setCurrentVote={setCurrentVote} 
-                        amountOfVotes={amountOfVotes}
-                        isAdmin={isAdmin}
-                        votes={votes} setVotes={setVotes}
-                        votingSystemObject={votingSystemObject} 
-                        setVotingSystemObject={setVotingSystemObject}
-                        setAmountOfVotes={setAmountOfVotes}
+                    <div className="my-4 ml-5 divide-x">
+                        <button className="rounded-l-lg bg-gray-100 px-3 py-2" onClick={() => {
+                            setVoteDisplayStyle("scrolling")
+                        }}>
+                            <CgScrollH className="text-xl" />
+                        </button>
+                        <button className="rounded-r-lg bg-gray-100 px-3 py-2" onClick={() => {
+                            setVoteDisplayStyle("grid")
+                        }}>
+                            <BsFillGrid3X3GapFill className="text-xl" />
+                        </button>
+                    </div>
+                    <ConditionalRender
+                        condition={voteDisplayStyle === "scrolling"}
+                        returnComponent={<VoteSystemGrid votes={votes} />}
                     >
-                        <VoteDecider 
-                            votingSystemObject={votingSystemObject} 
-                            setVotingSystemObject={setVotingSystemObject}
-                            setVotes={setVotes}
+                        <VoteSystemScroling
                             id={id}
-                            voterKey={voterKey}
                             isAdmin={isAdmin}
-                            votes={votes}
+                            voterKey={voterKey}
                             currentVote={currentVote}
+                            setCurrentVote={setCurrentVote}
+                            amountOfVotes={amountOfVotes}
+                            setAmountOfVotes={setAmountOfVotes}
+                            votes={votes}
+                            setVotes={setVotes}
+                            votingSystemObject={votingSystemObject}
+                            setVotingSystemObject={setVotingSystemObject}
                         />
-                    </VoteNavigation>
+                    </ConditionalRender>
                 </ConditionalRender>
             </Container>
         </IsLoading>

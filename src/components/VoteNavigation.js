@@ -17,7 +17,7 @@ const VotingSystem = (props) => {
     } = props
 
     return (
-        <>
+        <section className="flex">
             <ConditionalRender
                 condition={currentVote !== 0}
                 returnComponent={
@@ -71,7 +71,7 @@ const VotingSystem = (props) => {
                     setCurrentVote(currentVote + 1)
                 }}><MdKeyboardArrowRight /></button>
             </ConditionalRender>
-        </>
+        </section>
 	)
 }
 

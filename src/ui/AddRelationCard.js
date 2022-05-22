@@ -25,6 +25,7 @@ const RelationCard = (props) => {
                             type="text" 
                             name="Add Character"
                             placeholder="John Doe"
+                            value={nameToAdd}
                             onChange={(event) => {
                                 setNameToAdd(event.target.value)
                             }}
@@ -37,7 +38,7 @@ const RelationCard = (props) => {
                                         addRelation(
                                             {name: nameToAdd},
                                             relations, setRelations, 
-                                            setNotification, id, isRelation
+                                            setNotification, id, isRelation, setNameToAdd
                                         )
                                     }
                                 }
@@ -51,7 +52,7 @@ const RelationCard = (props) => {
                                         addRelation(
                                             {...playerCharacters, name: nameToAdd},
                                             relations, setRelations, 
-                                            setNotification, id, isRelation
+                                            setNotification, id, isRelation, setNameToAdd
                                         )
                                     }
                                 }
