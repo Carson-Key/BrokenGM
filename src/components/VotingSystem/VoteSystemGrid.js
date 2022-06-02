@@ -11,6 +11,7 @@ const VoteSystemGrid = (props) => {
                     if (vote.locked  === true) {
                         return (
                             <VoteGrid
+                                key={i}
                                 votes={votes}
                                 currentVote={i}
                             />
