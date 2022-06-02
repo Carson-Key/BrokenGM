@@ -46,7 +46,7 @@ const Relation = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1 mx-auto">
+            <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 {
                     relations.map((relation, i) => {
                         let relationMinusName = {...relation}
