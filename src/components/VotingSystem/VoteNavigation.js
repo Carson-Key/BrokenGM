@@ -2,10 +2,10 @@
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 // Components
-import ConditionalRender from '../components/ConditionalRender';
+import ConditionalRender from '../ConditionalRender';
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
-import { updateRealtimeDB } from '../helpers/database'
+import { returnChildOfObject } from '../../helpers/misc'
+import { updateRealtimeDB } from '../../helpers/database'
 
 const VotingSystem = (props) => {
     const { 

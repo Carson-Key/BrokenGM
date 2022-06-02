@@ -1,14 +1,14 @@
 // Packages
 import { useState, useEffect } from 'react'
-// Components
+// VotingSystem
+import IndividualVote from './IndividualVote'
 import VoteResultsUnlocked from './VoteResultsUnlocked'
-import ConditionalRender from './ConditionalRender'
-import IsLoading from './IsLoading'
-// UI
-import IndividualVote from '../ui/IndividualVote'
+// Components
+import ConditionalRender from '../ConditionalRender'
+import IsLoading from '../IsLoading'
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
-import { getRealtimeDB, updateRealtimeDB, turnListenerOff } from '../helpers/database'
+import { returnChildOfObject } from '../../helpers/misc'
+import { getRealtimeDB, updateRealtimeDB, turnListenerOff } from '../../helpers/database'
 
 const UnLockedVote = (props) => {
     const { currentVote, id, isAdmin, voterKey, votes, setVotes, votingSystemObject, setVotingSystemObject } = props

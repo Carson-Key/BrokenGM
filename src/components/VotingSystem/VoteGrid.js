@@ -1,11 +1,10 @@
-// Components
-import VoteResults from '../components/VoteResults'
-// UI
+// VotingSystem
+import VoteResults from './VoteResults'
 import IndividualArchivedVote from './IndividualArchivedVote'
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
+import { returnChildOfObject } from '../../helpers/misc'
 
-const Vote = (props) => {
+const VoteGrid = (props) => {
     const { currentVote, votes } = props
     const votingSystemArray = Object.keys(returnChildOfObject(
         votes, 
@@ -18,7 +17,7 @@ const Vote = (props) => {
     ) : {})
 
     return (
-        <section className="mx-auto">
+        <section className="mx-2 my-2 border-2 py-1 px-2 border-black rounded-lg w-96 h-96">
             <h2 className="text-center">{
                 returnChildOfObject(
                     votes, 
@@ -30,7 +29,7 @@ const Vote = (props) => {
                 votes={votes}
                 currentVote={currentVote}
             />
-            <section className="flex flex-col my-4 justify-center divide-y scrollbar-hide overflow-scroll">
+            <section className="grid grid-cols-3 my-4 justify-center scrollbar-hide overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                         return null
@@ -50,4 +49,4 @@ const Vote = (props) => {
 	)
 }
 
-export default Vote
+export default VoteGrid

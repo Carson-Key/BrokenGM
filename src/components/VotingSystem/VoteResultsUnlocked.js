@@ -1,10 +1,10 @@
 // Packages
 import { useEffect, useState } from 'react'
-// UI
-import IndividualArchivedVoteDecision from "../ui/IndividualTextVoteDecision"
+// VotingSystem
+import IndividualArchivedVoteDecision from "./IndividualTextVoteDecision"
 // Helpers
-import { defaultAccessArray, getHighestValueKey, returnChildOfObject } from '../helpers/misc'
-import { formatCharacterName } from '../helpers/voting'
+import { defaultAccessArray, getHighestValueKey, returnChildOfObject } from '../../helpers/misc'
+import { formatCharacterName } from '../../helpers/voting'
 
 const VoteResultsUnlocked = (props) => {
     const { votes, currentVote } = props

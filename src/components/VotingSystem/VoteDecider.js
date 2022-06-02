@@ -1,10 +1,10 @@
+// VotingSystem
+import UnLockedVote from './UnLockedVote'
+import Vote from './Vote'
 // Components
-import ConditionalRender from '../components/ConditionalRender'
-import UnLockedVote from '../components/UnLockedVote'
-// UI
-import Vote from '../ui/Vote'
+import ConditionalRender from '../ConditionalRender'
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
+import { returnChildOfObject } from '../../helpers/misc'
 
 const VoteDecider = (props) => {
     const { votes, currentVote, id, isAdmin, voterKey, setVotes, votingSystemObject, setVotingSystemObject } = props

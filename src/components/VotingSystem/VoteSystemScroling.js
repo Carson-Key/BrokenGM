@@ -1,6 +1,6 @@
-// Components
-import VoteNavigation from '../components/VoteNavigation'
-import VoteDecider from '../components/VoteDecider'
+// VotingSystem
+import VoteNavigation from './VoteNavigation'
+import VoteDecider from './VoteDecider'
 
 const VotingSystemScroling = (props) => {
     const { 

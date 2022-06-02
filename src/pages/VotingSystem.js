@@ -6,10 +6,9 @@ import { CgScrollH } from "react-icons/cg";
 // Components
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
+import { VoteSystemScroling, VoteSystemGrid } from '../components/VotingSystem'
 // UI
 import Container from '../ui/Container'
-import VoteSystemScroling from '../ui/VoteSystemScroling'
-import VoteSystemGrid from '../ui/VoteSystemGrid'
 // Helpers
 import { getRealtimeDBOnce, getRealtimeDB } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'

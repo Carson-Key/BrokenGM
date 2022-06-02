@@ -1,8 +1,8 @@
-// UI
+// VotingSystem
 import IndividualArchivedVoteDecision from "./IndividualTextVoteDecision"
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
-import { formatCharacterName } from '../helpers/voting'
+import { returnChildOfObject } from '../../helpers/misc'
+import { formatCharacterName } from '../../helpers/voting'
 
 const IndividualArchivedVote = (props) => {
     const { votes, currentVote, vote } = props

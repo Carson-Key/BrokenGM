@@ -1,9 +1,9 @@
 // Packages
 import { useState, useEffect } from "react"
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
-import { formatCharacterName, reverseFormatCharacterName } from '../helpers/voting'
-import { updateRealtimeDB } from '../helpers/database'
+import { returnChildOfObject } from '../../helpers/misc'
+import { formatCharacterName, reverseFormatCharacterName } from '../../helpers/voting'
+import { updateRealtimeDB } from '../../helpers/database'
 
 const IndividualEditVoteDecision = (props) => {
     const { vote, colors, votes, id, currentVote } = props

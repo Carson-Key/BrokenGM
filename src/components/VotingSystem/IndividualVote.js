@@ -1,10 +1,11 @@
-// UI
+// VotingSystem
 import IndividualTextVoteDecision from "./IndividualTextVoteDecision"
 import IndividualEditVoteDecision from "./IndividualEditVoteDecision"
+// Components
+import ConditionalRender from "../ConditionalRender"
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
-import { formatCharacterName } from '../helpers/voting'
-import ConditionalRender from "../components/ConditionalRender"
+import { returnChildOfObject } from '../../helpers/misc'
+import { formatCharacterName } from '../../helpers/voting'
 
 const IndividualVote = (props) => {
     const { votes, vote, voterKey, isAdmin, id, currentVote } = props
