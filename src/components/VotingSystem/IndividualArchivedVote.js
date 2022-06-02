@@ -1,7 +1,7 @@
 // Packages
 import { useState } from "react"
 // VotingSystem
-import IndividualArchivedVoteDecision from "./IndividualTextVoteDecision"
+import IndividualTextVoteDecision from "./IndividualTextVoteDecision"
 // Helpers
 import { returnChildOfObject } from '../../helpers/misc'
 import { formatCharacterName } from '../../helpers/voting'
@@ -15,7 +15,7 @@ const IndividualArchivedVote = (props) => {
             <h3 className="font-bold">
                 {formatCharacterName(vote)}
             </h3>
-            <IndividualArchivedVoteDecision vote={vote}>
+            <IndividualTextVoteDecision vote={vote}>
                 {formatCharacterName(returnChildOfObject(
                         votes, 
                         [currentVote, vote], 
@@ -25,7 +25,7 @@ const IndividualArchivedVote = (props) => {
                         [currentVote, vote], 
                         "Loading..."
                     ) : "unknown")}
-            </IndividualArchivedVoteDecision>
+            </IndividualTextVoteDecision>
         </div>
 	)
 }
