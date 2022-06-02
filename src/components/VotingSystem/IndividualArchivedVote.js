@@ -8,7 +8,7 @@ import { formatCharacterName } from '../../helpers/voting'
 
 const IndividualArchivedVote = (props) => {
     const { votes, currentVote, vote, className } = props
-    const classNameState = useState(className ? "" + className : "")[0]
+    const classNameState = useState(className ? " " + className : "")[0]
 
     return (
         <div className={"text-center py-2 px-4 mx-2" + classNameState}>
