@@ -1,7 +1,7 @@
 // Packages
 import { useEffect, useState } from 'react'
 // VotingSystem
-import IndividualArchivedVoteDecision from "./IndividualTextVoteDecision"
+import IndividualTextVoteDecision from "./IndividualTextVoteDecision"
 // Helpers
 import { defaultAccessArray, getHighestValueKey, returnChildOfObject } from '../../helpers/misc'
 import { formatCharacterName } from '../../helpers/voting'
@@ -40,7 +40,7 @@ const VoteResults = (props) => {
     return (
         <section className="text-center my-2">
             <h3 className="font-bold">Result</h3>
-            <IndividualArchivedVoteDecision
+            <IndividualTextVoteDecision
                 colors={{
                     yes: "text-white bg-green-700",
                     no: "text-white bg-red-700",
@@ -49,7 +49,7 @@ const VoteResults = (props) => {
                 }}
             >
                 {formatCharacterName(voteResult)}
-            </IndividualArchivedVoteDecision>
+            </IndividualTextVoteDecision>
         </section>
 	)
 }
