@@ -1,10 +1,10 @@
-// Components
-import CharacterRelationController from '../components/CharacterRelationController'
-import ConditionalRender from '../components/ConditionalRender'
-// UI
+// Relations
+import CharacterRelationController from './CharacterRelationController'
 import CharacterRelationIndicator from './CharacterRelationIndicator'
+// Components
+import ConditionalRender from '../ConditionalRender'
 // Helpers
-import { formatCharacterName } from '../helpers/relation'
+import { formatCharacterName } from '../../helpers/relation'
 
 const RelationOfCharacter = (props) => {
     const { relationKeys, relation, isAdmin, setRelations, index, relations, id, isRelation } = props

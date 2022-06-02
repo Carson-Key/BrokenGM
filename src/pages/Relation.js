@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
+import { RelationCard, AddRelationCard } from '../components/Relations'
 // UI
 import Container from "../ui/Container"
-import RelationCard from '../ui/RelationCard'
-import AddRelationCard from '../ui/AddRelationCard'
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers

@@ -1,12 +1,12 @@
 // Packages
 import { useState, useContext } from 'react'
 // UI
-import Card from './Card'
-import CardTitle from './CardTitle'
+import Card from '../../ui/Card'
+import CardTitle from '../../ui/CardTitle'
 // Contexts
-import { NotificationContext } from '../contexts/Notification'
+import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { addRelation } from '../helpers/relation'
+import { addRelation } from '../../helpers/relation'
 
 const RelationCard = (props) => {
     const { id, setRelations, relations, isRelation, playerCharacters } = props

@@ -1,8 +1,9 @@
-// Contexts
-import { NotificationContext } from '../contexts/Notification'
-// Helpers
+// Packages
 import { useState, useContext } from "react"
-import { changeRelationValue } from "../helpers/relation"
+// Contexts
+import { NotificationContext } from '../../contexts/Notification'
+// Helpers
+import { changeRelationValue } from "../../helpers/relation"
 
 const CharacterRelationController = (props) => {
     const { id, index, character, relation, setRelations, relations, isRelation } = props
