@@ -2,13 +2,11 @@
 import { getDocument } from "./firestore"
 
 export const getPlayerObject = (players, setNotification) => {
-    const returnObject = {}
+    let returnObject = {}
 
     players.forEach((player) => {
-        getDocument("users", player, setNotification).then((data) => {
-            const userData = data.data()
-            returnObject[player] = {name: userData.displayName, id: player}
-        })
+        const userdata = getDocument("users", player, setNotification)
+        returnObject = {...returnObject, [player]: {name: userdata.displayName, id: player}}
     })
 
     return returnObject

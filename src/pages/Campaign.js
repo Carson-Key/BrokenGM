@@ -35,10 +35,7 @@ const Campaign = () => {
             getCurrentUser(setUID, (uid) => {
                 if (campaignData.admins.includes(uid)) {
                     setIsAdmin(true)
-                    console.log(getPlayerObject(campaignData.players, setNotification))
-                    setPlayers(
-                        getPlayerObject(campaignData.players, setNotification)
-                    )
+                    setPlayers(getPlayerObject(campaignData.players, setNotification))
                 }
             })
             setIsLoading(false)
