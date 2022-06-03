@@ -1,5 +1,5 @@
 const Relations = (props) => {
-    const { relations } = props
+    const { relations, isAdmin, uid, players } = props
 
     return (
         relations.map((relation, i) => {

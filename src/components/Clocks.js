@@ -1,5 +1,5 @@
 const Clocks = (props) => {
-    const { clocks } = props
+    const { clocks, isAdmin, uid, players } = props
 
     return (
         clocks.map((clock, i) => {

@@ -45,9 +45,24 @@ const Campaign = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <Container>
-                <Clocks clocks={clocks} />
-                <Relations relations={relations} />
-                <VotingSystems votingSystems={votingSystems} />
+                <Clocks 
+                    clocks={clocks} 
+                    isAdmin={isAdmin}
+                    uid={uid}
+                    players={players}
+                />
+                <Relations 
+                    relations={relations} 
+                    isAdmin={isAdmin}
+                    uid={uid}
+                    players={players}
+                />
+                <VotingSystems 
+                    votingSystems={votingSystems} 
+                    isAdmin={isAdmin}
+                    uid={uid}
+                    players={players}
+                />
             </Container>
         </IsLoading>
     )

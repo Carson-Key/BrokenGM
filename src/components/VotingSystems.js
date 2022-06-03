@@ -1,5 +1,5 @@
 const VotingSystems = (props) => {
-    const { votingSystems } = props
+    const { votingSystems, isAdmin, uid, players } = props
 
     return (
         votingSystems.map((votingSystem, i) => {
