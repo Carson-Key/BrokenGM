@@ -12,10 +12,12 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
+import IsLoading from '../components/IsLoading'
 
 const Campaign = () => {
     const { id } = useParams()
     const setNotification = useContext(NotificationContext)[1]
+    const [isLoading, setIsLoading] = useState(true)
     const [isAdmin, setIsAdmin] = useState(false)
     const [uid, setUID] = useState("")
     const [clocks, setClocks] = useState([])
@@ -35,15 +37,18 @@ const Campaign = () => {
                     setPlayers(campaignData.players)
                 }
             })
+            setIsLoading(false)
         })
     }, [id, setNotification])
 
     return (
-        <Container>
-            <Clocks clocks={clocks} />
-            <Relations relations={relations} />
-            <VotingSystems votingSystems={votingSystems} />
-        </Container>
+        <IsLoading isLoading={isLoading}>
+            <Container>
+                <Clocks clocks={clocks} />
+                <Relations relations={relations} />
+                <VotingSystems votingSystems={votingSystems} />
+            </Container>
+        </IsLoading>
     )
 }
 
