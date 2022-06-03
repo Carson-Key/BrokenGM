@@ -42,7 +42,7 @@ const Campaign = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container>
+            <Container className="flex justify-evenly">
                 <CampaignLinkCard 
                     items={clocks} 
                     isAdmin={isAdmin}
