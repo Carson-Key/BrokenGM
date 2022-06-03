@@ -5,6 +5,7 @@ import { useEffect, useContext, useState } from 'react'
 import Clocks from '../components/Clocks'
 import Relations from '../components/Relations'
 import VotingSystems from '../components/VotingSystems'
+import IsLoading from '../components/IsLoading'
 // UI
 import Container from '../ui/Container'
 // Contexts
@@ -12,7 +13,7 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
-import IsLoading from '../components/IsLoading'
+import { getPlayerObject } from '../helpers/campaign'
 
 const Campaign = () => {
     const { id } = useParams()
@@ -34,7 +35,10 @@ const Campaign = () => {
             getCurrentUser(setUID, (uid) => {
                 if (campaignData.admins.includes(uid)) {
                     setIsAdmin(true)
-                    setPlayers(campaignData.players)
+                    console.log(getPlayerObject(campaignData.players, setNotification))
+                    setPlayers(
+                        getPlayerObject(campaignData.players, setNotification)
+                    )
                 }
             })
             setIsLoading(false)

@@ -7,7 +7,7 @@ export const getPlayerObject = (players, setNotification) => {
     players.forEach((player) => {
         getDocument("users", player, setNotification).then((data) => {
             const userData = data.data()
-            
+            returnObject[player] = {name: userData.displayName, id: player}
         })
     })
 
