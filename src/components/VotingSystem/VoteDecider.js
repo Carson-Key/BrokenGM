@@ -1,6 +1,5 @@
 // VotingSystem
 import UnLockedVote from './UnLockedVote'
-import Vote from './Vote'
 // Components
 import ConditionalRender from '../ConditionalRender'
 // Helpers
@@ -11,24 +10,9 @@ const VoteDecider = (props) => {
 
     return (
         <ConditionalRender
-            condition={returnChildOfObject(votes, [currentVote, "locked"], false)}
-            returnComponent={
-                <UnLockedVote
-                    votingSystemObject={votingSystemObject} 
-                    setVotingSystemObject={setVotingSystemObject}
-                    setVotes={setVotes}
-                    votes={votes}
-                    voterKey={voterKey}
-                    isAdmin={isAdmin}
-                    id={id}
-                    currentVote={currentVote}
-                />
-            }
+            condition={returnChildOfObject(votes, [currentVote, "locked"], true)}
         >
-            <Vote 
-                votes={votes}
-                currentVote={currentVote}
-            />
+            <></>
         </ConditionalRender>
 	)
 }

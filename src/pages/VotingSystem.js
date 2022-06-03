@@ -1,12 +1,10 @@
 // Packages
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { BsFillGrid3X3GapFill } from "react-icons/bs"
-import { CgScrollH } from "react-icons/cg";
 // Components
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
-import { VoteSystemScroling, VoteSystemGrid } from '../components/VotingSystem'
+import { ActiveVotes, VoteSystemGrid } from '../components/VotingSystem'
 // UI
 import Container from '../ui/Container'
 // Helpers
@@ -68,23 +66,23 @@ const VotingSystem = () => {
                     condition={amountOfVotes !== 0}
                     returnComponent={<p>There are no votes in this system</p>}
                 >
-                    <div className="my-4 ml-5 divide-x">
+                    <div className="my-4 divide-x mx-auto">
                         <button className="rounded-l-lg bg-gray-100 px-3 py-2" onClick={() => {
                             setVoteDisplayStyle("scrolling")
                         }}>
-                            <CgScrollH className="text-xl" />
+                            <h3>Active Votes</h3>
                         </button>
                         <button className="rounded-r-lg bg-gray-100 px-3 py-2" onClick={() => {
                             setVoteDisplayStyle("grid")
                         }}>
-                            <BsFillGrid3X3GapFill className="text-xl" />
+                            <h3>Past Votes</h3>
                         </button>
                     </div>
                     <ConditionalRender
                         condition={voteDisplayStyle === "scrolling"}
                         returnComponent={<VoteSystemGrid votes={votes} />}
                     >
-                        <VoteSystemScroling
+                        <ActiveVotes
                             id={id}
                             isAdmin={isAdmin}
                             voterKey={voterKey}

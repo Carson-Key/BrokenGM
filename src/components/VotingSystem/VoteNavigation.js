@@ -1,11 +1,10 @@
 // Packages
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
+import { useState } from "react"
 // Components
 import ConditionalRender from '../ConditionalRender';
 // Helpers
-import { returnChildOfObject } from '../../helpers/misc'
-import { updateRealtimeDB } from '../../helpers/database'
 
 const VotingSystem = (props) => {
     const { 
@@ -13,62 +12,36 @@ const VotingSystem = (props) => {
         currentVote, setCurrentVote, 
         amountOfVotes, setAmountOfVotes,
         isAdmin, votes, setVotes,
-        votingSystemObject, setVotingSystemObject
+        votingSystemObject, setVotingSystemObject, 
+        activeVoteIndexes
     } = props
+    const [activeVoteIndex, setActiveVoteIndex] = useState(0)
 
     return (
-        <section className="flex">
+        <section className="flex justify-center">
             <ConditionalRender
-                condition={currentVote !== 0}
+                condition={activeVoteIndex !== activeVoteIndexes.length - 1}
                 returnComponent={
                     <button disabled className="w-8 mr-2"></button>
                 }
             >
                 <button className="text-center w-8 mr-2" onClick={() => {
-                    setCurrentVote(currentVote - 1)
+                    setActiveVoteIndex(activeVoteIndex + 1)
+                    setCurrentVote(activeVoteIndexes[activeVoteIndex + 1])
                 }}><MdKeyboardArrowLeft /></button>
             </ConditionalRender>
-            {children}
+                <div className="flex-col justify-center">
+                    {children}
+                </div>
             <ConditionalRender
-                condition={currentVote !== amountOfVotes - 1}
+                condition={activeVoteIndex !== 0}
                 returnComponent={
-                    <ConditionalRender
-                        condition={isAdmin && returnChildOfObject(
-                            votes, 
-                            [currentVote, "locked"], 
-                            {}
-                        )}
-                        returnComponent={
-                            <button disabled className="w-8 mr-2"></button>
-                        }
-                    >
-                        <button className="text-center w-8 ml-2" onClick={() => {
-                            const newData = {
-                                description: "",
-                                locked: false,
-                                ...returnChildOfObject(
-                                    votingSystemObject, 
-                                    ["defaultVoters"], 
-                                    {}
-                                )
-                            }
-                            const newVotes = {
-                                ...votes,
-                                [amountOfVotes]: newData
-                            }
-                            setVotingSystemObject({
-                                ...votingSystemObject, 
-                                votes: newVotes
-                            })
-                            setVotes(newVotes)
-                            setAmountOfVotes(amountOfVotes + 1)
-                            updateRealtimeDB(newData, ["votingsystems/" + id + "/votes/" + amountOfVotes + "/"])
-                        }}><IoAddCircleOutline /></button>
-                    </ConditionalRender>
+                    <button disabled className="w-8 mr-2"></button>
                 }
             >
                 <button className="text-center w-8 ml-2" onClick={() => {
-                    setCurrentVote(currentVote + 1)
+                    setActiveVoteIndex(activeVoteIndex - 1)
+                    setCurrentVote(activeVoteIndexes[activeVoteIndex - 1])
                 }}><MdKeyboardArrowRight /></button>
             </ConditionalRender>
         </section>
