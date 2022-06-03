@@ -6,6 +6,7 @@ import Relation from '../pages/Relation'
 import Login from '../pages/Login'
 import Clock from '../pages/Clock'
 import Campaigns from '../pages/Campaigns'
+import Campaign from '../pages/Campaign'
 import VotingSystem from '../pages/VotingSystem'
 // Components
 import ConditionalRender from './ConditionalRender'
@@ -35,6 +36,7 @@ const PageRoutes = () => {
                     <Route path='/clock/:id' element={<Clock />} />
                     <Route path='/relation/:id' element={<Relation />} />
                     <Route path='/campaigns' element={<Campaigns />} />
+                    <Route path='/campaign/:id' element={<Campaign />} />
                     <Route path='/votingsystem/:id' element={<VotingSystem />} />
                     <Route path='/' element={<Campaigns />} />
                 </Routes>
