@@ -1,18 +1,12 @@
 // Packages
 import { useState, useEffect } from "react"
 // Helpers
-import { returnChildOfObject } from '../../helpers/misc'
 import { formatCharacterName, reverseFormatCharacterName } from '../../helpers/voting'
 import { updateRealtimeDB } from '../../helpers/database'
 
 const IndividualEditVoteDecision = (props) => {
     const { vote, colors, votes, id, currentVote } = props
     const [className, setClasseName] = useState("")
-    const [voteForColor, setVoteForColor] = useState(returnChildOfObject(
-        votes, 
-        [vote], 
-        "Loading..."
-    ))
     const colorObject = useState(colors ? colors : {
         yes: "text-white bg-green-400 placeholder:text-white",
         no: "text-white bg-red-400 placeholder:text-white",
@@ -21,16 +15,16 @@ const IndividualEditVoteDecision = (props) => {
     })[0]
 
     useEffect(() => {
-        if (voteForColor.toLowerCase() === "yes") {
+        if (votes[vote].toLowerCase() === "yes") {
             setClasseName(colorObject.yes)
-        } else if (voteForColor.toLowerCase() === "no") {
+        } else if (votes[vote].toLowerCase() === "no") {
             setClasseName(colorObject.no)
-        } else if (voteForColor.toLowerCase() === "abstain" || voteForColor.toLowerCase() === "" || voteForColor.toLowerCase() === '') {
+        } else if (votes[vote].toLowerCase() === "abstain" || votes[vote].toLowerCase() === "" || votes[vote].toLowerCase() === '') {
             setClasseName(colorObject.none)
         } else {
             setClasseName(colorObject.default)
         }
-    }, [voteForColor, colorObject])
+    }, [colorObject, votes, vote])
 
     return (
         <input 
@@ -41,7 +35,6 @@ const IndividualEditVoteDecision = (props) => {
             value={formatCharacterName(votes[vote])}
             onChange={(event) => {
                 const newData = reverseFormatCharacterName(event.target.value)
-                setVoteForColor(newData)
                 updateRealtimeDB(newData, ["votingsystems/" + id + "/votes/" + currentVote + "/" + vote + "/"])
             }}
         />
