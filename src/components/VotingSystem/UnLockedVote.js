@@ -50,11 +50,6 @@ const UnLockedVote = (props) => {
                             type="text"
                             name="description" 
                             placeholder="description"
-                            value={returnChildOfObject(
-                                votesListened, 
-                                ["description"], 
-                                "Loading..."
-                            )}
                             onChange={(event) => {
                                 updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/description/"])
                             }}

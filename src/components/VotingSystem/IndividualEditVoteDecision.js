@@ -38,11 +38,7 @@ const IndividualEditVoteDecision = (props) => {
             type="text"
             name={formatCharacterName(vote) + "'s vote"}
             placeholder="Type Your Vote Here"
-            value={formatCharacterName(returnChildOfObject(
-                votes, 
-                [vote], 
-                "Loading..."
-            ))}
+            value={formatCharacterName(votes[vote])}
             onChange={(event) => {
                 const newData = reverseFormatCharacterName(event.target.value)
                 setVoteForColor(newData)
