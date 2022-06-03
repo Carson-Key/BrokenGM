@@ -7,7 +7,7 @@ const Campaigns = () => {
             noCardText="You Don't Have Any Campaigns"
             cardInnerText="To Campaign page"
             docID="campaigns"
-            toPath="campaigns"
+            toPath="campaign"
         />
     )
 }
