@@ -9,7 +9,7 @@ const VotingSystem = (props) => {
     const [activeVoteIndex, setActiveVoteIndex] = useState(0)
 
     return (
-        <section className="flex justify-center">
+        <section className="flex justify-between w-screen">
             <ConditionalRender
                 condition={activeVoteIndex !== activeVoteIndexes.length - 1}
                 returnComponent={
