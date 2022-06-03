@@ -73,15 +73,7 @@ const ActiveVotes = (props) => {
                 }
             >
                 <VoteNavigation
-                    id={id}
-                    currentVote={currentVote} 
-                    setCurrentVote={setCurrentVote} 
-                    amountOfVotes={amountOfActiveVotes}
-                    isAdmin={isAdmin}
-                    votes={activeVotes} setVotes={setActiveVotes}
-                    votingSystemObject={votingSystemObject} 
-                    setVotingSystemObject={setVotingSystemObject}
-                    setAmountOfVotes={setAmountOfActiveVotes}
+                    setCurrentVote={setCurrentVote}
                     activeVoteIndexes={activeVoteIndexes}
                 >
                     <UnLockedVote

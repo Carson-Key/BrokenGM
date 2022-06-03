@@ -1,20 +1,11 @@
 // Packages
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { useState } from "react"
 // Components
 import ConditionalRender from '../ConditionalRender';
-// Helpers
 
 const VotingSystem = (props) => {
-    const { 
-        id, children, 
-        currentVote, setCurrentVote, 
-        amountOfVotes, setAmountOfVotes,
-        isAdmin, votes, setVotes,
-        votingSystemObject, setVotingSystemObject, 
-        activeVoteIndexes
-    } = props
+    const { children, setCurrentVote, activeVoteIndexes } = props
     const [activeVoteIndex, setActiveVoteIndex] = useState(0)
 
     return (
