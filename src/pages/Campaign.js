@@ -2,9 +2,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useContext, useState } from 'react'
 // Components
-import Clocks from '../components/Clocks'
-import Relations from '../components/Relations'
-import VotingSystems from '../components/VotingSystems'
+import CampaignLinkCard from '../components/CampaignLinkCard'
 import IsLoading from '../components/IsLoading'
 // UI
 import Container from '../ui/Container'
@@ -45,20 +43,20 @@ const Campaign = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <Container>
-                <Clocks 
-                    clocks={clocks} 
+                <CampaignLinkCard 
+                    items={clocks} 
                     isAdmin={isAdmin}
                     uid={uid}
                     players={players}
                 />
-                <Relations 
-                    relations={relations} 
+                <CampaignLinkCard 
+                    items={relations} 
                     isAdmin={isAdmin}
                     uid={uid}
                     players={players}
                 />
-                <VotingSystems 
-                    votingSystems={votingSystems} 
+                <CampaignLinkCard 
+                    items={votingSystems} 
                     isAdmin={isAdmin}
                     uid={uid}
                     players={players}
