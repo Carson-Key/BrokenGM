@@ -8,7 +8,7 @@ import { fireBaseError } from './notifications'
 
 async function createUserEntry(user, setNotification) {
 	let userDoc = await getDocument("users", user.uid)
-	setDocument("users", user.uid, {clocks: [], relations: [], campaigns: [], votingsystems: []}, setNotification, !userDoc)
+	setDocument("users", user.uid, {campaigns: [], displayName: user.displayName}, setNotification, !userDoc)
 }
 
 export const getCurrentUser = (setState, functionOnUserLoad = () => {}) => {
