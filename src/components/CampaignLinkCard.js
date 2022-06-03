@@ -5,13 +5,14 @@ import ConditionalRender from './ConditionalRender'
 // UI
 import Card from '../ui/Card'
 import CardTitle from '../ui/CardTitle'
+import GenericLinkCard from '../ui/GenericLinkCard'
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from '../helpers/firestore'
 
 const CampaignLinkCard = (props) => {
-    const { items, isAdmin, uid, players, docID } = props
+    const { items, isAdmin, uid, players, docID, playerBody, path } = props
     const setNotification = useContext(NotificationContext)[1]
     const [itemObject, setItemObject] = useState({name: "Loading..."})
 
@@ -24,17 +25,20 @@ const CampaignLinkCard = (props) => {
 
             return (
                 <ConditionalRender
+                    key={i}
                     condition={isAdmin}
                     returnComponent={
-                        <Card key={i}>
-                            <CardTitle>{itemObject.name}</CardTitle>
-                            <p>This is Item: {item}</p>
-                        </Card>
+                        <GenericLinkCard 
+                            key={i} 
+                            title={itemObject.name} 
+                            linkPath={"/" + path + "/" + item} 
+                            innerText={playerBody}
+                        />
                     }
                 >
-                    <Card key={i}>
+                    <Card>
                         <CardTitle>{itemObject.name}</CardTitle>
-                        <p>This is Item: {item}</p>
+                        <p>You are admin</p>
                     </Card>
                 </ConditionalRender>
             )

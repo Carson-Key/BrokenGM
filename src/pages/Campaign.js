@@ -44,22 +44,31 @@ const Campaign = () => {
         <IsLoading isLoading={isLoading}>
             <Container className="flex justify-evenly">
                 <CampaignLinkCard 
+                    docID="clocks"
+                    path="clock"
                     items={clocks} 
                     isAdmin={isAdmin}
                     uid={uid}
                     players={players}
+                    playerBody="To Clock"
                 />
                 <CampaignLinkCard 
+                    docID="relations"
+                    path="relation"
                     items={relations} 
                     isAdmin={isAdmin}
                     uid={uid}
                     players={players}
+                    playerBody="To Relation"
                 />
                 <CampaignLinkCard 
+                    docID="votingsystems"
+                    path="votingsystem"
                     items={votingSystems} 
                     isAdmin={isAdmin}
                     uid={uid}
                     players={players}
+                    playerBody="To Voting System"
                 />
             </Container>
         </IsLoading>
