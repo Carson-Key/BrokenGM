@@ -1,6 +1,9 @@
 // VotingSystem
 import VoteResults from './VoteResults'
 import IndividualArchivedVote from './IndividualArchivedVote'
+// UI
+import Card from '../../ui/Card'
+import CardTitle from '../../ui/CardTitle'
 // Helpers
 import { returnChildOfObject } from '../../helpers/misc'
 
@@ -17,19 +20,19 @@ const VoteGrid = (props) => {
     ) : {})
 
     return (
-        <section className="mx-2 my-2 border-2 py-1 px-2 border-black rounded-lg w-96 h-96">
-            <h2 className="text-center">{
+        <Card className="w-112 h-96">
+            <CardTitle className="text-sm">{
                 returnChildOfObject(
                     votes, 
                     [currentVote, "description"], 
                     "Loading..."
                 )
-            }</h2>
+            }</CardTitle>
             <VoteResults 
                 votes={votes}
                 currentVote={currentVote}
             />
-            <section className="grid grid-cols-3 my-4 justify-center scrollbar-hide overflow-scroll">
+            <section className="flex flex-wrap my-1 justify-center scrollbar-hide overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                         return null
@@ -37,6 +40,7 @@ const VoteGrid = (props) => {
                         return (
                             <IndividualArchivedVote 
                                 key={i}
+                                className="flex-1"
                                 votes = {votes}
                                 currentVote = {currentVote}
                                 vote={vote}
@@ -45,7 +49,7 @@ const VoteGrid = (props) => {
                     }
                 })}
             </section>
-        </section>
+        </Card>
 	)
 }
 

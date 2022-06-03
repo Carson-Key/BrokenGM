@@ -12,7 +12,7 @@ const IndividualArchivedVote = (props) => {
 
     return (
         <div className={"text-center py-2 px-4 mx-2" + classNameState}>
-            <h3 className="font-bold">
+            <h3 className="w-max mx-auto font-bold">
                 {formatCharacterName(vote)}
             </h3>
             <IndividualTextVoteDecision vote={vote}>
