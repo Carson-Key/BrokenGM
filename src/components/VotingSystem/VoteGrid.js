@@ -32,7 +32,7 @@ const VoteGrid = (props) => {
                 votes={votes}
                 currentVote={currentVote}
             />
-            <section className="flex flex-wrap my-1 justify-center scrollbar-hide overflow-scroll">
+            <section className="flex flex-wrap my-auto justify-center scrollbar-hide overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                         return null
