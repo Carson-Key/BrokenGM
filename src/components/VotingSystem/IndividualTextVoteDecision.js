@@ -24,7 +24,7 @@ const IndividualTextVoteDecision = (props) => {
     }, [children, colorObject])
 
     return (
-        <p className={"w-fit mx-auto py-1 px-3 rounded-xl " + className}>{children}</p>
+        <p className={"w-max mx-auto py-1 px-3 rounded-xl " + className}>{children}</p>
 	)
 }
 

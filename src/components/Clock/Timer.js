@@ -1,10 +1,10 @@
 // Packages
 import { useEffect, useContext } from 'react'
 // Contexts
-import { NotificationContext } from '../contexts/Notification'
+import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { addMilliSecond } from '../helpers/timer'
-import { getNumberSuffix, capitalizeFirstLetter } from '../helpers/misc'
+import { addMilliSecond } from '../../helpers/timer'
+import { getNumberSuffix, capitalizeFirstLetter } from '../../helpers/misc'
 
 const Timer = (props) => {
     const { 

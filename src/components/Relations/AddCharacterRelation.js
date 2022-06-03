@@ -2,9 +2,9 @@
 import { GrAddCircle } from 'react-icons/gr'
 import { useState, useContext } from 'react'
 // Contexts
-import { NotificationContext } from '../contexts/Notification'
+import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { addCharacterRelation } from '../helpers/relation'
+import { addCharacterRelation } from '../../helpers/relation'
 
 const AddCharacterRelation = (props) => {
     const { id, index, setRelations, relations, isRelation } = props

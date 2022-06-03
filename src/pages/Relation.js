@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
+import { RelationCard, AddRelationCard } from '../components/Relations'
 // UI
 import Container from "../ui/Container"
-import RelationCard from '../ui/RelationCard'
-import AddRelationCard from '../ui/AddRelationCard'
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
@@ -46,7 +45,7 @@ const Relation = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="flex flex-wrap justify-evenly md:justify-start md:px-2 md:py-1 mx-auto">
+            <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 {
                     relations.map((relation, i) => {
                         let relationMinusName = {...relation}

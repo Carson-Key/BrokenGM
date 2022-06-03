@@ -1,10 +1,11 @@
-// Components
+// Relations
 import RelationOfCharacter from './RelationOfCharacters'
-import AddCharacterRelation from '../components/AddCharacterRelation'
-import ConditionalRender from '../components/ConditionalRender'
+import AddCharacterRelation from './AddCharacterRelation'
+// Components
+import ConditionalRender from '../ConditionalRender'
 // UI
-import Card from './Card'
-import CardTitle from './CardTitle'
+import Card from '../../ui/Card'
+import CardTitle from '../../ui/CardTitle'
 
 const RelationCard = (props) => {
     const { name, relation, isAdmin, setRelations, relations, index, id, isRelation } = props

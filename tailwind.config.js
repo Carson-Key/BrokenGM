@@ -4,6 +4,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        '112' : '28rem'
+      },
       margin: {
         '0pr': '0%',
         '2.5pr': '2.5%',

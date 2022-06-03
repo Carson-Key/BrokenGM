@@ -1,11 +1,13 @@
-// Components
-import VoteResults from '../components/VoteResults'
-// UI
+// VotingSystem
+import VoteResults from './VoteResults'
 import IndividualArchivedVote from './IndividualArchivedVote'
+// UI
+import Card from '../../ui/Card'
+import CardTitle from '../../ui/CardTitle'
 // Helpers
-import { returnChildOfObject } from '../helpers/misc'
+import { returnChildOfObject } from '../../helpers/misc'
 
-const Vote = (props) => {
+const VoteGrid = (props) => {
     const { currentVote, votes } = props
     const votingSystemArray = Object.keys(returnChildOfObject(
         votes, 
@@ -18,19 +20,19 @@ const Vote = (props) => {
     ) : {})
 
     return (
-        <section className="mx-auto">
-            <h2 className="text-center">{
+        <Card className="w-112 h-96">
+            <CardTitle className="text-sm">{
                 returnChildOfObject(
                     votes, 
                     [currentVote, "description"], 
                     "Loading..."
                 )
-            }</h2>
+            }</CardTitle>
             <VoteResults 
                 votes={votes}
                 currentVote={currentVote}
             />
-            <section className="flex flex-col my-4 justify-center divide-y scrollbar-hide overflow-scroll">
+            <section className="flex flex-wrap my-auto justify-center scrollbar-hide overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
                         return null
@@ -38,6 +40,7 @@ const Vote = (props) => {
                         return (
                             <IndividualArchivedVote 
                                 key={i}
+                                className="flex-1"
                                 votes = {votes}
                                 currentVote = {currentVote}
                                 vote={vote}
@@ -46,8 +49,8 @@ const Vote = (props) => {
                     }
                 })}
             </section>
-        </section>
+        </Card>
 	)
 }
 
-export default Vote
+export default VoteGrid

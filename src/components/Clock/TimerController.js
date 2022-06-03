@@ -1,13 +1,13 @@
 // Packages
 import { useState, useContext, useEffect } from 'react'
 // Contexts
-import { NotificationContext } from '../contexts/Notification'
+import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { addUnit } from "../helpers/timer"
-import { updateDocumentWithPromise } from "../helpers/firestore"
-import { fireError, firePing } from "../helpers/notifications"
+import { addUnit } from "../../helpers/timer"
+import { updateDocumentWithPromise } from "../../helpers/firestore"
+import { fireError, firePing } from "../../helpers/notifications"
 // Objects
-import { TIMENAMESANDTYPES } from "../helpers/objects"
+import { TIMENAMESANDTYPES } from "../../helpers/objects"
 
 const TimerController = (props) => {
     const { 

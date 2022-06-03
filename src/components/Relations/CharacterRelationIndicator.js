@@ -1,6 +1,6 @@
 // Helpers
-import { RELATIONINDICATORCLASSES } from '../helpers/objects'
-import { defaultAccessArray } from '../helpers/misc'
+import { RELATIONINDICATORCLASSES } from '../../helpers/objects'
+import { defaultAccessArray } from '../../helpers/misc'
 
 const CharacterRelationIndicator = (props) => {
     const { character, relation } = props

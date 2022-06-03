@@ -1,12 +1,12 @@
 // Packages
 import { useState, useContext } from 'react'
 // UI
-import Card from './Card'
-import CardTitle from './CardTitle'
+import Card from '../../ui/Card'
+import CardTitle from '../../ui/CardTitle'
 // Contexts
-import { NotificationContext } from '../contexts/Notification'
+import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { addRelation } from '../helpers/relation'
+import { addRelation } from '../../helpers/relation'
 
 const RelationCard = (props) => {
     const { id, setRelations, relations, isRelation, playerCharacters } = props
@@ -18,7 +18,7 @@ const RelationCard = (props) => {
             <CardTitle>
                 Add New Relation
             </CardTitle>
-            <div className="text-3xl my-3 mx-4 w-72 overflow-scroll h-64 divide-y">
+            <div className="text-3xl my-3 mx-4 w-72 overflow-scroll scrollbar-hide h-64 divide-y">
                 <div className="flex flex-col items-center justify-center mx-auto w-fit mt-auto h-full ">
                     <input 
                             className="border rounded-lg border-slate-400 text-center h-9 px-2 py-2 w-48"

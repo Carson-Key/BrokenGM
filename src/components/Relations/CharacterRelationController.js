@@ -1,12 +1,13 @@
-// Contexts
-import { NotificationContext } from '../contexts/Notification'
-// Helpers
+// Packages
 import { useState, useContext } from "react"
-import { changeRelationValue } from "../helpers/relation"
+// Contexts
+import { NotificationContext } from '../../contexts/Notification'
+// Helpers
+import { changeRelationValue } from "../../helpers/relation"
 
 const CharacterRelationController = (props) => {
     const { id, index, character, relation, setRelations, relations, isRelation } = props
-    const [changeByValue, setChangeByValue] = useState()
+    const [changeByValue, setChangeByValue] = useState("")
     const setNotification = useContext(NotificationContext)[1]
 
     return (
@@ -32,7 +33,12 @@ const CharacterRelationController = (props) => {
                 placeholder={relation[character]}
                 value={changeByValue}
                 onChange={(event) => {
-                    setChangeByValue(parseInt(event.target.value))
+                    const intInputValue = parseInt(event.target.value)
+                    if (intInputValue) {
+                        setChangeByValue(intInputValue)
+                    } else {
+                        setChangeByValue("")
+                    }
                 }}
             />
             <div className="border-y border-r rounded-r-md px-1 py-1 divide divide-x">

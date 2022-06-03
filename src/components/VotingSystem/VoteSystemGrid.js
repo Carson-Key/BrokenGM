@@ -1,5 +1,5 @@
-// UI
-import VoteGrid from '../ui/VoteGrid'
+// VotingSystem
+import VoteGrid from './VoteGrid'
 
 const VoteSystemGrid = (props) => {
     const { votes } = props
@@ -11,6 +11,7 @@ const VoteSystemGrid = (props) => {
                     if (vote.locked  === true) {
                         return (
                             <VoteGrid
+                                key={i}
                                 votes={votes}
                                 currentVote={i}
                             />
