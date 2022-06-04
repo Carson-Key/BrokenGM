@@ -21,12 +21,12 @@ export const reverseFormatCharacterName = (name) => {
     return joinedName
 }
 export const returnArrayOfActiveVotes = (votes) => {
-    const tempVotes = [...votes]
+    const tempVotes = Object.keys(votes)
     let returnedVotes = []
     let returnedVoteIndexes = []
 
     tempVotes.forEach((vote, i) => {
-        if (!vote.locked) {
+        if (!votes[vote].locked) {
             returnedVotes.push(vote)
             returnedVoteIndexes.push(i)
         }

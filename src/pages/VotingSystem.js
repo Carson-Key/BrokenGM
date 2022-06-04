@@ -94,18 +94,13 @@ const VotingSystem = () => {
                         ...votes,
                         [amountOfVotes]: newData
                     }
-                    const tempVotes = (votes.length ? votes : [])
-                    const newVotesArray = [
-                        ...tempVotes,
-                        newData
-                    ]
                     setVotingSystemObject({
                         ...votingSystemObject, 
                         votes: newVotes
                     })
                     setVotes(newVotes)
                     setAmountOfVotes(amountOfVotes + 1)
-                    const [tempActiveVotes, tempActiveVoteIndexes] = returnArrayOfActiveVotes(newVotesArray)
+                    const [tempActiveVotes, tempActiveVoteIndexes] = returnArrayOfActiveVotes(newVotes)
                     setActiveVotes(tempActiveVotes)
                     setAmountOfActiveVotes(tempActiveVotes.length)
                     setActiveVoteIndexes(tempActiveVoteIndexes)
