@@ -30,28 +30,30 @@ const ClockSettings = (props) => {
     }, [players, id, setNotification])
 
     return (
-        <div>
-            <h2>Edit Player Access</h2>
-            <EditPlayers
-                players={clockPlayers}
-                toggleAccess={(event, player) => {
-                    const playerObject = clockPlayers[player]
-                    if (playerObject.access) {
-                        let tempActivePlayers = [...activePlayers]
-                        tempActivePlayers = removeElementFromArray(tempActivePlayers, player)
-                        setActivePlayers(tempActivePlayers)
-                        updateDocument("clocks", id, {players: tempActivePlayers}, setNotification, isClocks)
-                    } else {
-                        let tempActivePlayers = [...activePlayers, player]
-                        setActivePlayers(tempActivePlayers)
-                        updateDocument("clocks", id, {players: tempActivePlayers}, setNotification, isClocks)
-                    }
-                    setClockPlayers({
-                        ...clockPlayers, 
-                        [player]: {...playerObject, access: !playerObject.access}
-                    })
-                }}
-            />
+        <div className="px-2 divide-y h-60 overflow-auto scrollbar-hide">
+            <div className="py-2">
+                <h2 className="text-xl font-semibold">Edit Player Access</h2>
+                <EditPlayers
+                    players={clockPlayers}
+                    toggleAccess={(event, player) => {
+                        const playerObject = clockPlayers[player]
+                        if (playerObject.access) {
+                            let tempActivePlayers = [...activePlayers]
+                            tempActivePlayers = removeElementFromArray(tempActivePlayers, player)
+                            setActivePlayers(tempActivePlayers)
+                            updateDocument("clocks", id, {players: tempActivePlayers}, setNotification, isClocks)
+                        } else {
+                            let tempActivePlayers = [...activePlayers, player]
+                            setActivePlayers(tempActivePlayers)
+                            updateDocument("clocks", id, {players: tempActivePlayers}, setNotification, isClocks)
+                        }
+                        setClockPlayers({
+                            ...clockPlayers, 
+                            [player]: {...playerObject, access: !playerObject.access}
+                        })
+                    }}
+                />
+            </div>
         </div>
     )
 }
