@@ -2,7 +2,7 @@ const SettingsBody = (props) => {
     const { children } = props
 
     return (
-        <div className="px-2 divide-y h-60 overflow-auto scrollbar-hide">
+        <div className="px-2 divide-y h-60 overflow-auto scrollbar-hide text-lg">
             {children}
         </div>
     )
