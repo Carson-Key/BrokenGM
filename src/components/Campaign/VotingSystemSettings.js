@@ -11,8 +11,8 @@ import SettingsSectionTitle from "./SettingsSectionTitle"
 import { NotificationContext } from "../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../helpers/firestore"
-import { getRealtimeDBOnce } from "../../helpers/database"
-import { formatCharacterName } from "../../helpers/voting"
+import { getRealtimeDBOnce, updateRealtimeDB } from "../../helpers/database"
+import { formatCharacterName, reverseFormatCharacterName } from "../../helpers/voting"
 import { returnChildOfObject, removeElementFromArray } from "../../helpers/misc"
 
 const VotingSystemSettings = (props) => {
@@ -22,6 +22,7 @@ const VotingSystemSettings = (props) => {
     const [isVotingSystem, setIsVotingSystem] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
     const [defaultVoters, setDefaultVoters] = useState([])
+    const [newDfaultVoter, setNewDefaultVoter] = useState("")
 
     useEffect(() => {
         getDocument("votingsystems", id, setNotification).then((data)  => {
@@ -71,12 +72,18 @@ const VotingSystemSettings = (props) => {
                         type="text"
                         name="Add Character"
                         placeholder="John Doe"
+                        value={newDfaultVoter}
                         onChange={(event) => {
+                            setNewDefaultVoter(event.target.value)
                         }}
                     />
                     <button
                         onClick={
                             () => {
+                                const formattedName = reverseFormatCharacterName(newDfaultVoter)
+                                updateRealtimeDB("", ["votingsystems/" + id + "/defaultVoters/" + formattedName])
+                                setNewDefaultVoter("")
+                                setDefaultVoters([...defaultVoters, formattedName])
                             }
                         }
                     >
