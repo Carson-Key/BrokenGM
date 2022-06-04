@@ -15,7 +15,7 @@ import { getRealtimeDBOnce } from "../../helpers/database"
 import { formatCharacterName } from "../../helpers/voting"
 import { returnChildOfObject, removeElementFromArray } from "../../helpers/misc"
 
-const ClockSettings = (props) => {
+const VotingSystemSettings = (props) => {
     const { players, id } = props
     const setNotification = useContext(NotificationContext)[1]
     const [votingSystemPlayers, setVotingSystemPlayers] = useState({...players})
@@ -111,4 +111,4 @@ const ClockSettings = (props) => {
     )
 }
 
-export default ClockSettings
+export default VotingSystemSettings
