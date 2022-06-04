@@ -3,7 +3,6 @@ const Input = (props) => {
 
 	return (
         <label className={labelClass}>
-            {labelText}
             <input 
                 className={inputClass} 
                 type={type} 
@@ -11,6 +10,7 @@ const Input = (props) => {
                 onChange={onChange} 
                 checked={checked}
             />
+            {labelText}
         </label>
 	)
 }
