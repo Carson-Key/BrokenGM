@@ -12,7 +12,7 @@ import { getRealtimeDB, updateRealtimeDB, turnListenerOff } from '../../helpers/
 
 const UnLockedVote = (props) => {
     const { currentVote, id, isAdmin, voterKey, votes, setVotes, votingSystemObject, setVotingSystemObject } = props
-    const [votesListened, setVotesListened] = useState({})
+    const [votesListened, setVotesListened] = useState({description: ""})
     const [votesArray, setVotesArray] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -50,6 +50,7 @@ const UnLockedVote = (props) => {
                             type="text"
                             name="description" 
                             placeholder="description"
+                            value={votesListened.description}
                             onChange={(event) => {
                                 updateRealtimeDB(event.target.value, ["votingsystems/" + id + "/votes/" + currentVote + "/description/"])
                             }}
