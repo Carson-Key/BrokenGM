@@ -53,7 +53,7 @@ const VotingSystemSettings = (props) => {
                             return (
                                 <div className={
                                         "w-1/2 py-2 px-2 flex justify-between" +
-                                        ((i < defaultVoters.length - 2) ? " border-b" : "") +
+                                        ((i < defaultVoters.length - ((defaultVoters.length % 2 !== 0) ? 1 : 2)) ? " border-b" : "") +
                                         ((i % 2 === 0) ? " border-r" : "")
                                     }
                                 >
