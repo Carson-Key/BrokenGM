@@ -5,10 +5,7 @@ import { db } from './firebase'
 // Helpers
 import { fireBaseError } from "./notifications"
 
-export async function getDocument(
-	collection, document, setNotification, 
-	errorHandler = (setNotification, code, message) => { fireBaseError(setNotification, code, message) }
-) {
+export async function getDocument(collection, document, setNotification, returnErrorCode = false) {
 	try {
 		const userDoc = doc(db, collection, document)
 		const userDBEntry = await getDoc(userDoc)
@@ -19,8 +16,12 @@ export async function getDocument(
 			return null
 		}
 	} catch (error) {
-		errorHandler(setNotification, error.code, error.message)
-		return null
+		if (returnErrorCode) {
+			return error.code
+		} else {
+			fireBaseError(setNotification, error.code, error.message)
+			return null
+		}
 	}
 }
 export async function setDocument(collection, document, dataToAdd, setNotification, documentExsists = true) {
