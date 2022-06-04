@@ -1,12 +1,12 @@
 // Helpers
 import { getDocument } from "./firestore"
 
-export const getPlayerObject = (players, setNotification) => {
+export const getPlayerObject = async (players, setNotification, setPlayers) => {
     let returnObject = {}
 
-    players.forEach((player) => {
-        const userdata = getDocument("users", player, setNotification)
-        returnObject = {...returnObject, [player]: {name: userdata.displayName, id: player}}
+    await players.forEach(async (player) => {
+        const userdata = await getDocument("users", player, setNotification)
+        setPlayers(prev => ({...prev, [player]: {name: userdata.data().displayName, id: player, access: false}}))
     })
 
     return returnObject

@@ -38,7 +38,7 @@ const Campaign = () => {
             getCurrentUser(setUID, (uid) => {
                 if (campaignData.admins.includes(uid)) {
                     setIsAdmin(true)
-                    setPlayers(getPlayerObject(campaignData.players, setNotification))
+                    getPlayerObject(campaignData.players, setNotification, setPlayers)
                 }
             })
             setIsLoading(false)
@@ -54,6 +54,7 @@ const Campaign = () => {
                     items={clocks} 
                     isAdmin={isAdmin}
                     playerBody="To Clock"
+                    players={players}
                     Settings={ClockSettings}
                 />
                 <CampaignLinkCard 
@@ -62,6 +63,7 @@ const Campaign = () => {
                     items={relations} 
                     isAdmin={isAdmin}
                     playerBody="To Relation"
+                    players={players}
                     Settings={RelationSettings}
                 />
                 <CampaignLinkCard 
@@ -70,6 +72,7 @@ const Campaign = () => {
                     items={votingSystems} 
                     isAdmin={isAdmin}
                     playerBody="To Voting System"
+                    players={players}
                     Settings={VotingSystemSettings}
                 />
             </Container>
