@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react"
 // Campaign
 import EditPlayers from "./EditPlayers"
 import SettingsBody from "./SettingsBody"
+import SettingsSection from "./SettingsSection"
 // Contexts
 import { NotificationContext } from "../../contexts/Notification"
 // Helpers
@@ -32,7 +33,7 @@ const ClockSettings = (props) => {
 
     return (
         <SettingsBody>
-            <div className="py-2">
+            <SettingsSection>
                 <h2 className="text-xl font-semibold">Edit Player Access</h2>
                 <EditPlayers
                     players={clockPlayers}
@@ -54,7 +55,7 @@ const ClockSettings = (props) => {
                         })
                     }}
                 />
-            </div>
+            </SettingsSection>
         </SettingsBody>
     )
 }
