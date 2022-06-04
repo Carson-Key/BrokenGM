@@ -2,12 +2,11 @@
 import { Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 // Pages
-import Relations from '../pages/Relations'
 import Relation from '../pages/Relation'
 import Login from '../pages/Login'
 import Clock from '../pages/Clock'
-import Clocks from '../pages/Clocks'
-import VotingSystems from '../pages/VotingSystems'
+import Campaigns from '../pages/Campaigns'
+import Campaign from '../pages/Campaign'
 import VotingSystem from '../pages/VotingSystem'
 // Components
 import ConditionalRender from './ConditionalRender'
@@ -35,12 +34,11 @@ const PageRoutes = () => {
                 <Routes>
                     <Route path='/login' element={<Login />} />
                     <Route path='/clock/:id' element={<Clock />} />
-                    <Route path='/clocks' element={<Clocks />} />
                     <Route path='/relation/:id' element={<Relation />} />
-                    <Route path='/relations' element={<Relations />} />
-                    <Route path='/votingsystems' element={<VotingSystems />} />
+                    <Route path='/campaigns' element={<Campaigns />} />
+                    <Route path='/campaign/:id' element={<Campaign />} />
                     <Route path='/votingsystem/:id' element={<VotingSystem />} />
-                    <Route path='/' element={<Clocks />} />
+                    <Route path='/' element={<Campaigns />} />
                 </Routes>
             </ConditionalRender>
         </IsLoading>

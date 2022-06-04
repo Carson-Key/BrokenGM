@@ -2,7 +2,7 @@
 import { capitalizeFirstLetter } from "./misc"
 
 export const formatCharacterName = (name) => {
-    let brokenName = name.split('-')
+    let brokenName = name.split('_')
     brokenName.forEach((word, i) => {
         const capitalizedWord = capitalizeFirstLetter(word)
         brokenName[i] = capitalizedWord
@@ -16,17 +16,17 @@ export const reverseFormatCharacterName = (name) => {
     brokenName.forEach((word, i) => {
         brokenName[i] = word.toLowerCase()
     })
-    const joinedName = brokenName.join('-')
+    const joinedName = brokenName.join('_')
 
     return joinedName
 }
 export const returnArrayOfActiveVotes = (votes) => {
-    const tempVotes = [...votes]
+    const tempVotes = Object.keys(votes)
     let returnedVotes = []
     let returnedVoteIndexes = []
 
     tempVotes.forEach((vote, i) => {
-        if (!vote.locked) {
+        if (!votes[vote].locked) {
             returnedVotes.push(vote)
             returnedVoteIndexes.push(i)
         }

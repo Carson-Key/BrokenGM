@@ -2,7 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId} {
-      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+    	allow read: if request.auth != null;
+      allow update, delete: if request.auth != null && request.auth.uid == userId;
       allow create: if request.auth != null;
     }
     match /clocks/{documentId} {
@@ -14,6 +15,10 @@ service cloud.firestore {
       allow update, write, delete, read: if request.auth != null && request.auth.uid in resource.data.admins;
     }
     match /votingsystems/{documentId} {
+      allow read: if request.auth != null && request.auth.uid in resource.data.players;
+      allow update, write, delete, read: if request.auth != null && request.auth.uid in resource.data.admins;
+    }
+    match /campaigns/{documentId} {
       allow read: if request.auth != null && request.auth.uid in resource.data.players;
       allow update, write, delete, read: if request.auth != null && request.auth.uid in resource.data.admins;
     }

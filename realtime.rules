@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "votingsystems": {
+    	"$votingsystem_id": {
+        "votes": {
+          "$decision_id": {
+            "$voters_id": {
+              ".write": "$voters_id === root.child('votingsystems').child($votingsystem_id).child('voters').child(auth.uid).val() && root.child('votingsystems').child($votingsystem_id).child('votes').child($decision_id).child('locked').val() !== true"
+            }
+          },
+        },
+      	".write": "root.child('votingsystems').child($votingsystem_id).child('admins').child(auth.uid).exists()", 
+      	".read": "root.child('votingsystems').child($votingsystem_id).child('admins').child(auth.uid).exists() || root.child('votingsystems').child($votingsystem_id).child('players').child(auth.uid).exists() || root.child('votingsystems').child($votingsystem_id).child('voters').child(auth.uid).exists()"
+      }
+    }
+  }
+}

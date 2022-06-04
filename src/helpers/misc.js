@@ -53,3 +53,9 @@ export const getHighestValueKey = (object) => {
             return object[key1] > object[key2] ? key1 : key2
         });
   }
+
+export const removeElementFromArray = (array, value) => { 
+    return array.filter((ele) => { 
+        return ele !== value;
+    })
+}

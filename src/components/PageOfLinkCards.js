@@ -6,12 +6,13 @@ import ConditionalRender from "./ConditionalRender"
 // UI
 import Container from "../ui/Container"
 import GenericLinkCard from "../ui/GenericLinkCard"
+import CenterScreen from "../ui/CenterScreen"
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getCurrentUser } from "../helpers/auth"
 import { getDocument } from "../helpers/firestore"
-import CenterScreen from "../ui/CenterScreen"
+import { fireError } from "../helpers/notifications"
 
 const PageOflinkCards = (props) => {
     const { noCardText, cardInnerText, docID, toPath } = props
@@ -23,6 +24,7 @@ const PageOflinkCards = (props) => {
     const [loadedUID, setLoadedUID] = useState(false)
     const [loadedCardsArray, setLoadedCardsArray] = useState(false)
     const [loadedCards, setLoadedCards] = useState(false)
+    const [getUserTries, setGetUserTries] = useState(0)
 
     useEffect(() => {
         const getRelations = () => {
@@ -31,9 +33,14 @@ const PageOflinkCards = (props) => {
                     setLoadedUID(true)
                 })
             }
+            if (getUserTries >= 5) {
+                fireError(setNotification, "Timeout on User Reterival", "To many attempts to get user data from firestore")
+            }
             if (loadedUID && !loadedCardsArray) {
                 getDocument("users", uid, setNotification).then((data) => {
-                    if (data.data()[docID].length === 0) {
+                    if (!data && getUserTries < 5) {
+                        setGetUserTries(getUserTries + 1)
+                    } else if (data.data()[docID].length === 0) {
                         setIsLoading(false)
                     } else {
                         setCardsArray(data.data()[docID])
@@ -60,7 +67,7 @@ const PageOflinkCards = (props) => {
         if (isLoading) {
             getRelations()
         }
-    })
+    }, [cards, cardsArray, docID, isLoading, loadedCards, loadedCardsArray, loadedUID, setNotification, uid, getUserTries])
 
     return (
         <IsLoading isLoading={isLoading}>
