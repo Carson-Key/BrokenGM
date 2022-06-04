@@ -1,5 +1,6 @@
 // Packages
 import { useContext, useState, useEffect, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 // Components
 import ConditionalRender from './ConditionalRender'
 // UI
@@ -45,10 +46,12 @@ const CampaignLinkCard = (props) => {
                             />
                         }
                     >
-                        <Card>
-                            <CardTitle>{item.name}</CardTitle>
-                            <p>You are admin</p>
-                        </Card>
+                        <Link to={"/" + path + "/" + item.id}>
+                            <Card>
+                                <CardTitle>{item.name}</CardTitle>
+                                <p>You are admin</p>
+                            </Card>
+                        </Link>
                     </ConditionalRender>
                 )
             } else {
