@@ -2,15 +2,15 @@
 import { useContext, useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 // Components
-import ConditionalRender from './ConditionalRender'
+import ConditionalRender from '../ConditionalRender'
 // UI
-import Card from '../ui/Card'
-import CardTitle from '../ui/CardTitle'
-import GenericLinkCard from '../ui/GenericLinkCard'
+import Card from '../../ui/Card'
+import CardTitle from '../../ui/CardTitle'
+import GenericLinkCard from '../../ui/GenericLinkCard'
 // Contexts
-import { NotificationContext } from "../contexts/Notification"
+import { NotificationContext } from "../../contexts/Notification"
 // Helpers
-import { getDocument } from '../helpers/firestore'
+import { getDocument } from '../../helpers/firestore'
 
 const CampaignLinkCard = (props) => {
     const { items, isAdmin, docID, playerBody, path } = props

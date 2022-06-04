@@ -2,7 +2,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useContext, useState } from 'react'
 // Components
-import CampaignLinkCard from '../components/CampaignLinkCard'
+import CampaignLinkCard from '../components/Campaign/CampaignLinkCard'
 import IsLoading from '../components/IsLoading'
 // UI
 import Container from '../ui/Container'
