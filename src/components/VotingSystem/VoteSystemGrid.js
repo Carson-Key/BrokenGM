@@ -1,5 +1,5 @@
 // Packages
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 // VotingSystem
 import VoteGrid from './VoteGrid'
 
