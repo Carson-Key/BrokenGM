@@ -1,3 +1,5 @@
+// Packages
+import { Fragment } from 'react'
 // VotingSystem
 import VoteResults from './VoteResults'
 import IndividualArchivedVote from './IndividualArchivedVote'
@@ -35,7 +37,7 @@ const VoteGrid = (props) => {
             <section className="flex flex-wrap my-auto justify-center scrollbar-hide overflow-scroll">
                 {votingSystemArray.map((vote, i) => {
                     if (vote === "locked" || vote === "description" || vote === "defaultVoters") {
-                        return null
+                        return <Fragment key={i}></Fragment>
                     } else {
                         return (
                             <IndividualArchivedVote 

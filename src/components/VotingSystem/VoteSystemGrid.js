@@ -1,3 +1,5 @@
+// Packages
+import { Fragment } from 'react'
 // VotingSystem
 import VoteGrid from './VoteGrid'
 
@@ -17,7 +19,7 @@ const VoteSystemGrid = (props) => {
                             />
                         )
                     } else {
-                        return <></>
+                        return <Fragment key={i}></Fragment>
                     }
                 })
             }
