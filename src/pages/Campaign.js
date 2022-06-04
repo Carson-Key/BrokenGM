@@ -23,7 +23,7 @@ const Campaign = () => {
     const setNotification = useContext(NotificationContext)[1]
     const [isLoading, setIsLoading] = useState(true)
     const [isAdmin, setIsAdmin] = useState(false)
-    const [uid, setUID] = useState("")
+    const setUID = useState("")[1]
     const [clocks, setClocks] = useState([])
     const [relations, setRelations] = useState([])
     const [votingSystems, setVotingSystems] = useState([])
@@ -43,7 +43,7 @@ const Campaign = () => {
             })
             setIsLoading(false)
         })
-    }, [id, setNotification])
+    }, [id, setNotification, setUID])
 
     return (
         <IsLoading isLoading={isLoading}>
