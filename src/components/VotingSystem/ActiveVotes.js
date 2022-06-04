@@ -29,7 +29,7 @@ const ActiveVotes = (props) => {
         <ConditionalRender
             condition={amountOfActiveVotes !== 0}
             returnComponent={
-                <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl">There are no Active Votes</h2>
+                <h2 className="text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl">There are no Active Votes</h2>
             }
         >
             <VoteNavigation
