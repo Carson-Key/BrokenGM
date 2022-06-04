@@ -11,7 +11,7 @@ import SettingsSectionTitle from "../SettingsSectionTitle"
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../../helpers/firestore"
-import { getRealtimeDBOnce } from "../../../helpers/database"
+import { getRealtimeDBOnce, updateRealtimeDB } from "../../../helpers/database"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
 
 const VotingSystemSettings = (props) => {
@@ -22,6 +22,8 @@ const VotingSystemSettings = (props) => {
     const [activePlayers, setActivePlayers] = useState([])
     const [defaultVoters, setDefaultVoters] = useState([])
     const [defaultVotersObject, setDefaultVotersObject] = useState({})
+    const [voters, setVoters] = useState([])
+    const [votersObject, setVotersObject] = useState({})
 
     useEffect(() => {
         getDocument("votingsystems", id, setNotification).then((data)  => {
@@ -39,6 +41,12 @@ const VotingSystemSettings = (props) => {
             if (data) {
                 setDefaultVoters(Object.keys(data))
                 setDefaultVotersObject(data)
+            }
+        })
+        getRealtimeDBOnce("votingsystems/" + id + "/voters", (data) => {
+            if (data) {
+                setVoters(Object.keys(data))
+                setVotersObject(data)
             }
         })
     }, [players, id, setNotification])
@@ -61,14 +69,25 @@ const VotingSystemSettings = (props) => {
                     toggleAccess={(event, player) => {
                         const playerObject = votingSystemPlayers[player]
                         if (playerObject.access) {
+                            let tempVotersObject = {...votersObject}
+                            let tempVoters = removeElementFromArray(voters, player)
+                            delete tempVotersObject[player]
                             let tempActivePlayers = [...activePlayers]
                             tempActivePlayers = removeElementFromArray(tempActivePlayers, player)
                             setActivePlayers(tempActivePlayers)
+                            setVoters(tempVoters)
+                            setVotersObject(tempVotersObject)
                             updateDocument("votingsystems", id, {players: tempActivePlayers}, setNotification, isVotingSystem)
+                            updateRealtimeDB(tempVotersObject, ["votingsystems/" + id + "/voters/"])
                         } else {
                             let tempActivePlayers = [...activePlayers, player]
+                            let tempVotersObject = {...votersObject, [player]: ""}
+                            let tempVoters = [...voters, player]
                             setActivePlayers(tempActivePlayers)
+                            setVoters(tempVoters)
+                            setVotersObject(tempVotersObject)
                             updateDocument("votingsystems", id, {players: tempActivePlayers}, setNotification, isVotingSystem)
+                            updateRealtimeDB(tempVotersObject, ["votingsystems/" + id + "/voters/"])
                         }
                         setVotingSystemPlayers({
                             ...votingSystemPlayers, 
