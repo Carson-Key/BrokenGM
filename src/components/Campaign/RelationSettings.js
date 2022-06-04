@@ -2,6 +2,9 @@
 import { useState, useEffect, useContext } from "react"
 // Campaign
 import EditPlayers from "./EditPlayers"
+import SettingsBody from "./SettingsBody"
+import SettingsSection from "./SettingsSection"
+import SettingsSectionTitle from "./SettingsSectionTitle"
 // Contexts
 import { NotificationContext } from "../../contexts/Notification"
 // Helpers
@@ -30,26 +33,31 @@ const ClockSettings = (props) => {
     }, [players, id, setNotification])
 
     return (
-        <EditPlayers
-            players={relationPlayers}
-            toggleAccess={(event, player) => {
-                const playerObject = relationPlayers[player]
-                if (playerObject.access) {
-                    let tempActivePlayers = [...activePlayers]
-                    tempActivePlayers = removeElementFromArray(tempActivePlayers, player)
-                    setActivePlayers(tempActivePlayers)
-                    updateDocument("relations", id, {players: tempActivePlayers}, setNotification, isRealion)
-                } else {
-                    let tempActivePlayers = [...activePlayers, player]
-                    setActivePlayers(tempActivePlayers)
-                    updateDocument("relations", id, {players: tempActivePlayers}, setNotification, isRealion)
-                }
-                setRealtionPlayers({
-                    ...relationPlayers, 
-                    [player]: {...playerObject, access: !playerObject.access}
-                })
-            }}
-        />
+        <SettingsBody>
+            <SettingsSection>
+                <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
+                <EditPlayers
+                    players={relationPlayers}
+                    toggleAccess={(event, player) => {
+                        const playerObject = relationPlayers[player]
+                        if (playerObject.access) {
+                            let tempActivePlayers = [...activePlayers]
+                            tempActivePlayers = removeElementFromArray(tempActivePlayers, player)
+                            setActivePlayers(tempActivePlayers)
+                            updateDocument("relations", id, {players: tempActivePlayers}, setNotification, isRealion)
+                        } else {
+                            let tempActivePlayers = [...activePlayers, player]
+                            setActivePlayers(tempActivePlayers)
+                            updateDocument("relations", id, {players: tempActivePlayers}, setNotification, isRealion)
+                        }
+                        setRealtionPlayers({
+                            ...relationPlayers, 
+                            [player]: {...playerObject, access: !playerObject.access}
+                        })
+                    }}
+                />
+            </SettingsSection>
+        </SettingsBody>
     )
 }
 
