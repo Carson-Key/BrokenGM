@@ -54,7 +54,7 @@ const Campaign = () => {
                     items={clocks} 
                     isAdmin={isAdmin}
                     playerBody="To Clock"
-                    settings={<ClockSettings/>}
+                    Settings={ClockSettings}
                 />
                 <CampaignLinkCard 
                     docID="relations"
@@ -62,7 +62,7 @@ const Campaign = () => {
                     items={relations} 
                     isAdmin={isAdmin}
                     playerBody="To Relation"
-                    settings={<RelationSettings/>}
+                    Settings={RelationSettings}
                 />
                 <CampaignLinkCard 
                     docID="votingsystems"
@@ -70,7 +70,7 @@ const Campaign = () => {
                     items={votingSystems} 
                     isAdmin={isAdmin}
                     playerBody="To Voting System"
-                    settings={<VotingSystemSettings/>}
+                    Settings={VotingSystemSettings}
                 />
             </Container>
         </IsLoading>

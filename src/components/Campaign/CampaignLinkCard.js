@@ -13,7 +13,7 @@ import { NotificationContext } from "../../contexts/Notification"
 import { getDocument } from '../../helpers/firestore'
 
 const CampaignLinkCard = (props) => {
-    const { items, isAdmin, docID, playerBody, path, settings } = props
+    const { items, isAdmin, docID, playerBody, path, Settings } = props
     const setNotification = useContext(NotificationContext)[1]
     const [itemArray, setItemArray] = useState([])
 
@@ -49,7 +49,7 @@ const CampaignLinkCard = (props) => {
                         <Link to={"/" + path + "/" + item.id}>
                             <Card>
                                 <CardTitle>{item.name}</CardTitle>
-                                {settings}
+                                {<Settings/>}
                             </Card>
                         </Link>
                     </ConditionalRender>
