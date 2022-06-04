@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react"
 import EditPlayers from "./EditPlayers"
 import SettingsBody from "./SettingsBody"
 import SettingsSection from "./SettingsSection"
+import SettingsSectionTitle from "./SettingsSectionTitle"
 // Contexts
 import { NotificationContext } from "../../contexts/Notification"
 // Helpers
@@ -34,7 +35,7 @@ const ClockSettings = (props) => {
     return (
         <SettingsBody>
             <SettingsSection>
-                <h2 className="text-xl font-semibold">Edit Player Access</h2>
+                <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers
                     players={clockPlayers}
                     toggleAccess={(event, player) => {
