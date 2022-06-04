@@ -22,6 +22,7 @@ const VotingSystemSettings = (props) => {
     const [isVotingSystem, setIsVotingSystem] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
     const [defaultVoters, setDefaultVoters] = useState([])
+    const [defaultVotersObject, setDefaultVotersObject] = useState({})
     const [newDfaultVoter, setNewDefaultVoter] = useState("")
 
     useEffect(() => {
@@ -39,6 +40,7 @@ const VotingSystemSettings = (props) => {
         getRealtimeDBOnce("votingsystems/" + id + "/defaultVoters", (data) => {
             if (data) {
                 setDefaultVoters(Object.keys(data))
+                setDefaultVotersObject(data)
             }
         })
     }, [players, id, setNotification])
@@ -58,7 +60,16 @@ const VotingSystemSettings = (props) => {
                                     }
                                 >
                                     {formatCharacterName(voter)}
-                                    <button className="text-red-500">
+                                    <button className="text-red-500"
+                                        onClick={() => {
+                                            let tempDefaultVotersObject = {...defaultVotersObject}
+                                            let tempDefaultVoters = removeElementFromArray(defaultVoters, voter)
+                                            delete tempDefaultVotersObject[voter]
+                                            updateRealtimeDB(tempDefaultVotersObject, ["votingsystems/" + id + "/defaultVoters/"])
+                                            setDefaultVoters(tempDefaultVoters)
+                                            setDefaultVotersObject(tempDefaultVotersObject)
+                                        }}
+                                    >
                                         <FaTrash/>
                                     </button>
                                 </div>
