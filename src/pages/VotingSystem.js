@@ -7,6 +7,7 @@ import ConditionalRender from '../components/ConditionalRender'
 import { ActiveVotes, VoteSystemGrid } from '../components/VotingSystem'
 // UI
 import Container from '../ui/Container'
+import CenterScreen from '../ui/CenterScreen'
 // Helpers
 import { getRealtimeDBOnce, getRealtimeDB } from '../helpers/database'
 import { getCurrentUser } from '../helpers/auth'
@@ -38,7 +39,7 @@ const VotingSystem = () => {
                     })
                     setVotingSystemObject(data)
                     setVotes(data.votes)
-                    const votesAsArray = Object.keys(data.votes)
+                    const votesAsArray = Object.keys((data.votes) ? data.votes : [])
                     if (votesAsArray.length > 0) {
                         setCurrentVote(votesAsArray.length - 1)
                         setAmountOfVotes(votesAsArray.length)
@@ -61,11 +62,16 @@ const VotingSystem = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="flex flex-col h-full">
-                <ConditionalRender
-                    condition={amountOfVotes !== 0}
-                    returnComponent={<p>There are no votes in this system</p>}
-                >
+            <ConditionalRender
+                condition={amountOfVotes !== 0}
+                returnComponent={
+                    <CenterScreen>
+                        <h1 className="text-4xl w-screen text-center mt-auto mx-auto">
+                            There are no votes in this system
+                        </h1>
+                    </CenterScreen>}
+            >
+                <Container className="flex flex-col h-full">
                     <div className="my-4 divide-x mx-auto">
                         <button className="rounded-l-lg bg-gray-100 px-3 py-2" onClick={() => {
                             setVoteDisplayStyle("scrolling")
@@ -96,8 +102,8 @@ const VotingSystem = () => {
                             setVotingSystemObject={setVotingSystemObject}
                         />
                     </ConditionalRender>
-                </ConditionalRender>
-            </Container>
+                </Container>
+            </ConditionalRender>
         </IsLoading>
 	)
 }

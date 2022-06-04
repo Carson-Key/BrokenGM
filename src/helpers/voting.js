@@ -2,7 +2,7 @@
 import { capitalizeFirstLetter } from "./misc"
 
 export const formatCharacterName = (name) => {
-    let brokenName = name.split('-')
+    let brokenName = name.split('_')
     brokenName.forEach((word, i) => {
         const capitalizedWord = capitalizeFirstLetter(word)
         brokenName[i] = capitalizedWord
@@ -16,7 +16,7 @@ export const reverseFormatCharacterName = (name) => {
     brokenName.forEach((word, i) => {
         brokenName[i] = word.toLowerCase()
     })
-    const joinedName = brokenName.join('-')
+    const joinedName = brokenName.join('_')
 
     return joinedName
 }
