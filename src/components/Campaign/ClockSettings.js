@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from "react"
 // Campaign
 import EditPlayers from "./EditPlayers"
+import SettingsBody from "./SettingsBody"
 // Contexts
 import { NotificationContext } from "../../contexts/Notification"
 // Helpers
@@ -30,7 +31,7 @@ const ClockSettings = (props) => {
     }, [players, id, setNotification])
 
     return (
-        <div className="px-2 divide-y h-60 overflow-auto scrollbar-hide">
+        <SettingsBody>
             <div className="py-2">
                 <h2 className="text-xl font-semibold">Edit Player Access</h2>
                 <EditPlayers
@@ -54,7 +55,7 @@ const ClockSettings = (props) => {
                     }}
                 />
             </div>
-        </div>
+        </SettingsBody>
     )
 }
 
