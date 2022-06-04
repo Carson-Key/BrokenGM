@@ -45,13 +45,13 @@ const CampaignLinkCard = (props) => {
                                 innerText={playerBody}
                             />
                         }
-                    >
-                        <Link to={"/" + path + "/" + item.id}>
-                            <Card>
+                    >   
+                        <Card>
+                            <Link to={"/" + path + "/" + item.id}>
                                 <CardTitle>{item.name}</CardTitle>
-                                {<Settings players={players} id={item.id} />}
-                            </Card>
-                        </Link>
+                            </Link>
+                            {<Settings players={players} id={item.id} />}
+                        </Card>
                     </ConditionalRender>
                 )
             } else {
