@@ -15,6 +15,7 @@ const EditPlayers = (props) => {
                             toggleAccess(event, playerID)
                         }}
                         labelClass="px-2 w-1/2"
+                        inputClass="mr-1"
                         name={players[playerID].name}
                         labelText={players[playerID].name}
                         checked={players[playerID].access}
