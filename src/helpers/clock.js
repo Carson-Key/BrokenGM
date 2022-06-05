@@ -36,7 +36,6 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
             tempClock.dayOfWeek = newDayofWeek - 1
         }
         tempClock.timer = newTimer
-        console.log(newDays)
         setTimer(newTimer)
         setClock(tempClock)
     }
