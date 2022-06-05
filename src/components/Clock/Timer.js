@@ -24,7 +24,7 @@ const Timer = (props) => {
                 + ", "}
                 </p>
                 <p>
-                    {clock.year} {clock.yearSuffix}
+                    {Math.abs(clock.year)} {(clock.year >= 0) ? clock.yearSuffix : clock.preYearSuffix}
                 </p>
             </h1>
             <h1 className="text-5xl w-fit mx-auto pt-6">
