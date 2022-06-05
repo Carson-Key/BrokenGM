@@ -1,6 +1,11 @@
 // Packages
 import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
+// Components
+import { Timer } from '../components/Clock'
+import IsLoading from '../components/IsLoading'
+// UI
+import Container from '../ui/Container'
 // Contexts
 import { NotificationContext } from "../contexts/Notification"
 // Helpers
@@ -34,7 +39,14 @@ const Clock = () => {
     }, [id, isLoading, uid, setNotification, clock, timer])
 
     return (
-        <p>Clock</p>
+        <IsLoading isLoading={isLoading}>
+            <Container className="mt-auto">
+                <Timer
+                    timer={timer}
+                    clock={clock}
+                />
+            </Container>
+        </IsLoading>
 	)
 }
 
