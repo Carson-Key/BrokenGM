@@ -10,24 +10,34 @@ export const tickTimer = (
 }
 
 const checkForOverflow = (timer, clock, setTimer, setClock) => {
-    const timerExcess = timer - (3600000 * clock.hoursInDay)
     const tempClock = {...clock}
-    if (timerExcess >= 0) {
-        tempClock.dayOfMonth = tempClock.dayOfMonth + 1
-        tempClock.dayOfWeek = tempClock.dayOfWeek + 1
-        if (tempClock.dayOfMonth > tempClock.daysInMonths[tempClock.monthOfYear]) {
-            tempClock.monthOfYear = tempClock.monthOfYear + 1
-            tempClock.dayOfMonth = 1
-            if (tempClock.monthOfYear === tempClock.daysInMonths.length) {
-                tempClock.monthOfYear = 0
-                tempClock.year = tempClock.year + 1
+    let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
+    const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays) - (timer % (3600000 * clock.hoursInDay))
+
+    if (newTimer >= 0) {
+        tempClock.dayOfMonth = tempClock.dayOfMonth + newDays
+        let amountOfDays = tempClock.dayOfMonth
+        let breakWhileLoop = false
+        while(!breakWhileLoop) {
+            if (amountOfDays > tempClock.daysInMonths[tempClock.monthOfYear]) {
+                amountOfDays = amountOfDays - tempClock.daysInMonths[tempClock.monthOfYear]
+                tempClock.monthOfYear = tempClock.monthOfYear + 1
+                if (tempClock.monthOfYear === tempClock.daysInMonths.length) {
+                    tempClock.monthOfYear = 0
+                    tempClock.year = tempClock.year + 1
+                }
+            } else {
+                breakWhileLoop = !breakWhileLoop
+                tempClock.dayOfMonth = amountOfDays
             }
         }
-        if (tempClock.dayOfWeek === tempClock.daysOfWeek.length) {
-            tempClock.dayOfWeek = 0
+        const newDayofWeek = ((tempClock.dayOfWeek + 1) + newDays) % tempClock.daysOfWeek.length
+        if (newDayofWeek > 0) {
+            tempClock.dayOfWeek = newDayofWeek - 1
         }
-        tempClock.timer = timerExcess
-        setTimer(timerExcess)
+        tempClock.timer = newTimer
+        console.log(newDays)
+        setTimer(newTimer)
         setClock(tempClock)
     }
 }
