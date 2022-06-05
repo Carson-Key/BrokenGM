@@ -2,7 +2,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
-import { Timer } from '../components/Clock'
+import { Timer, Controller } from '../components/Clock'
 import IsLoading from '../components/IsLoading'
 // UI
 import Container from '../ui/Container'
@@ -44,6 +44,11 @@ const Clock = () => {
                 <Timer
                     timer={timer}
                     clock={clock}
+                />
+                <Controller
+                    id={id} isAdmin={isAdmin}
+                    timer={timer} setTimer={setTimer}
+                    clock={clock} setClock={setClock} isClock={isClock}
                 />
             </Container>
         </IsLoading>
