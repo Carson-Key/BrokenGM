@@ -6,8 +6,7 @@ export const CONVERSIONS = {
     [TIMEUNITS[3]]: (amount, daysInHours) => {return amount * ((3600000 * daysInHours) * 7)},
     [TIMEUNITS[4]]: (amount, daysInHours, daysInMonths, currentMonth) => {
         let returnValue = 0
-        let j = (currentMonth + 1 === daysInMonths.length) ? 
-        0 : currentMonth + 1
+        let j = currentMonth
         for (let i = amount; i !== 0; i--) {
             returnValue += ((3600000 * daysInHours) * daysInMonths[j])
             j = j + 1

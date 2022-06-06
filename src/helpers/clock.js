@@ -34,6 +34,7 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
     if (newTimer >= 0) {
         let amountOfDays = tempClock.dayOfMonth + newDays
         let breakWhileLoop = false
+        const firstMonth = tempClock.monthOfYear
         while(!breakWhileLoop) {
             const nextMonthIndex = 
                 (tempClock.monthOfYear + 1 === tempClock.daysInMonths.length) ? 
@@ -55,6 +56,7 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
                 tempAmountOfDays >= tempClock.daysInMonths[nextMonthIndex] &&
                 tempAmountOfDays <= tempClock.daysInMonths[tempClock.monthOfYear]
             ) {
+                newDays = newDays - (tempClock.daysInMonths[firstMonth] - tempClock.daysInMonths[nextMonthIndex])
                 tempClock.dayOfMonth = tempClock.daysInMonths[nextMonthIndex]
                 tempClock.monthOfYear = tempClock.monthOfYear + 1
                 if (tempClock.monthOfYear === tempClock.daysInMonths.length) {
@@ -75,7 +77,6 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
             }
         }
         const newDayofWeek = newDays % tempClock.daysOfWeek.length
-        console.log(newDays)
         tempClock.dayOfWeek = tempClock.dayOfWeek + newDayofWeek
         if (tempClock.dayOfWeek >= tempClock.daysOfWeek.length) {
             tempClock.dayOfWeek = tempClock.dayOfWeek - tempClock.daysOfWeek.length
