@@ -18,7 +18,6 @@ export const CONVERSIONS = {
     },
     [TIMEUNITS[5]]: (amount, daysInHours, daysInMonths) => {
         const daysInYear = daysInMonths.reduce((partialSum, a) => partialSum + a, 0)
-        console.log(daysInYear)
         return amount * ((3600000 * daysInHours) * daysInYear)
     },
 }
