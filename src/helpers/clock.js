@@ -3,11 +3,10 @@ export const tickTimer = (
     clock, setClock, setNotification, 
     isAdmin, isClock 
 ) => {
-    // setTimer(prev => prev + 10)
-    // if (timer >= (3600000 * clock.hoursInDay)) {
-    //     checkForOverflow(timer, clock, setTimer, setClock)
-    // }
-    addTime(25, 'hours', clock, timer, setTimer, setClock)
+    setTimer(prev => prev + 10)
+    if (timer >= (3600000 * clock.hoursInDay)) {
+        checkForOverflow(timer, clock, setTimer, setClock)
+    }
 }
 
 const TIMEUNITS = ['mins', 'hours', 'days', 'weeks', 'months', 'years']
@@ -18,10 +17,11 @@ const CONVERSIONS = {
     [TIMEUNITS[3]]: (amount, daysInHours) => {return amount * ((3600000 * daysInHours) * 7)},
     [TIMEUNITS[4]]: (amount, daysInHours, daysInMonths, currentMonth) => {
         let returnValue = 0
-        let j = currentMonth
+        let j = (currentMonth + 1 === daysInMonths.length) ? 
+        0 : currentMonth + 1
         for (let i = amount; i !== 0; i--) {
             returnValue += ((3600000 * daysInHours) * daysInMonths[j])
-            j += 1
+            j = j + 1
             if (j === daysInMonths.length) {
                 j = 0
             }
@@ -30,6 +30,7 @@ const CONVERSIONS = {
     },
     [TIMEUNITS[5]]: (amount, daysInHours, daysInMonths) => {
         const daysInYear = daysInMonths.reduce((partialSum, a) => partialSum + a, 0)
+        console.log(daysInYear)
         return amount * ((3600000 * daysInHours) * daysInYear)
     },
 }
@@ -52,14 +53,40 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
     const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
-    console.log(newTimer)
+
     if (newTimer >= 0) {
-        tempClock.dayOfMonth = tempClock.dayOfMonth + newDays
-        let amountOfDays = tempClock.dayOfMonth
+        let amountOfDays = tempClock.dayOfMonth + newDays
         let breakWhileLoop = false
         while(!breakWhileLoop) {
-            if (amountOfDays > tempClock.daysInMonths[tempClock.monthOfYear]) {
-                amountOfDays = amountOfDays - tempClock.daysInMonths[tempClock.monthOfYear]
+            const nextMonthIndex = 
+                (tempClock.monthOfYear + 1 === tempClock.daysInMonths.length) ? 
+                    0 : tempClock.monthOfYear + 1
+            const tempAmountOfDays = amountOfDays - tempClock.daysInMonths[tempClock.monthOfYear]
+            if (newDays < tempClock.daysInMonths[tempClock.monthOfYear]) {
+                if (amountOfDays > tempClock.daysInMonths[tempClock.monthOfYear]) {
+                    tempClock.dayOfMonth = amountOfDays - tempClock.daysInMonths[tempClock.monthOfYear]
+                    tempClock.monthOfYear = tempClock.monthOfYear + 1
+                    if (tempClock.monthOfYear === tempClock.daysInMonths.length) {
+                        tempClock.monthOfYear = 0
+                        tempClock.year = tempClock.year + 1
+                    }
+                } else {
+                    tempClock.dayOfMonth = amountOfDays
+                }
+                breakWhileLoop = !breakWhileLoop
+            } else if (
+                tempAmountOfDays >= tempClock.daysInMonths[nextMonthIndex] &&
+                tempAmountOfDays <= tempClock.daysInMonths[tempClock.monthOfYear]
+            ) {
+                tempClock.dayOfMonth = tempClock.daysInMonths[nextMonthIndex]
+                tempClock.monthOfYear = tempClock.monthOfYear + 1
+                if (tempClock.monthOfYear === tempClock.daysInMonths.length) {
+                    tempClock.monthOfYear = 0
+                    tempClock.year = tempClock.year + 1
+                }
+                breakWhileLoop = !breakWhileLoop
+            } else if (amountOfDays > tempClock.daysInMonths[tempClock.monthOfYear]) {
+                amountOfDays = tempAmountOfDays
                 tempClock.monthOfYear = tempClock.monthOfYear + 1
                 if (tempClock.monthOfYear === tempClock.daysInMonths.length) {
                     tempClock.monthOfYear = 0
@@ -67,10 +94,10 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
                 }
             } else {
                 breakWhileLoop = !breakWhileLoop
-                tempClock.dayOfMonth = amountOfDays
             }
         }
         const newDayofWeek = newDays % tempClock.daysOfWeek.length
+        console.log(newDays)
         tempClock.dayOfWeek = tempClock.dayOfWeek + newDayofWeek
         if (tempClock.dayOfWeek >= tempClock.daysOfWeek.length) {
             tempClock.dayOfWeek = tempClock.dayOfWeek - tempClock.daysOfWeek.length
