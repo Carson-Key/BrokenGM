@@ -1,106 +1,27 @@
-// Helpers
-import { 
-    yearsOverflow, monthsOverflow, 
-    weeksOverflow, daysOverflow,
-    hoursOverflow, minsOverflow
-} from './timer'
-
-export const EMPTYTIMEROBJECT = {
-    admins: [],
-    dayOfMonth: 0,
-    dayOfWeek: 0,
-    daysInMonths: [],
-    daysOfWeek: [],
-    isActive: false,
-    monthOfYear: 7,
-    monthsOfYear: [] ,
-    name: "",
-    players: [],
-    timer: 0,
-    year: 0,
-    yearSuffix: ""
-}
-
-export const TIMETYPES = {
-    mils: "mils",
-    secs: "secs",
-    mins: "mins",
-    hours: "hours",
-    days: "days",
-    weeks: "weeks",
-    months: "months",
-    years: "years"
-}
-export const TIMENAMESANDTYPES = {
-    mins: {
-        name: "Minutes",
-        type: TIMETYPES.mins
+export const TIMEUNITS = ['mins', 'hours', 'days', 'weeks', 'months', 'years']
+export const CONVERSIONS = {
+    [TIMEUNITS[0]]: (amount) => {return amount * 60000},
+    [TIMEUNITS[1]]: (amount) => {return amount * 3600000},
+    [TIMEUNITS[2]]: (amount, daysInHours) => {return amount * (3600000 * daysInHours)},
+    [TIMEUNITS[3]]: (amount, daysInHours) => {return amount * ((3600000 * daysInHours) * 7)},
+    [TIMEUNITS[4]]: (amount, daysInHours, daysInMonths, currentMonth) => {
+        let returnValue = 0
+        let j = (currentMonth + 1 === daysInMonths.length) ? 
+        0 : currentMonth + 1
+        for (let i = amount; i !== 0; i--) {
+            returnValue += ((3600000 * daysInHours) * daysInMonths[j])
+            j = j + 1
+            if (j === daysInMonths.length) {
+                j = 0
+            }
+        }
+        return returnValue
     },
-    hours: {
-        name: "Hours",
-        type: TIMETYPES.hours
+    [TIMEUNITS[5]]: (amount, daysInHours, daysInMonths) => {
+        const daysInYear = daysInMonths.reduce((partialSum, a) => partialSum + a, 0)
+        console.log(daysInYear)
+        return amount * ((3600000 * daysInHours) * daysInYear)
     },
-    days: {
-        name: "Days",
-        type: TIMETYPES.days
-    },
-    weeks: {
-        name: "Weeks",
-        type: TIMETYPES.weeks
-    },
-    months: {
-        name: "Months",
-        type: TIMETYPES.months
-    },
-    years: {
-        name: "Years",
-        type: TIMETYPES.years
-    }
-}
-export const TIMECONVERSTIONS = {
-    [TIMETYPES.mins]: [
-        {type: TIMETYPES.years, con: 525600}, 
-        {type: TIMETYPES.months, con: 43800}, 
-        {type: TIMETYPES.weeks, con: 10080}, 
-        {type: TIMETYPES.days, con: 1440}, 
-        {type: TIMETYPES.hours, con: 60}
-    ],
-    [TIMETYPES.hours]: [
-        {type: TIMETYPES.years, con: 8760}, 
-        {type: TIMETYPES.months, con: 730}, 
-        {type: TIMETYPES.weeks, con: 168}, 
-        {type: TIMETYPES.days, con: 24}
-    ],
-    [TIMETYPES.days]: [
-        {type: TIMETYPES.years, con: 365}, 
-        {type: TIMETYPES.months, con: 30}, 
-        {type: TIMETYPES.weeks, con: 7}
-    ],
-    [TIMETYPES.weeks]: [
-        {type: TIMETYPES.years, con: 52}, 
-        {type: TIMETYPES.months, con: 4}
-    ],
-    [TIMETYPES.months]: [
-        {type: TIMETYPES.years, con: 12}
-    ],
-    [TIMETYPES.years]: []
-}
-export const OVERFLOWOBJECT = {
-    [TIMETYPES.mins]: (amount, returnedObject) => {minsOverflow(amount, returnedObject)},
-    [TIMETYPES.hours]: (amount, returnedObject) => {hoursOverflow(amount, returnedObject)},
-    [TIMETYPES.days]: (amount, returnedObject) => {daysOverflow(amount, returnedObject)},
-    [TIMETYPES.weeks]: (amount, returnedObject) => {weeksOverflow(amount, returnedObject)},
-    [TIMETYPES.months]: (amount, returnedObject) => {monthsOverflow(amount, returnedObject)},
-    [TIMETYPES.years]: (amount, returnedObject) => {yearsOverflow(amount, returnedObject)}
-}
-export const ADDUNITINMILI = {
-    [TIMETYPES.secs]: 1000,
-    [TIMETYPES.mins]: 60000,
-    [TIMETYPES.hours]: 3600000,
-    [TIMETYPES.days]: 1,
-    [TIMETYPES.weeks]: 1,
-    [TIMETYPES.months]: 1,
-    [TIMETYPES.years]: 1
 }
 
 export const RELATIONINDICATORCLASSES = {
