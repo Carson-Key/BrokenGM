@@ -119,8 +119,9 @@ const Controller = (props) => {
                                     key={i}
                                     className="px-2"
                                     onClick={() => {
-                                        if (changeTimerValue && !isNaN(parseInt(changeTimerValue))) {
-                                            addTime(parseInt(changeTimerValue), timeUnit, clock, timer, setTimer, setClock)
+                                        const intChangedTimerValue = parseInt(changeTimerValue)
+                                        if (changeTimerValue && !isNaN(intChangedTimerValue)) {
+                                            addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock)
                                         } else {
                                             fireError(
                                                 setNotification, 
