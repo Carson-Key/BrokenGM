@@ -16,13 +16,13 @@ const Controller = (props) => {
     useEffect(() => {
         let interval = null
         if (clock.isActive) {
-            interval = setInterval(() => {
-                tickTimer(
-                    id, timer, setTimer, 
-                    clock, setClock, setNotification, 
-                    isAdmin, isClock
-                )
-            }, 10)
+            // interval = setInterval(() => {
+            //     tickTimer(
+            //         id, timer, setTimer, 
+            //         clock, setClock, setNotification, 
+            //         isAdmin, isClock
+            //     )
+            // }, 10)
         } else if (!clock.isActive) {
             clearInterval(interval)
         }
@@ -32,7 +32,12 @@ const Controller = (props) => {
     return (
         <>
             <button onClick={() => {
-                setClock(prev => ({...prev, isActive: !prev.isActive}))
+                // setClock(prev => ({...prev, isActive: !prev.isActive}))
+                tickTimer(
+                    id, timer, setTimer, 
+                    clock, setClock, setNotification, 
+                    isAdmin, isClock
+                )
             }}>Start</button>
         </>
 	)
