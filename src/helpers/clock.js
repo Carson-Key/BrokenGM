@@ -7,7 +7,7 @@ export const tickTimer = (
     // if (timer >= (3600000 * clock.hoursInDay)) {
     //     checkForOverflow(timer, clock, setTimer, setClock)
     // }
-    addTime(1, 'years', clock, timer, setTimer, setClock)
+    addTime(25, 'hours', clock, timer, setTimer, setClock)
 }
 
 const TIMEUNITS = ['mins', 'hours', 'days', 'weeks', 'months', 'years']
@@ -51,8 +51,8 @@ const addTime = (amount, unit, clock, timer, setTimer, setClock) => {
 const checkForOverflow = (timer, clock, setTimer, setClock) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
-    const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays) - (timer % (3600000 * clock.hoursInDay))
-
+    const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
+    console.log(newTimer)
     if (newTimer >= 0) {
         tempClock.dayOfMonth = tempClock.dayOfMonth + newDays
         let amountOfDays = tempClock.dayOfMonth
