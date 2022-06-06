@@ -5,9 +5,11 @@ import ConditionalRender from '../ConditionalRender'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { tickTimer } from '../../helpers/clock'
+import { tickTimer, addTime } from '../../helpers/clock'
 import { updateDocumentWithPromise } from '../../helpers/firestore.js'
-import { firePing } from "../../helpers/notifications"
+import { firePing, fireError } from "../../helpers/notifications"
+// Objects
+import { TIMEUNITS } from "../../helpers/objects"
 
 const Controller = (props) => {
     const { 
@@ -67,7 +69,7 @@ const Controller = (props) => {
 
     return (
         <ConditionalRender condition={isAdmin}>
-            <section className="mx-auto w-fit my-4">
+            <section className="mx-auto w-fit my-8">
                 <button 
                     className={"text-white text-center text-md md:text-3xl rounded px-3 py-2 " + timerStateButtonColor}
                     onClick={() => {
@@ -84,7 +86,7 @@ const Controller = (props) => {
                     {timerStateButtonText}
                 </button>
                 <button 
-                    className={"ml-3 text-white text-md md:text-3xl rounded px-3 py-2 mb-6 bg-blue-500"}
+                    className={"ml-3 text-white text-md md:text-3xl rounded px-3 py-2 bg-blue-500"}
                     onClick={() => {
                         updateDocumentWithPromise(
                             "clocks", id, 
@@ -97,6 +99,42 @@ const Controller = (props) => {
                 >
                     Save Timer
                 </button>
+            </section>
+            <section className="mx-auto w-fit text-center flex text-md md:text-3xl">
+                <input 
+                    className="bg-gray-100 px-1 py-1 md:px-3 rounded-l-md w-10 md:w-40"
+                    type="text" 
+                    name="Change Clock" 
+                    placeholder="+/- Time"
+                    value={changeTimerValue}
+                    onChange={(event) => {
+                        setChangeTimerValue(event.target.value)
+                    }}
+                />
+                <div className="border-y border-r rounded-r-md px-1 py-1 md:px-3 md:py-2 divide divide-x">
+                    {
+                        TIMEUNITS.map((timeUnit, i) => {
+                            return (
+                                <button 
+                                    key={i}
+                                    className="px-2"
+                                    onClick={() => {
+                                        if (changeTimerValue && !isNaN(parseInt(changeTimerValue))) {
+                                            addTime(parseInt(changeTimerValue), timeUnit, clock, timer, setTimer, setClock)
+                                        } else {
+                                            fireError(
+                                                setNotification, 
+                                                "Bad User Input", "Illegal character, please only use numbers"
+                                            )
+                                        }
+                                    }}
+                                >
+                                    {TIMEUNITS[i]}
+                                </button>
+                            )
+                        })
+                    }
+                </div>
             </section>
         </ConditionalRender>
 	)

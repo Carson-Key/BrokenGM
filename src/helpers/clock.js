@@ -12,7 +12,7 @@ export const tickTimer = (
     }
 }
 
-const addTime = (amount, unit, clock, timer, setTimer, setClock) => {
+export const addTime = (amount, unit, clock, timer, setTimer, setClock) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
         clock.daysInMonths, clock.monthOfYear
