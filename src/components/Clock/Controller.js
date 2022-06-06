@@ -7,6 +7,7 @@ import { NotificationContext } from '../../contexts/Notification'
 // Helpers
 import { tickTimer } from '../../helpers/clock'
 import { updateDocumentWithPromise } from '../../helpers/firestore.js'
+import { firePing } from "../../helpers/notifications"
 
 const Controller = (props) => {
     const { 
@@ -81,6 +82,20 @@ const Controller = (props) => {
                     }}
                 >
                     {timerStateButtonText}
+                </button>
+                <button 
+                    className={"ml-3 text-white text-md md:text-3xl rounded px-3 py-2 mb-6 bg-blue-500"}
+                    onClick={() => {
+                        updateDocumentWithPromise(
+                            "clocks", id, 
+                            {...clock, timer}, 
+                            setNotification, isClock
+                        ).then(() => {
+                            firePing(setNotification, "Successful save to Firestore", "You have successfully saved the clock")
+                        })
+                    }}
+                >
+                    Save Timer
                 </button>
             </section>
         </ConditionalRender>
