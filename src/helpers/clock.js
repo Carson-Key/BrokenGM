@@ -70,6 +70,7 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
                     tempClock.year = tempClock.year + 1
                 }
             } else {
+                tempClock.dayOfMonth = amountOfDays
                 breakWhileLoop = !breakWhileLoop
             }
         }
