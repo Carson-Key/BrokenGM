@@ -5,7 +5,7 @@ import ConditionalRender from '../ConditionalRender'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { tickTimer, addTime } from '../../helpers/clock'
+import { tickTimer, addTime, subtractTime } from '../../helpers/clock'
 import { updateDocumentWithPromise } from '../../helpers/firestore.js'
 import { firePing, fireError } from "../../helpers/notifications"
 // Objects
@@ -121,7 +121,11 @@ const Controller = (props) => {
                                     onClick={() => {
                                         const intChangedTimerValue = parseInt(changeTimerValue)
                                         if (changeTimerValue && !isNaN(intChangedTimerValue)) {
-                                            addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock)
+                                            if (intChangedTimerValue > 0) {
+                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock)
+                                            } else {
+                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock)
+                                            }
                                         } else {
                                             fireError(
                                                 setNotification, 

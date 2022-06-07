@@ -25,6 +25,9 @@ export const addTime = (amount, unit, clock, timer, setTimer, setClock) => {
         setClock(prev => ({...prev, timer: newTimer}))
     }
 }
+export const subtractTime = (amount, unit, clock, timer, setTimer, setClock) => {
+    checkForNegativeOverflow(timer, clock, setTimer, setClock)
+}
 
 const checkForOverflow = (timer, clock, setTimer, setClock) => {
     const tempClock = {...clock}
@@ -85,4 +88,8 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
         setTimer(newTimer)
         setClock(tempClock)
     }
+}
+
+const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
+    
 }

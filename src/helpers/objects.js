@@ -5,16 +5,29 @@ export const CONVERSIONS = {
     [TIMEUNITS[2]]: (amount, daysInHours) => {return amount * (3600000 * daysInHours)},
     [TIMEUNITS[3]]: (amount, daysInHours) => {return amount * ((3600000 * daysInHours) * 7)},
     [TIMEUNITS[4]]: (amount, daysInHours, daysInMonths, currentMonth) => {
-        let returnValue = 0
-        let j = currentMonth
-        for (let i = amount; i !== 0; i--) {
-            returnValue += ((3600000 * daysInHours) * daysInMonths[j])
-            j = j + 1
-            if (j === daysInMonths.length) {
-                j = 0
+        if (amount < 0) {
+            let returnValue = 0
+            let j = currentMonth
+            for (let i = amount; i !== 0; i++) {
+                returnValue -= ((3600000 * daysInHours) * daysInMonths[j])
+                j = j - 1
+                if (j === 0) {
+                    j = daysInMonths.length - 1
+                }
             }
+            return returnValue
+        } else {
+            let returnValue = 0
+            let j = currentMonth
+            for (let i = amount; i !== 0; i--) {
+                returnValue += ((3600000 * daysInHours) * daysInMonths[j])
+                j = j + 1
+                if (j === daysInMonths.length) {
+                    j = 0
+                }
+            }
+            return returnValue
         }
-        return returnValue
     },
     [TIMEUNITS[5]]: (amount, daysInHours, daysInMonths) => {
         const daysInYear = daysInMonths.reduce((partialSum, a) => partialSum + a, 0)
