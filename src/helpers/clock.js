@@ -26,7 +26,17 @@ export const addTime = (amount, unit, clock, timer, setTimer, setClock) => {
     }
 }
 export const subtractTime = (amount, unit, clock, timer, setTimer, setClock) => {
-    checkForNegativeOverflow(timer, clock, setTimer, setClock)
+    const amountOfMilli = CONVERSIONS[unit](
+        amount, clock.hoursInDay, 
+        clock.daysInMonths, clock.monthOfYear
+    )
+    let newTimer = timer + amountOfMilli
+    if (newTimer < 0) {
+        checkForNegativeOverflow(timer, clock, setTimer, setClock)
+    } else {
+        setTimer(newTimer)
+        setClock(prev => ({...prev, timer: newTimer}))
+    }
 }
 
 const checkForOverflow = (timer, clock, setTimer, setClock) => {
