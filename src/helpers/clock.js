@@ -1,4 +1,5 @@
 // Helpers
+import { getDocument, updateDocument } from './firestore.js'
 import { CONVERSIONS } from './objects.js'
 
 export const tickTimer = (
@@ -7,39 +8,57 @@ export const tickTimer = (
     isAdmin, isClock 
 ) => {
     setTimer(prev => prev + 10)
+    if (timer % 90000 === 0 && isAdmin) {
+        if (isAdmin) {
+            updateDocument(
+                "clocks", id, 
+                {...clock, timer}, setNotification, isClock)
+        } else {
+            getDocument("clocks", id, setNotification).then((data) => {
+                setClock(data.data())
+                setTimer(data.data().timer + 10)
+            })
+        }
+    }
     if (timer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(timer, clock, setTimer, setClock)
+        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin)
     }
 }
 
-export const addTime = (amount, unit, clock, timer, setTimer, setClock) => {
+export const addTime = (
+    amount, unit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin
+) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
         clock.daysInMonths, clock.monthOfYear
     )
     let newTimer = timer + amountOfMilli
     if (newTimer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(newTimer, clock, setTimer, setClock)
+        checkForOverflow(newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin)
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
     }
 }
-export const subtractTime = (amount, unit, clock, timer, setTimer, setClock) => {
+export const subtractTime = (
+    amount, unit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin
+) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
         clock.daysInMonths, clock.monthOfYear
     )
     let newTimer = timer + amountOfMilli
     if (newTimer < 0) {
-        checkForNegativeOverflow(newTimer, clock, setTimer, setClock)
+        checkForNegativeOverflow(
+            newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin
+        )
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
     }
 }
 
-const checkForOverflow = (timer, clock, setTimer, setClock) => {
+const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
     const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
@@ -97,10 +116,16 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
         tempClock.timer = newTimer
         setTimer(newTimer)
         setClock(tempClock)
+        if (isAdmin) {
+            updateDocument(
+                "clocks", id, 
+                tempClock, setNotification, isClock
+            )
+        }
     }
 }
 
-const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
+const checkForNegativeOverflow = (timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
     const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
@@ -166,5 +191,11 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
         tempClock.timer = newTimer
         setTimer(newTimer)
         setClock(tempClock)
+        if (isAdmin) {
+            updateDocument(
+                "clocks", id, 
+                tempClock, setNotification, isClock
+            )
+        }
     }
 }

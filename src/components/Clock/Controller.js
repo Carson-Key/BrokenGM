@@ -122,9 +122,9 @@ const Controller = (props) => {
                                         const intChangedTimerValue = parseInt(changeTimerValue)
                                         if (changeTimerValue && !isNaN(intChangedTimerValue)) {
                                             if (intChangedTimerValue > 0) {
-                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock)
+                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin)
                                             } else {
-                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock)
+                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin)
                                             }
                                         } else {
                                             fireError(
