@@ -1,3 +1,3 @@
 // Clock
-export { default as Timer } from "./Timer";
-export { default as TimerController } from "./TimerController";
+export { default as Timer } from "./Timer"
+export { default as Controller } from "./Controller"

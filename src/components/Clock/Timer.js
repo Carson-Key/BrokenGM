@@ -1,38 +1,8 @@
-// Packages
-import { useEffect, useContext } from 'react'
-// Contexts
-import { NotificationContext } from '../../contexts/Notification'
 // Helpers
-import { addMilliSecond } from '../../helpers/timer'
 import { getNumberSuffix, capitalizeFirstLetter } from '../../helpers/misc'
 
 const Timer = (props) => {
-    const { 
-        id,
-        timer, 
-        setTimer,
-        isActive,
-        isLoading,
-        isAdmin,
-        isClock,
-        timerObject,
-        setTimerObject
-    } = props
-    const setNotification = useContext(NotificationContext)[1]
-
-    useEffect(() => {
-        if (!isLoading) {
-            let interval = null
-            if (isActive) {
-                interval = setInterval(() => {
-                    addMilliSecond(id, timer, setTimer, timerObject, setTimerObject, setNotification, isAdmin, isClock)
-                }, 10)
-            } else if (!isActive && timer !== 0) {
-                clearInterval(interval)
-            }
-            return () => clearInterval(interval)
-        }
-    }, [id, isActive, timer, setTimer, isLoading, isClock, timerObject, setTimerObject, setNotification, isAdmin])
+    const { timer, clock } = props
 
     return (
         <section className="h-full">
@@ -40,21 +10,21 @@ const Timer = (props) => {
                 <p>
                     {
                         capitalizeFirstLetter(
-                            timerObject.daysOfWeek[timerObject.dayOfWeek]
+                            clock.daysOfWeek[clock.dayOfWeek]
                         ) + ","
                     }
                 </p>
                 <p className="lg:mx-2">
                 {" The " +
-                    timerObject.dayOfMonth}{getNumberSuffix(timerObject.dayOfMonth)
+                    clock.dayOfMonth}{getNumberSuffix(clock.dayOfMonth)
                 + " of " +
                     capitalizeFirstLetter(
-                        timerObject.monthsOfYear[timerObject.monthOfYear]
+                        clock.monthsOfYear[clock.monthOfYear]
                     )
                 + ", "}
                 </p>
                 <p>
-                    {timerObject.year} {timerObject.yearSuffix}
+                    {Math.abs(clock.year)} {(clock.year >= 0) ? clock.yearSuffix : clock.preYearSuffix}
                 </p>
             </h1>
             <h1 className="text-5xl w-fit mx-auto pt-6">
