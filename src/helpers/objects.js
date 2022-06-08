@@ -11,7 +11,7 @@ export const CONVERSIONS = {
             for (let i = amount; i !== 0; i++) {
                 returnValue -= ((3600000 * daysInHours) * daysInMonths[j])
                 j = j - 1
-                if (j === 0) {
+                if (j === -1) {
                     j = daysInMonths.length - 1
                 }
             }

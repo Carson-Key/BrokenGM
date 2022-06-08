@@ -32,7 +32,7 @@ export const subtractTime = (amount, unit, clock, timer, setTimer, setClock) => 
     )
     let newTimer = timer + amountOfMilli
     if (newTimer < 0) {
-        checkForNegativeOverflow(timer, clock, setTimer, setClock)
+        checkForNegativeOverflow(newTimer, clock, setTimer, setClock)
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
@@ -101,5 +101,66 @@ const checkForOverflow = (timer, clock, setTimer, setClock) => {
 }
 
 const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
-    
+    const tempClock = {...clock}
+    let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
+    const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
+
+    if (newTimer >= 0) {
+        let amountOfDays = tempClock.dayOfMonth + Math.abs(newDays)
+        let breakWhileLoop = false
+        const firstMonth = tempClock.monthOfYear
+        while(!breakWhileLoop) {
+            const nextMonthIndex = 
+                (tempClock.monthOfYear - 1 === -1) ? 
+                tempClock.daysInMonths.length - 1 : tempClock.monthOfYear - 1
+            const tempAmountOfDays = amountOfDays - tempClock.daysInMonths[tempClock.monthOfYear]
+            if (Math.abs(newDays) < tempClock.daysInMonths[firstMonth]) {
+                if (Math.abs(newDays) >= tempClock.dayOfMonth) {
+                    tempClock.dayOfMonth =  tempClock.daysInMonths[nextMonthIndex] - (Math.abs(newDays) - tempClock.dayOfMonth)
+                    tempClock.monthOfYear = tempClock.monthOfYear - 1
+                    if (tempClock.monthOfYear === -1) {
+                        tempClock.monthOfYear = tempClock.daysInMonths.length - 1
+                        tempClock.year = tempClock.year - 1
+                    }
+                } else {
+                    tempClock.dayOfMonth = tempClock.dayOfMonth - Math.abs(newDays)
+                }
+                breakWhileLoop = !breakWhileLoop
+            } else if (
+                tempAmountOfDays >= tempClock.daysInMonths[nextMonthIndex] &&
+                tempAmountOfDays <= tempClock.daysInMonths[tempClock.monthOfYear]
+            ) {
+                newDays = newDays - (tempClock.daysInMonths[firstMonth] - tempClock.daysInMonths[nextMonthIndex])
+                tempClock.dayOfMonth = tempClock.daysInMonths[nextMonthIndex]
+                tempClock.monthOfYear = tempClock.monthOfYear - 1
+                if (tempClock.monthOfYear === -1) {
+                    tempClock.monthOfYear = tempClock.daysInMonths.length - 1
+                    tempClock.year = tempClock.year - 1
+                }
+                breakWhileLoop = !breakWhileLoop
+            } else if (amountOfDays > tempClock.daysInMonths[nextMonthIndex]) {
+                if (tempAmountOfDays === 0) {
+                    breakWhileLoop = !breakWhileLoop
+                } else {
+                    amountOfDays = tempAmountOfDays
+                    tempClock.monthOfYear = tempClock.monthOfYear - 1
+                    if (tempClock.monthOfYear === -1) {
+                        tempClock.monthOfYear = tempClock.daysInMonths.length - 1
+                        tempClock.year = tempClock.year - 1
+                    }
+                }
+            } else {
+                tempClock.dayOfMonth = amountOfDays
+                breakWhileLoop = !breakWhileLoop
+            }
+        }
+        const newDayofWeek = newDays % tempClock.daysOfWeek.length
+        tempClock.dayOfWeek = tempClock.dayOfWeek + newDayofWeek
+        if (tempClock.dayOfWeek < 0) {
+            tempClock.dayOfWeek = tempClock.dayOfWeek + tempClock.daysOfWeek.length
+        }
+        tempClock.timer = newTimer
+        setTimer(newTimer)
+        setClock(tempClock)
+    }
 }
