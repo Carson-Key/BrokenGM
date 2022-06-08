@@ -159,8 +159,6 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
             }
         }
         const newDayofWeek = (newDays) % tempClock.daysOfWeek.length
-        console.log(newDays)
-        console.log(tempClock.daysOfWeek.length)
         tempClock.dayOfWeek = tempClock.dayOfWeek + newDayofWeek
         if (tempClock.dayOfWeek < 0) {
             tempClock.dayOfWeek = tempClock.dayOfWeek + tempClock.daysOfWeek.length
