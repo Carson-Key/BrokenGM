@@ -38,6 +38,12 @@ export const addTime = (
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
+        if (isAdmin) {
+            updateDocument(
+                "clocks", id, 
+                {...clock, timer: newTimer}, setNotification, isClock
+            )
+        }
     }
 }
 export const subtractTime = (
@@ -55,6 +61,12 @@ export const subtractTime = (
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
+        if (isAdmin) {
+            updateDocument(
+                "clocks", id, 
+                {...clock, timer: newTimer}, setNotification, isClock
+            )
+        }
     }
 }
 
@@ -113,6 +125,7 @@ const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification,
         if (tempClock.dayOfWeek >= tempClock.daysOfWeek.length) {
             tempClock.dayOfWeek = tempClock.dayOfWeek - tempClock.daysOfWeek.length
         }
+        console.log(isAdmin)
         tempClock.timer = newTimer
         setTimer(newTimer)
         setClock(tempClock)
@@ -188,6 +201,7 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock, id, setNotif
         if (tempClock.dayOfWeek < 0) {
             tempClock.dayOfWeek = tempClock.dayOfWeek + tempClock.daysOfWeek.length
         }
+        console.log(isAdmin)
         tempClock.timer = newTimer
         setTimer(newTimer)
         setClock(tempClock)
