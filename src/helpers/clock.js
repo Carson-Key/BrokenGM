@@ -130,7 +130,6 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
                 tempAmountOfDays >= tempClock.daysInMonths[nextMonthIndex] &&
                 tempAmountOfDays <= tempClock.daysInMonths[tempClock.monthOfYear]
             ) {
-                newDays = newDays - (tempClock.daysInMonths[firstMonth] - tempClock.daysInMonths[nextMonthIndex])
                 tempClock.dayOfMonth = tempClock.daysInMonths[nextMonthIndex]
                 tempClock.monthOfYear = tempClock.monthOfYear - 1
                 if (tempClock.monthOfYear === -1) {
@@ -150,11 +149,18 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock) => {
                     }
                 }
             } else {
+                if (tempClock.daysInMonths[firstMonth] < tempClock.daysInMonths[tempClock.monthOfYear]) {
+                    newDays = newDays - (tempClock.daysInMonths[tempClock.monthOfYear] - amountOfDays)
+                } else if (tempClock.daysInMonths[firstMonth] > tempClock.daysInMonths[tempClock.monthOfYear]) {
+                    newDays = -1 * tempClock.daysInMonths[tempClock.monthOfYear]
+                }
                 tempClock.dayOfMonth = amountOfDays
                 breakWhileLoop = !breakWhileLoop
             }
         }
-        const newDayofWeek = newDays % tempClock.daysOfWeek.length
+        const newDayofWeek = (newDays) % tempClock.daysOfWeek.length
+        console.log(newDays)
+        console.log(tempClock.daysOfWeek.length)
         tempClock.dayOfWeek = tempClock.dayOfWeek + newDayofWeek
         if (tempClock.dayOfWeek < 0) {
             tempClock.dayOfWeek = tempClock.dayOfWeek + tempClock.daysOfWeek.length
