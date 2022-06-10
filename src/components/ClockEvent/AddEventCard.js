@@ -70,6 +70,7 @@ const AddEventCard = (props) => {
                             const daysInMonth = clockData ? (clockData.daysInMonths[time.monthsNumber - 1] ? clockData.daysInMonths[time.monthsNumber - 1] : -1 ) : null
                             const monthsInYear = clockData ? clockData.daysInMonths.length : null
                             const daysInYear = clockData ? clockData.daysInMonths.reduce((partialSum, a) => partialSum + a, 0) : null
+                            const daysInMonths = clockData ? clockData.daysInMonths : null
                             if (checkInput(
                                 [time.minsNumber, time.hoursNumber, time.daysNumber, time.monthsNumber, time.yearsNumber],
                                 [time.minsString, time.hoursString, time.daysString, time.monthsString, time.yearsString],
@@ -78,7 +79,7 @@ const AddEventCard = (props) => {
                                 saveEvent(
                                     time.timer, time.daysNumber, time.monthsNumber, time.yearsNumber,
                                     descriptionToAdd, setNotification,
-                                    id, events, setEvents, isClockEvents, hoursInDay, daysInYear
+                                    id, events, setEvents, isClockEvents, hoursInDay, daysInYear, daysInMonths
                                 )
                             }
                         }

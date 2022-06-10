@@ -86,10 +86,10 @@ export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, 
 export const saveEvent = (
     timer, days, months, years,
     descriptionToAdd, setNotification,
-    id, events, setEvents, isClockEvents, hoursInDay, daysInYear
+    id, events, setEvents, isClockEvents, hoursInDay, daysInYear, daysInMonths
 ) => {
     const newEvent = translateInputToFullTimeStamp(timer, days, months, years) + "{" + descriptionToAdd + "}"
-    if (hoursInDay && daysInYear) {
+    if (hoursInDay && daysInYear && daysInMonths) {
         let tempEvents = [...events, newEvent].sort((a, b) => { 
             const timeA = parseEventString(a).time
             const timeB = parseEventString(b).time
@@ -97,10 +97,12 @@ export const saveEvent = (
             return (
                 (
                     (timeA.year * (daysInYear * hoursInDay * 3600000)) +
+                    (daysInMonths.slice(0, timeA.month).reduce((a,b)=>a+b,0) * (hoursInDay * 3600000)) +
                     (timeA.day * (hoursInDay * 3600000)) + timeA.timer
                 ) - 
                 (
                     (timeB.year * (daysInYear * hoursInDay * 3600000)) +
+                    (daysInMonths.slice(0, timeB.month).reduce((a,b)=>a+b,0) * (hoursInDay * 3600000)) +
                     (timeB.day * (hoursInDay * 3600000)) + timeB.timer
                 )
             )
