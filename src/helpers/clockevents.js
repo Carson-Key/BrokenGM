@@ -45,7 +45,7 @@ export const translateInputToFullTimeStamp = (timeStamp, days, months, years) =>
     return ("[" + years + ":" + months + ":" + days + ":" + timeStamp + "]")
 }
 
-export const checkInput = (timeNumberArray, timeStringArray, setNotification) => {
+export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, setNotification) => {
     let returnBool = true
     timeNumberArray.forEach((time) => {
         if (isNaN(time)) {
@@ -64,10 +64,18 @@ export const checkInput = (timeNumberArray, timeStringArray, setNotification) =>
             returnBool = false
         }
     })
+    if (hoursInDay) {
+        if (timer > (hoursInDay * 3600000)) {
+            fireError(setNotification, "Bad User Input", "The hours you entered exceed the amount in the clock")
+            returnBool = false
+        }
+    }
+
     return returnBool
 }
 export const saveEvent = (
-    timeToAdd, descriptionToAdd, setNotification,
+    mins, hours, days, months, years,
+    descriptionToAdd, setNotification,
     id, events, setEvents, isClockEvents
 ) => {
 

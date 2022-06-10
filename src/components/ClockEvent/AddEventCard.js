@@ -4,12 +4,12 @@ import { useState, useContext } from 'react'
 import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
 // Helpers
-import { saveEvent, checkInput } from '../../helpers/clockevents'
+import { saveEvent, checkInput, translateTimeStampToMili } from '../../helpers/clockevents'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 
 const AddEventCard = (props) => {
-    const { id, events, setEvents, isClockEvents } = props
+    const { id, events, setEvents, isClockEvents, clockData } = props
     const [timeToAdd, setTimeToAdd] = useState("")
     const [descriptionToAdd, setDescriptionToAdd] = useState("")
     const setNotification = useContext(NotificationContext)[1]
@@ -53,7 +53,7 @@ const AddEventCard = (props) => {
                         () => {
                             const splitTime = timeToAdd.split("/")
                             const splitHoursMinis = splitTime[0].split(":")
-                            const time = {
+                            let time = {
                                 minsNumber: parseInt(splitHoursMinis[1]),
                                 hoursNumber: parseInt(splitHoursMinis[0]),
                                 daysNumber: parseInt(splitTime[1]),
@@ -63,15 +63,18 @@ const AddEventCard = (props) => {
                                 hoursString: splitHoursMinis[0],
                                 daysString: splitTime[1],
                                 monthsString: splitTime[2],
-                                yearsString: splitTime[3],
+                                yearsString: splitTime[3]
                             }
+                            time.timer = translateTimeStampToMili(time.hoursNumber, time.minsNumber)
+                            const hoursInDay = clockData ? clockData.hoursInDay : null
                             if (checkInput(
                                 [time.minsNumber, time.hoursNumber, time.daysNumber, time.monthsNumber, time.yearsNumber],
                                 [time.minsString, time.hoursString, time.daysString, time.monthsString, time.yearsString],
-                                setNotification
+                                time.timer, hoursInDay, setNotification
                             )) {
                                 saveEvent(
-                                    timeToAdd, descriptionToAdd, setNotification,
+                                    time.minsNumber, time.hoursNumber, time.daysNumber, time.monthsNumber, time.yearsNumber,
+                                    descriptionToAdd, setNotification,
                                     id, events, setEvents, isClockEvents
                                 )
                             }

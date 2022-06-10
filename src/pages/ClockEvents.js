@@ -80,6 +80,7 @@ const Relation = () => {
                         events={events}
                         setEvents={setEvents}
                         isClockEvents={isClockEvents}
+                        clockData={clockData}
                     />
                 </ConditionalRender>
             </Container>
