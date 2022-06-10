@@ -1,6 +1,7 @@
 // Helpers
 import { getNumberSuffix, capitalizeFirstLetter } from './misc'
 import { fireError } from './notifications'
+import { updateDocument } from './firestore'
 // Objects
 import { CLOCKEVENTUNITS } from './objects'
 
@@ -107,9 +108,11 @@ export const saveEvent = (
                 )
             )
         } )
-        console.log(tempEvents)
+        updateDocument("clockevents", id, {events: tempEvents}, setNotification, isClockEvents)
+        setEvents(tempEvents)
     } else {
         let tempEvents = [...events, newEvent]
-        console.log(tempEvents)
+        updateDocument("clockevents", id, {events: tempEvents}, setNotification, isClockEvents)
+        setEvents(tempEvents)
     }
 }

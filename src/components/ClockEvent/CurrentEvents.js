@@ -13,9 +13,16 @@ const CurrentEvents = (props) => {
             const { time, description } = parseEventString(event)
             if (clockData) {
                 if (
-                    (time.year >= clockData.year && 
-                    time.month >= clockData.monthOfYear &&
-                    time.day >= clockData.dayOfMonth) && time.timer > clockData.timer
+                    (
+                        time.year > clockData.year || 
+                        time.month > clockData.monthOfYear ||
+                        time.day > clockData.dayOfMonth
+                    ) || (
+                        time.year === clockData.year && 
+                        time.month === clockData.monthOfYear &&
+                        time.day === clockData.dayOfMonth && 
+                        time.timer > clockData.timer
+                    )
                 ) {
                     return (
                         <EventCard 
@@ -25,7 +32,7 @@ const CurrentEvents = (props) => {
                             clockData={clockData}
                         />
                     )
-                } 
+                }
             }
             return <Fragment key={i}></Fragment>
         })
