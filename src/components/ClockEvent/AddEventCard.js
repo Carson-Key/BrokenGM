@@ -57,7 +57,7 @@ const AddEventCard = (props) => {
                                 minsNumber: parseInt(splitHoursMinis[1]),
                                 hoursNumber: parseInt(splitHoursMinis[0]),
                                 daysNumber: parseInt(splitTime[1]),
-                                monthsNumber: parseInt(splitTime[2]),
+                                monthsNumber: parseInt(splitTime[2]) - 1,
                                 yearsNumber: parseInt(splitTime[3]),
                                 minsString: splitHoursMinis[1],
                                 hoursString: splitHoursMinis[0],
@@ -67,7 +67,7 @@ const AddEventCard = (props) => {
                             }
                             time.timer = translateTimeStampToMili(time.hoursNumber, time.minsNumber)
                             const hoursInDay = clockData ? clockData.hoursInDay : null
-                            const daysInMonth = clockData ? (clockData.daysInMonths[time.monthsNumber - 1] ? clockData.daysInMonths[time.monthsNumber - 1] : -1 ) : null
+                            const daysInMonth = clockData ? (clockData.daysInMonths[time.monthsNumber] ? clockData.daysInMonths[time.monthsNumber] : -1 ) : null
                             const monthsInYear = clockData ? clockData.daysInMonths.length : null
                             const daysInYear = clockData ? clockData.daysInMonths.reduce((partialSum, a) => partialSum + a, 0) : null
                             const daysInMonths = clockData ? clockData.daysInMonths : null
