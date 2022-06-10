@@ -25,8 +25,8 @@ const EventCard = (props) => {
 
                 }
             </CardTitle>
-            <div className="mx-4 w-72 scrollbar-hide overflow-scroll divide-y">
-                {description}
+            <div className="text-center my-2 mx-4 w-72 scrollbar-hide overflow-scroll">
+                <p>{description}</p>
             </div>
         </Card>
 	)
