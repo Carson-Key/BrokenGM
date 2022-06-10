@@ -6,7 +6,8 @@ import {
     CampaignLinkCard, 
     ClockSettings, 
     RelationSettings ,
-    VotingSystemSettings
+    VotingSystemSettings,
+    ClockEventsSettings
 } from '../components/Campaign'
 import IsLoading from '../components/IsLoading'
 // UI
@@ -27,14 +28,16 @@ const Campaign = () => {
     const [clocks, setClocks] = useState([])
     const [relations, setRelations] = useState([])
     const [votingSystems, setVotingSystems] = useState([])
+    const [clockEvents, setClockEvents] = useState([])
     const [players, setPlayers] = useState([])
 
     useEffect(() => {
         getDocument("campaigns", id, setNotification).then((data) => {
             const campaignData = data.data()
-            setClocks(campaignData.clocks)
-            setRelations(campaignData.relations)
-            setVotingSystems(campaignData.votingsystems)
+            setClocks((campaignData.clocks) ? campaignData.clocks : [])
+            setRelations((campaignData.relations) ? campaignData.relations : [])
+            setVotingSystems((campaignData.votingsystems) ? campaignData.votingsystems : [])
+            setClockEvents((campaignData.clockevents) ? campaignData.clockevents : [])
             getCurrentUser(setUID, (uid) => {
                 if (campaignData.admins.includes(uid)) {
                     setIsAdmin(true)
@@ -74,6 +77,15 @@ const Campaign = () => {
                     playerBody="To Voting System"
                     players={players}
                     Settings={VotingSystemSettings}
+                />
+                <CampaignLinkCard 
+                    docID="clockevents"
+                    path="clockevents"
+                    items={clockEvents} 
+                    isAdmin={isAdmin}
+                    playerBody="To Clock Events"
+                    players={players}
+                    Settings={ClockEventsSettings}
                 />
             </Container>
         </IsLoading>
