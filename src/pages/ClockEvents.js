@@ -1,10 +1,10 @@
 // Packages
-import { Fragment, useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
-import { PastEvents, AddEventCard } from '../components/ClockEvent'
+import { PastEvents, AddEventCard, CurrentEvents } from '../components/ClockEvent'
 // UI
 import Container from "../ui/Container"
 // Contexts
@@ -65,7 +65,12 @@ const Relation = () => {
                 </button>
             </div>
             <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
-                <PastEvents events={events} clockData={clockData} />
+                <ConditionalRender 
+                    condition={eventsDisplayStyle === "old"}
+                    returnComponent={<CurrentEvents events={events} clockData={clockData} />}
+                >
+                    <PastEvents events={events} clockData={clockData} />
+                </ConditionalRender>
                 <ConditionalRender condition={isAdmin}>
                     <AddEventCard
                         id={id}

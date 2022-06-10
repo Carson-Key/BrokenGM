@@ -5,7 +5,7 @@ import EventCard from './EventCard'
 // Helpers
 import { parseEventString } from '../../helpers/clockevents'
 
-const PastEvents = (props) => {
+const CurrentEvents = (props) => {
     const { events, clockData } = props
 
     return (
@@ -17,19 +17,19 @@ const PastEvents = (props) => {
                     time.month >= clockData.monthOfYear &&
                     time.day >= clockData.dayOfMonth) && time.timer > clockData.timer
                 ) {
-                    return <Fragment key={i}></Fragment>
+                    return (
+                        <EventCard 
+                            key={i}
+                            time={time}
+                            description={description}
+                            clockData={clockData}
+                        />
+                    )
                 } 
             }
-            return (
-                <EventCard 
-                    key={i}
-                    time={time}
-                    description={description}
-                    clockData={clockData}
-                />
-            )
+            return <Fragment key={i}></Fragment>
         })
 	)
 }
 
-export default PastEvents
+export default CurrentEvents
