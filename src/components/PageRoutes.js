@@ -8,6 +8,7 @@ import Clock from '../pages/Clock'
 import Campaigns from '../pages/Campaigns'
 import Campaign from '../pages/Campaign'
 import VotingSystem from '../pages/VotingSystem'
+import ClockEvents from '../pages/ClockEvents'
 // Components
 import ConditionalRender from './ConditionalRender'
 import IsLoading from './IsLoading'
@@ -38,6 +39,7 @@ const PageRoutes = () => {
                     <Route path='/campaigns' element={<Campaigns />} />
                     <Route path='/campaign/:id' element={<Campaign />} />
                     <Route path='/votingsystem/:id' element={<VotingSystem />} />
+                    <Route path='/clockevents/:id' element={<ClockEvents />} />
                     <Route path='/' element={<Campaigns />} />
                 </Routes>
             </ConditionalRender>
