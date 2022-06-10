@@ -125,7 +125,6 @@ const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification,
         if (tempClock.dayOfWeek >= tempClock.daysOfWeek.length) {
             tempClock.dayOfWeek = tempClock.dayOfWeek - tempClock.daysOfWeek.length
         }
-        console.log(isAdmin)
         tempClock.timer = newTimer
         setTimer(newTimer)
         setClock(tempClock)
@@ -201,7 +200,6 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock, id, setNotif
         if (tempClock.dayOfWeek < 0) {
             tempClock.dayOfWeek = tempClock.dayOfWeek + tempClock.daysOfWeek.length
         }
-        console.log(isAdmin)
         tempClock.timer = newTimer
         setTimer(newTimer)
         setClock(tempClock)
