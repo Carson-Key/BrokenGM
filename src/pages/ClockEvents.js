@@ -19,6 +19,7 @@ const Relation = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [events, setEvents] = useState([])
     const [eventsDisplayStyle, setEventsDisplayStyle] = useState("new")
+    const [activeClass, setActiveClass] = useState({old: "", new: " bg-gray-300"})
     const [clockData, setClockData] = useState(null)
     const [isClockEvents, setIsClockEvents] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
@@ -53,13 +54,15 @@ const Relation = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <div className="my-4 divide-x mx-auto">
-                <button className="rounded-l-lg bg-gray-100 px-3 py-2" onClick={() => {
+                <button className={"rounded-l-lg bg-gray-100 px-3 py-2" + activeClass.new} onClick={() => {
                     setEventsDisplayStyle("new")
+                    setActiveClass({old: "", new: activeClass.old})
                 }}>
                     <h3>Coming Events</h3>
                 </button>
-                <button className="rounded-r-lg bg-gray-100 px-3 py-2" onClick={() => {
+                <button className={"rounded-r-lg bg-gray-100 px-3 py-2" + activeClass.old} onClick={() => {
                     setEventsDisplayStyle("old")
+                    setActiveClass({old: activeClass.new, new: activeClass.old})
                 }}>
                     <h3>Past Events</h3>
                 </button>
