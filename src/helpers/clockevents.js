@@ -1,7 +1,7 @@
 // Helpers
 import { getNumberSuffix, capitalizeFirstLetter } from './misc'
-import { fireError } from './notifications'
-import { updateDocument } from './firestore'
+import { fireError, firePing } from './notifications'
+import { updateDocumentWithPromise } from './firestore'
 // Objects
 import { CLOCKEVENTUNITS } from './objects'
 
@@ -108,11 +108,27 @@ export const saveEvent = (
                 )
             )
         } )
-        updateDocument("clockevents", id, {events: tempEvents}, setNotification, isClockEvents)
+        updateDocumentWithPromise(
+            "clockevents", id, {events: tempEvents}, 
+            setNotification, isClockEvents).then(() => {
+                firePing(
+                    setNotification, 
+                    "Successfull Fire Base Call", 
+                    "You have successfully added a new event!"
+                )
+            })
         setEvents(tempEvents)
     } else {
         let tempEvents = [...events, newEvent]
-        updateDocument("clockevents", id, {events: tempEvents}, setNotification, isClockEvents)
+        updateDocumentWithPromise(
+            "clockevents", id, {events: tempEvents}, 
+            setNotification, isClockEvents).then(() => {
+                firePing(
+                    setNotification, 
+                    "Successfull Fire Base Call", 
+                    "You have successfully added a new event!"
+                )
+            })
         setEvents(tempEvents)
     }
 }
