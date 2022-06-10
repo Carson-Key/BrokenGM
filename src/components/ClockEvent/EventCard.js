@@ -25,8 +25,15 @@ const EventCard = (props) => {
 
                 }
             </CardTitle>
-            <div className="text-center my-2 mx-4 w-72 scrollbar-hide overflow-scroll">
-                <p>{description}</p>
+            <div className="flex flex-col justify-between h-full">
+                <div className="text-center my-2 mx-4 w-72 scrollbar-hide overflow-scroll h-52 break-words">
+                    <p>{description}</p>
+                </div>
+                <button 
+                    className="bg-red-500 text-white py-1 px-3 w-fit mx-auto my-2 rounded"
+                >
+                    Delete
+                </button>
             </div>
         </Card>
 	)
