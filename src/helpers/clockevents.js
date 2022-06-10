@@ -74,9 +74,32 @@ export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, 
     return returnBool
 }
 export const saveEvent = (
-    mins, hours, days, months, years,
+    timer, days, months, years,
     descriptionToAdd, setNotification,
-    id, events, setEvents, isClockEvents
+    id, events, setEvents, isClockEvents, hoursInDay, daysInMonth, daysInYear
 ) => {
-
+    const newEvent = translateInputToFullTimeStamp(timer, days, months, years) + "{" + descriptionToAdd + "}"
+    if (hoursInDay && daysInYear && daysInMonth) {
+        let tempEvents = [...events, newEvent].sort((a, b) => { 
+            const timeA = parseEventString(a).time
+            const timeB = parseEventString(b).time
+    
+            return (
+                (
+                    (timeA.year * (daysInYear * hoursInDay * 3600000)) + 
+                    (timeA.month * (daysInMonth * hoursInDay * 3600000)) + 
+                    (timeA.day * (hoursInDay * 3600000)) + timeA.timer
+                ) - 
+                (
+                    (timeB.year * (daysInYear * hoursInDay * 3600000)) + 
+                    (timeB.month * (daysInMonth * hoursInDay * 3600000)) + 
+                    (timeB.day * (hoursInDay * 3600000)) + timeB.timer
+                )
+            )
+        } )
+        console.log(tempEvents)
+    } else {
+        let tempEvents = [...events, newEvent]
+        console.log(tempEvents)
+    }
 }
