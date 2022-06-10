@@ -132,3 +132,19 @@ export const saveEvent = (
         setEvents(tempEvents)
     }
 }
+export const deleteEvent = (
+    id, indexToRemove, events, setEvents, isClockEvents, setNotification
+) => {
+    let tempEvents = [...events]
+    tempEvents.splice(indexToRemove, 1)
+    updateDocumentWithPromise(
+        "clockevents", id, {events: tempEvents}, 
+        setNotification, isClockEvents).then(() => {
+            firePing(
+                setNotification, 
+                "Successfull FireBase Call", 
+                "You have successfully deleted an event!"
+            )
+        })
+    setEvents(tempEvents)
+}

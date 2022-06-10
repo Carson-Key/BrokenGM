@@ -1,5 +1,5 @@
 // Packages
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 // Components
 import ConditionalRender from '../ConditionalRender'
 // UI
@@ -7,11 +7,21 @@ import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
 import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 // Helpers
-import { generateClockTimeStamp, generateClockTimeStampWithoutClock } from '../../helpers/clockevents'
+import { 
+    generateClockTimeStamp, 
+    generateClockTimeStampWithoutClock,
+    deleteEvent
+} from '../../helpers/clockevents'
+// Contexts
+import { NotificationContext } from '../../contexts/Notification'
 
 const EventCard = (props) => {
-    const { time, description, clockData } = props
+    const { 
+        time, description, clockData, id, i, 
+        events, setEvents, isClockEvents 
+    } = props
     const [popUp, setPopUp] = useState(false)
+    const setNotification = useContext(NotificationContext)[1]
 
     return (
         <Card className="h-80">
@@ -46,11 +56,13 @@ const EventCard = (props) => {
                 <ConfirmationPopUp
                     message="Are you sure you want to delete this event"
                     onClick={() => {
-                        console.log("yes")
+                        deleteEvent(
+                            id, i, events, 
+                            setEvents, isClockEvents, setNotification
+                        )
                         setPopUp(false)
                     }}
                     cancel={() => {
-                        console.log("no")
                         setPopUp(false)
                     }}
                 />

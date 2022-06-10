@@ -70,9 +70,23 @@ const Relation = () => {
             <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 <ConditionalRender 
                     condition={eventsDisplayStyle === "old"}
-                    returnComponent={<CurrentEvents events={events} clockData={clockData} />}
+                    returnComponent={
+                        <CurrentEvents 
+                            events={events} 
+                            clockData={clockData} 
+                            id={id} 
+                            setEvents={setEvents} 
+                            isClockEvents={isClockEvents} 
+                        />
+                    }
                 >
-                    <PastEvents events={events} clockData={clockData} />
+                    <PastEvents 
+                        events={events} 
+                        clockData={clockData} 
+                        id={id} 
+                        setEvents={setEvents} 
+                        isClockEvents={isClockEvents} 
+                    />
                 </ConditionalRender>
                 <ConditionalRender condition={isAdmin}>
                     <AddEventCard
