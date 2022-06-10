@@ -13,15 +13,19 @@ const PastEvents = (props) => {
             const { time, description } = parseEventString(event)
             if (clockData) {
                 if (
+                    time.year > clockData.year || 
                     (
-                        time.year > clockData.year || 
-                        time.month > clockData.monthOfYear ||
-                        time.day > clockData.dayOfMonth
+                        time.month > clockData.monthOfYear && 
+                        time.year === clockData.year
                     ) || (
-                        time.year === clockData.year && 
-                        time.month === clockData.monthOfYear &&
+                        time.day > clockData.dayOfMonth && 
+                        time.month === clockData.monthOfYear && 
+                        time.year === clockData.year
+                    ) || (
+                        time.day > clockData.dayOfMonth && 
                         time.day === clockData.dayOfMonth && 
-                        time.timer > clockData.timer
+                        time.month === clockData.monthOfYear && 
+                        time.year === clockData.year
                     )
                 ) {
                     return <Fragment key={i}></Fragment>
