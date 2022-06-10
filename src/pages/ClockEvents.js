@@ -56,13 +56,13 @@ const Relation = () => {
             <div className="my-4 divide-x mx-auto">
                 <button className={"rounded-l-lg bg-gray-100 px-3 py-2" + activeClass.new} onClick={() => {
                     setEventsDisplayStyle("new")
-                    setActiveClass({old: "", new: activeClass.old})
+                    setActiveClass({old: "", new: " bg-gray-300"})
                 }}>
                     <h3>Coming Events</h3>
                 </button>
                 <button className={"rounded-r-lg bg-gray-100 px-3 py-2" + activeClass.old} onClick={() => {
                     setEventsDisplayStyle("old")
-                    setActiveClass({old: activeClass.new, new: activeClass.old})
+                    setActiveClass({old: " bg-gray-300", new: ""})
                 }}>
                     <h3>Past Events</h3>
                 </button>
