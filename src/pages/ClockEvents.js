@@ -12,12 +12,14 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
+import { parseEventString } from '../helpers/clockevents'
 
 const Relation = () => {
     const { id } = useParams()
     const setNotification = useContext(NotificationContext)[1]
     const [isLoading, setIsLoading] = useState(true)
     const [events, setEvents] = useState([])
+    const [clockData, setClockData] = useState(null)
     const [isClockEvents, setIsClockEvents] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [uid, setUID] = useState("")
@@ -32,7 +34,14 @@ const Relation = () => {
                         setIsAdmin(true)
                     }
                 })
-                setIsLoading(false)
+                getDocument("clocks", data.data().clock, setNotification, true).then((data) => {
+                    if (data === "permission-denied") {
+                        setClockData(null)
+                    } else {
+                        setClockData(data.data())
+                    }
+                    setIsLoading(false)
+                })
             })
         }
 
@@ -46,14 +55,14 @@ const Relation = () => {
             <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 {
                     events.map((event, i) => {
-                        const timeStamp = event
-                        const description = event
+                        const { time, description } = parseEventString(event)
 
                         return (
                             <EventCard 
                                 key={i}
-                                timeStamp={timeStamp}
+                                time={time}
                                 description={description}
+                                clockData={clockData}
                             />
                         )
                     })
