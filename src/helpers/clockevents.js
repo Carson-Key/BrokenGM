@@ -45,7 +45,7 @@ export const translateInputToFullTimeStamp = (timeStamp, days, months, years) =>
     return ("[" + years + ":" + months + ":" + days + ":" + timeStamp + "]")
 }
 
-export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, setNotification) => {
+export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, daysInMonth, monthsInYear, setNotification) => {
     let returnBool = true
     timeNumberArray.forEach((time) => {
         if (isNaN(time)) {
@@ -70,29 +70,37 @@ export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, 
             returnBool = false
         }
     }
+    if (daysInMonth && monthsInYear) {
+        if (timeNumberArray[2] > daysInMonth) {
+            fireError(setNotification, "Bad User Input", "The days you entered exceed the amount in the month in the clock")
+            returnBool = false
+        }
+        if (timeNumberArray[3] > monthsInYear) {
+            fireError(setNotification, "Bad User Input", "The months you entered exceed the amount of months in the clock")
+            returnBool = false
+        }
+    }
 
     return returnBool
 }
 export const saveEvent = (
     timer, days, months, years,
     descriptionToAdd, setNotification,
-    id, events, setEvents, isClockEvents, hoursInDay, daysInMonth, daysInYear
+    id, events, setEvents, isClockEvents, hoursInDay, daysInYear
 ) => {
     const newEvent = translateInputToFullTimeStamp(timer, days, months, years) + "{" + descriptionToAdd + "}"
-    if (hoursInDay && daysInYear && daysInMonth) {
+    if (hoursInDay && daysInYear) {
         let tempEvents = [...events, newEvent].sort((a, b) => { 
             const timeA = parseEventString(a).time
             const timeB = parseEventString(b).time
     
             return (
                 (
-                    (timeA.year * (daysInYear * hoursInDay * 3600000)) + 
-                    (timeA.month * (daysInMonth * hoursInDay * 3600000)) + 
+                    (timeA.year * (daysInYear * hoursInDay * 3600000)) +
                     (timeA.day * (hoursInDay * 3600000)) + timeA.timer
                 ) - 
                 (
-                    (timeB.year * (daysInYear * hoursInDay * 3600000)) + 
-                    (timeB.month * (daysInMonth * hoursInDay * 3600000)) + 
+                    (timeB.year * (daysInYear * hoursInDay * 3600000)) +
                     (timeB.day * (hoursInDay * 3600000)) + timeB.timer
                 )
             )

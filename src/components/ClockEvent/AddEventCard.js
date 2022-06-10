@@ -67,17 +67,18 @@ const AddEventCard = (props) => {
                             }
                             time.timer = translateTimeStampToMili(time.hoursNumber, time.minsNumber)
                             const hoursInDay = clockData ? clockData.hoursInDay : null
-                            const daysInMonth = clockData ? clockData.daysInMonths[time.monthsNumber] : null
+                            const daysInMonth = clockData ? (clockData.daysInMonths[time.monthsNumber - 1] ? clockData.daysInMonths[time.monthsNumber - 1] : -1 ) : null
+                            const monthsInYear = clockData ? clockData.daysInMonths.length : null
                             const daysInYear = clockData ? clockData.daysInMonths.reduce((partialSum, a) => partialSum + a, 0) : null
                             if (checkInput(
                                 [time.minsNumber, time.hoursNumber, time.daysNumber, time.monthsNumber, time.yearsNumber],
                                 [time.minsString, time.hoursString, time.daysString, time.monthsString, time.yearsString],
-                                time.timer, hoursInDay, setNotification
+                                time.timer, hoursInDay, daysInMonth, monthsInYear, setNotification
                             )) {
                                 saveEvent(
                                     time.timer, time.daysNumber, time.monthsNumber, time.yearsNumber,
                                     descriptionToAdd, setNotification,
-                                    id, events, setEvents, isClockEvents, hoursInDay, daysInMonth, daysInYear
+                                    id, events, setEvents, isClockEvents, hoursInDay, daysInYear
                                 )
                             }
                         }
