@@ -42,7 +42,10 @@ const EventCard = (props) => {
                 }
             </CardTitle>
             <div className="flex flex-col justify-between h-full">
-                <div className="text-center my-2 mx-4 w-72 scrollbar-hide overflow-scroll h-52 break-words">
+                <div className={
+                    "text-center my-2 mx-4 w-72 scrollbar-hide overflow-scroll break-words" + 
+                    ((isAdmin) ? " h-52" : "")
+                }>
                     <p>{description}</p>
                 </div>
                 <ConditionalRender condition={isAdmin}>
