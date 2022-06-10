@@ -6,7 +6,7 @@ import EventCard from './EventCard'
 import { parseEventString } from '../../helpers/clockevents'
 
 const CurrentEvents = (props) => {
-    const { events, clockData, id, setEvents, isClockEvents } = props
+    const { events, clockData, id, setEvents, isClockEvents, isAdmin } = props
 
     return (
         events.map((event, i) => {
@@ -39,6 +39,7 @@ const CurrentEvents = (props) => {
                             events={events}
                             setEvents={setEvents}
                             isClockEvents={isClockEvents}
+                            isAdmin={isAdmin}
                         />
                     )
                 } 

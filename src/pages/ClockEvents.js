@@ -77,6 +77,7 @@ const Relation = () => {
                             id={id} 
                             setEvents={setEvents} 
                             isClockEvents={isClockEvents} 
+                            isAdmin={isAdmin}
                         />
                     }
                 >
@@ -86,6 +87,7 @@ const Relation = () => {
                         id={id} 
                         setEvents={setEvents} 
                         isClockEvents={isClockEvents} 
+                        isAdmin={isAdmin}
                     />
                 </ConditionalRender>
                 <ConditionalRender condition={isAdmin}>
