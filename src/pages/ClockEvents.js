@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 // Components
 import IsLoading from '../components/IsLoading'
 import ConditionalRender from '../components/ConditionalRender'
-import { EventCard, AddEventCard } from '../components/ClockEvent'
+import { PastEvents, AddEventCard } from '../components/ClockEvent'
 // UI
 import Container from "../ui/Container"
 // Contexts
@@ -12,7 +12,6 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
-import { parseEventString } from '../helpers/clockevents'
 
 const Relation = () => {
     const { id } = useParams()
@@ -65,33 +64,8 @@ const Relation = () => {
                     <h3>Past Events</h3>
                 </button>
             </div>
-            <button className="w-fit mx-auto text-white bg-green-500 rounded-md px-2 py-1">
-                Add New Event
-            </button>
             <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
-                {
-                    events.map((event, i) => {
-                        const { time, description } = parseEventString(event)
-
-                        if (clockData) {
-                            if (
-                                (time.year >= clockData.year && 
-                                time.month >= clockData.monthOfyear &&
-                                time.day >= clockData.dayOfMonth) && time.timer > clockData.timer
-                            ) {
-                                return <Fragment key={i}></Fragment>
-                            } 
-                        }
-                        return (
-                            <EventCard 
-                                key={i}
-                                time={time}
-                                description={description}
-                                clockData={clockData}
-                            />
-                        )
-                    })
-                }
+                <PastEvents events={events} clockData={clockData} />
                 <ConditionalRender condition={isAdmin}>
                     <AddEventCard
                         id={id}

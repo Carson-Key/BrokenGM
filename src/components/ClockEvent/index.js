@@ -1,3 +1,3 @@
-// Relations
-export { default as EventCard } from "./EventCard";
-export { default as AddEventCard } from "./AddEventCard";
+// Clock Events
+export { default as AddEventCard } from "./AddEventCard"
+export { default as PastEvents } from "./PastEvents"
