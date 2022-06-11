@@ -2,7 +2,6 @@
 import { parseEventString } from './clockevents.js'
 import { getDocument, updateDocument } from './firestore.js'
 import { firePing } from './notifications'
-import { removeElementFromArray } from './misc'
 // Objects
 import { CONVERSIONS } from './objects.js'
 
