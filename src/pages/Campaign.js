@@ -58,6 +58,7 @@ const Campaign = () => {
                     isAdmin={isAdmin}
                     playerBody="To Clock"
                     players={players}
+                    clocks={[]}
                     Settings={ClockSettings}
                 />
                 <CampaignLinkCard 
@@ -67,6 +68,7 @@ const Campaign = () => {
                     isAdmin={isAdmin}
                     playerBody="To Relation"
                     players={players}
+                    clocks={[]}
                     Settings={RelationSettings}
                 />
                 <CampaignLinkCard 
@@ -76,6 +78,7 @@ const Campaign = () => {
                     isAdmin={isAdmin}
                     playerBody="To Voting System"
                     players={players}
+                    clocks={[]}
                     Settings={VotingSystemSettings}
                 />
                 <CampaignLinkCard 
@@ -85,6 +88,7 @@ const Campaign = () => {
                     isAdmin={isAdmin}
                     playerBody="To Clock Events"
                     players={players}
+                    clocks={clocks}
                     Settings={ClockEventsSettings}
                 />
             </Container>
