@@ -57,7 +57,7 @@ export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, 
     timeStringArray.forEach((time, i) => {
         if (i === (timeStringArray.length - 1)) {
             if (!(/^[-\d]+$/.test(time))) {
-                fireError(setNotification, "Bad User Input", "Illegal character, please only use numbers")
+                fireError(setNotification, "Bad User Input", "Illegal character, please only use numbers or a dash for negative years")
                 returnBool = false
             }
         } else if (!(/^[\d]+$/.test(time))) {
@@ -67,20 +67,20 @@ export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, 
     })
     if (hoursInDay) {
         if (timer > (hoursInDay * 3600000)) {
-            fireError(setNotification, "Bad User Input", "The hours you entered exceed the amount in the clock")
+            fireError(setNotification, "Bad User Input", "The HH:MM entered exceed the amount in a day")
             returnBool = false
         }
     }
     if (daysInMonth && monthsInYear) {
         if (timeNumberArray[2] > daysInMonth) {
-            fireError(setNotification, "Bad User Input", "The days you entered exceed the amount in the month in the clock")
+            fireError(setNotification, "Bad User Input", "The DD (day of month) entered exceeds the amount of days in the month given")
             returnBool = false
         } else if (timeNumberArray[2] < 1) {
             fireError(setNotification, "Bad User Input", "DD (day of month) can not be less than 1")
             returnBool = false
         }
         if (timeNumberArray[3] > monthsInYear) {
-            fireError(setNotification, "Bad User Input", "The months you entered exceed the amount of months in the clock")
+            fireError(setNotification, "Bad User Input", "The MM (month of the year in number form) entered exceeds the amount of months in the years")
             returnBool = false
         } else if (timeNumberArray[3] < 0) {
             fireError(setNotification, "Bad User Input", "MM (month of the year in number form) can not be less than 1")
