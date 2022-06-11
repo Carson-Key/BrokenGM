@@ -40,14 +40,14 @@ const Controller = (props) => {
                 tickTimer(
                     id, timer, setTimer, 
                     clock, setClock, setNotification, 
-                    isAdmin, isClock, logAccess, events, setNewEvents
+                    isAdmin, isClock, logAccess, events, setNewEvents, setEvents
                 )
             }, 10)
         } else if (!clock.isActive) {
             clearInterval(interval)
         }
         return () => clearInterval(interval)
-    }, [id, timer, clock, isAdmin, isClock, setClock, setTimer, setNotification, logAccess, events, setNewEvents])
+    }, [id, timer, clock, isAdmin, isClock, setClock, setTimer, setNotification, logAccess, events, setNewEvents, setEvents])
     useEffect(() => {
         if (clock.isActive) {
             setTimerStateButtonText(startStopButtonStyleObject.stop.text)
@@ -123,7 +123,7 @@ const Controller = (props) => {
                                         const intChangedTimerValue = parseInt(changeTimerValue)
                                         if (changeTimerValue && !isNaN(intChangedTimerValue)) {
                                             if (intChangedTimerValue > 0) {
-                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents)
+                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, setEvents)
                                             } else {
                                                 subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, newEvents, setEvents, eventId)
                                             }

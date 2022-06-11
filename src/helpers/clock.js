@@ -2,17 +2,18 @@
 import { parseEventString } from './clockevents.js'
 import { getDocument, updateDocument } from './firestore.js'
 import { firePing } from './notifications'
+import { removeElementFromArray } from './misc'
 // Objects
 import { CONVERSIONS } from './objects.js'
 
-const checkForEvents = (logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck = {}) => {
+const checkForEvents = (logAccess, events, clock, timer, setNotification, setNewEvents, setEvents, eventCheck = {}) => {
     if (logAccess) {
         const eventsArray = Object.keys(events)
         const timeString = 
             clock.year + ":" + clock.monthOfYear + ":" + 
             clock.dayOfMonth + ":" + timer
         if (eventsArray.includes(timeString)) {
-            events[timeString].forEach((description) => {
+            events[timeString].forEach((description, i) => {
                 firePing(setNotification, "A Clock Event Has Fired", "An Event Has Happened: " + description)
                 setNewEvents(prev => (
                     [...prev, 
@@ -26,11 +27,14 @@ const checkForEvents = (logAccess, events, clock, timer, setNotification, setNew
                     ]
                 ))
             })
+            const tempEvents = {...events}
+            delete tempEvents[timeString]
+            setEvents(tempEvents)
             eventCheck.checked = true
         }
     }
 }
-const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck = {}) => {
+const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, setNewEvents, setEvents, eventCheck = {}) => {
     if (logAccess) {
         const CurrentClockMilliseconds = 
             (clock.year * (clock.daysInMonths.reduce((a,b)=>a+b,0) * clock.hoursInDay * 3600000)) +
@@ -66,6 +70,10 @@ const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, s
                                 ]
                             ))
                         })
+                        const tempEvents = {...events}
+                        delete tempEvents[eventsArray[index]]
+                        console.log(tempEvents)
+                        setEvents(tempEvents)
                         index -= 1
                     } else {
                         eventCheck.checked = true
@@ -163,12 +171,12 @@ const checkForEventsOnSubtract = (logAccess, events, clock, timer, setNewEvents,
 export const tickTimer = (
     id, timer, setTimer, 
     clock, setClock, setNotification, 
-    isAdmin, isClock, logAccess, events, setNewEvents
+    isAdmin, isClock, logAccess, events, setNewEvents, setEvents
 ) => {
     let eventCheck = {checked: false}
     setTimer(prev => prev + 10)
     if (timer % 60000 === 0) {
-        checkForEvents(logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck)
+        checkForEvents(logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck, setEvents)
         if (isAdmin) {
             updateDocument(
                 "clocks", id, 
@@ -181,13 +189,13 @@ export const tickTimer = (
         }
     }
     if (timer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck, logAccess, events, setNewEvents, eventCheck)
+        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck, logAccess, events, setNewEvents, setEvents, eventCheck)
     }
 }
 
 export const addTime = (
     amount, unit, clock, timer, setTimer, setClock, id, setNotification, 
-    isClock, isAdmin, logAccess, events, setNewEvents
+    isClock, isAdmin, logAccess, events, setNewEvents, setEvents
 ) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
@@ -196,7 +204,7 @@ export const addTime = (
     let newTimer = timer + amountOfMilli
     let eventCheck = {checked: false}
     if (newTimer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, eventCheck)
+        checkForOverflow(newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, setEvents, eventCheck)
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
@@ -206,7 +214,7 @@ export const addTime = (
                 {...clock, timer: newTimer}, setNotification, isClock
             )
         }
-        checkForEventsOnAdd(logAccess, events, {...clock, timer: newTimer}, newTimer, setNotification, setNewEvents, eventCheck)
+        checkForEventsOnAdd(logAccess, events, {...clock, timer: newTimer}, newTimer, setNotification, setNewEvents, setEvents, eventCheck)
     }
 }
 export const subtractTime = (
@@ -238,7 +246,7 @@ export const subtractTime = (
 
 const checkForOverflow = (
     timer, clock, setTimer, setClock, id, setNotification, isClock, 
-    isAdmin, logAccess, events, setNewEvents, eventCheck = {}
+    isAdmin, logAccess, events, setNewEvents, setEvents, eventCheck = {}
 ) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
@@ -295,7 +303,7 @@ const checkForOverflow = (
             tempClock.dayOfWeek = tempClock.dayOfWeek - tempClock.daysOfWeek.length
         }
         tempClock.timer = newTimer
-        checkForEventsOnAdd(logAccess, events, {...tempClock, timer: newTimer}, newTimer, setNotification, setNewEvents, eventCheck)
+        checkForEventsOnAdd(logAccess, events, {...tempClock, timer: newTimer}, newTimer, setNotification, setNewEvents, setEvents, eventCheck)
         setTimer(newTimer)
         setClock(tempClock)
         if (isAdmin) {
