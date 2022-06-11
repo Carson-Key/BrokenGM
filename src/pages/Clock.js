@@ -97,8 +97,8 @@ const Clock = () => {
                 <Controller
                     id={id} isAdmin={isAdmin} logAccess={logAccess} 
                     timer={timer} setTimer={setTimer} 
-                    clock={clock} setClock={setClock} isClock={isClock}
-                    events={events} setNewEvents={setNewEvents}
+                    clock={clock} setClock={setClock} isClock={isClock} setEvents={setEvents}
+                    events={events} setNewEvents={setNewEvents} newEvents={newEvents}
                 />
                 <ConditionalRender condition={logAccess}>
                     <EventLog

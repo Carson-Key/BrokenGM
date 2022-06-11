@@ -20,6 +20,7 @@ const checkForEvents = (logAccess, events, clock, timer, setNotification, setNew
                             description, timer,
                             year: clock.year,
                             month: clock.monthsOfYear[clock.monthOfYear],
+                            monthIndex: clock.monthOfYear,
                             day: clock.dayOfMonth
                         }
                     ]
@@ -55,6 +56,7 @@ const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, s
                                     description, timer: time.timer,
                                     year: clock.year,
                                     month: clock.monthsOfYear[clock.monthOfYear],
+                                    monthIndex: clock.monthOfYear,
                                     day: clock.dayOfMonth
                                 }
                             ]
@@ -64,6 +66,41 @@ const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, s
                 } else {
                     eventCheck.checked = true
                     breakWhileLoop = !breakWhileLoop
+                }
+            } else {
+                breakWhileLoop = !breakWhileLoop
+            }
+        }
+    }
+}
+const checkForEventsOnSubtract = (logAccess, events, clock, timer, setNewEvents, newEvents, setEvents) => {
+    if (logAccess) {
+        const CurrentClockMilliseconds = 
+            (clock.year * (clock.daysInMonths.reduce((a,b)=>a+b,0) * clock.hoursInDay * 3600000)) +
+            (clock.daysInMonths.slice(0, clock.monthOfYear).reduce((a,b)=>a+b,0) * (clock.hoursInDay * 3600000)) +
+            (clock.dayOfMonth * (clock.hoursInDay * 3600000)) + timer
+        let breakWhileLoop = false
+        const eventsArray = Object.keys(newEvents)
+        let index = eventsArray.length - 1
+        let tempNewEvents = [...newEvents]
+        while(!breakWhileLoop) {
+            if (eventsArray.length !== 0) {
+                if (index < 0) {
+                    setNewEvents(tempNewEvents)
+                    breakWhileLoop = !breakWhileLoop
+                } else {
+                    console.log(newEvents[index])
+                    const EventInMiliseconds =             
+                        (newEvents[index].year * (clock.daysInMonths.reduce((a,b)=>a+b,0) * clock.hoursInDay * 3600000)) +
+                        (clock.daysInMonths.slice(0, newEvents[index].monthIndex).reduce((a,b)=>a+b,0) * (clock.hoursInDay * 3600000)) +
+                        (newEvents[index].day * (clock.hoursInDay * 3600000)) + newEvents[index].timer
+                    if (CurrentClockMilliseconds < EventInMiliseconds) {
+                        tempNewEvents.splice(index, 1)
+                        index -= 1
+                    } else {
+                        setNewEvents(tempNewEvents)
+                        breakWhileLoop = !breakWhileLoop
+                    }
                 }
             } else {
                 breakWhileLoop = !breakWhileLoop
@@ -123,7 +160,7 @@ export const addTime = (
 }
 export const subtractTime = (
     amount, unit, clock, timer, setTimer, setClock, id, setNotification, 
-    isClock, isAdmin, logAccess, events, setNewEvents
+    isClock, isAdmin, logAccess, events, setNewEvents, newEvents, setEvents
 ) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
@@ -132,7 +169,8 @@ export const subtractTime = (
     let newTimer = timer + amountOfMilli
     if (newTimer < 0) {
         checkForNegativeOverflow(
-            newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin
+            newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin,
+            logAccess, events, setNewEvents, newEvents, setEvents
         )
     } else {
         setTimer(newTimer)
@@ -217,7 +255,10 @@ const checkForOverflow = (
     }
 }
 
-const checkForNegativeOverflow = (timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin) => {
+const checkForNegativeOverflow = (
+    timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, 
+    logAccess, events, setNewEvents, newEvents, setEvents
+) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
     const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
@@ -281,6 +322,7 @@ const checkForNegativeOverflow = (timer, clock, setTimer, setClock, id, setNotif
             tempClock.dayOfWeek = tempClock.dayOfWeek + tempClock.daysOfWeek.length
         }
         tempClock.timer = newTimer
+        checkForEventsOnSubtract(logAccess, events, {...tempClock, timer: newTimer}, newTimer, setNewEvents, newEvents, setEvents)
         setTimer(newTimer)
         setClock(tempClock)
         if (isAdmin) {
