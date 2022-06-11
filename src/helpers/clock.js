@@ -1,4 +1,5 @@
 // Helpers
+import { parseEventString } from './clockevents.js'
 import { getDocument, updateDocument } from './firestore.js'
 import { firePing } from './notifications'
 // Objects
@@ -24,8 +25,50 @@ const checkForEvents = (logAccess, events, clock, timer, setNotification, setNew
                     ]
                 ))
             })
+            eventCheck.checked = true
         }
-        eventCheck.checked = true
+    }
+}
+const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck = {}) => {
+    if (logAccess) {
+        const CurrentClockMilliseconds = 
+            (clock.year * (clock.daysInMonths.reduce((a,b)=>a+b,0) * clock.hoursInDay * 3600000)) +
+            (clock.daysInMonths.slice(0, clock.monthOfYear).reduce((a,b)=>a+b,0) * (clock.hoursInDay * 3600000)) +
+            (clock.dayOfMonth * (clock.hoursInDay * 3600000)) + timer
+        let breakWhileLoop = false
+        const eventsArray = Object.keys(events)
+        let index = eventsArray.length - 1
+        while(!breakWhileLoop) {
+            if (eventsArray.length !== 0) {
+                const { time } = parseEventString("[" + eventsArray[index] + "]{test}")
+                const EventInMiliseconds =             
+                    (time.year * (clock.daysInMonths.reduce((a,b)=>a+b,0) * clock.hoursInDay * 3600000)) +
+                    (clock.daysInMonths.slice(0, time.month).reduce((a,b)=>a+b,0) * (clock.hoursInDay * 3600000)) +
+                    (time.day * (clock.hoursInDay * 3600000)) + time.timer
+                if (CurrentClockMilliseconds >= EventInMiliseconds) {
+                    console.log(events[eventsArray[index]])
+                    events[eventsArray[index]].forEach((description) => {
+                        firePing(setNotification, "A Clock Event Has Fired", "An Event Has Happened: " + description)
+                        setNewEvents(prev => (
+                            [...prev, 
+                                {
+                                    description, timer: time.timer,
+                                    year: clock.year,
+                                    month: clock.monthsOfYear[clock.monthOfYear],
+                                    day: clock.dayOfMonth
+                                }
+                            ]
+                        ))
+                    })
+                    index -= 1
+                } else {
+                    eventCheck.checked = true
+                    breakWhileLoop = !breakWhileLoop
+                }
+            } else {
+                breakWhileLoop = !breakWhileLoop
+            }
+        }
     }
 }
 
@@ -50,20 +93,22 @@ export const tickTimer = (
         }
     }
     if (timer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck.checked)
+        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck, logAccess, events, setNewEvents, eventCheck)
     }
 }
 
 export const addTime = (
-    amount, unit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin
+    amount, unit, clock, timer, setTimer, setClock, id, setNotification, 
+    isClock, isAdmin, logAccess, events, setNewEvents
 ) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
         clock.daysInMonths, clock.monthOfYear
     )
     let newTimer = timer + amountOfMilli
+    let eventCheck = {checked: false}
     if (newTimer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin)
+        checkForOverflow(newTimer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, eventCheck)
     } else {
         setTimer(newTimer)
         setClock(prev => ({...prev, timer: newTimer}))
@@ -73,10 +118,12 @@ export const addTime = (
                 {...clock, timer: newTimer}, setNotification, isClock
             )
         }
+        checkForEventsOnAdd(logAccess, events, {...clock, timer: newTimer}, newTimer, setNotification, setNewEvents, eventCheck)
     }
 }
 export const subtractTime = (
-    amount, unit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin
+    amount, unit, clock, timer, setTimer, setClock, id, setNotification, 
+    isClock, isAdmin, logAccess, events, setNewEvents
 ) => {
     const amountOfMilli = CONVERSIONS[unit](
         amount, clock.hoursInDay, 
@@ -99,7 +146,10 @@ export const subtractTime = (
     }
 }
 
-const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck = true) => {
+const checkForOverflow = (
+    timer, clock, setTimer, setClock, id, setNotification, isClock, 
+    isAdmin, logAccess, events, setNewEvents, eventCheck = {}
+) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
     const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)
@@ -155,6 +205,7 @@ const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification,
             tempClock.dayOfWeek = tempClock.dayOfWeek - tempClock.daysOfWeek.length
         }
         tempClock.timer = newTimer
+        checkForEventsOnAdd(logAccess, events, {...tempClock, timer: newTimer}, newTimer, setNotification, setNewEvents, eventCheck)
         setTimer(newTimer)
         setClock(tempClock)
         if (isAdmin) {

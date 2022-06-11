@@ -21,7 +21,7 @@ const Clock = () => {
     const [timer, setTimer] = useState(0)
     const [clock, setClock] = useState({})
     const [newEvents, setNewEvents] = useState([])
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState({})
     const [isClock, setIsClock] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [logAccess, setLogAccess] = useState(false)
