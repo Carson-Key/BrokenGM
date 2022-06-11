@@ -75,9 +75,15 @@ export const checkInput = (timeNumberArray, timeStringArray, timer, hoursInDay, 
         if (timeNumberArray[2] > daysInMonth) {
             fireError(setNotification, "Bad User Input", "The days you entered exceed the amount in the month in the clock")
             returnBool = false
+        } else if (timeNumberArray[2] < 1) {
+            fireError(setNotification, "Bad User Input", "DD (day of month) can not be less than 1")
+            returnBool = false
         }
         if (timeNumberArray[3] > monthsInYear) {
             fireError(setNotification, "Bad User Input", "The months you entered exceed the amount of months in the clock")
+            returnBool = false
+        } else if (timeNumberArray[3] < 0) {
+            fireError(setNotification, "Bad User Input", "MM (month of the year in number form) can not be less than 1")
             returnBool = false
         }
     }
