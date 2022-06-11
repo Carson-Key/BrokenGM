@@ -11,6 +11,7 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
+import ConditionalRender from '../components/ConditionalRender'
 
 const Clock = () => {
     const { id } = useParams()
@@ -22,6 +23,7 @@ const Clock = () => {
     const [events, setEvents] = useState([])
     const [isClock, setIsClock] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [logAccess, setLogAccess] = useState(false)
     const [uid, setUID] = useState("")
 
     useEffect(() => {
@@ -38,6 +40,7 @@ const Clock = () => {
                 getDocument("clockevents", data.data().clockEvent, setNotification, true).then((data) => {
                     if (data !== "permission-denied") {
                         setEvents(data.data().events)
+                        setLogAccess(true)
                     }
                     setIsLoading(false)
                 })
@@ -57,9 +60,11 @@ const Clock = () => {
                     timer={timer} setTimer={setTimer}
                     clock={clock} setClock={setClock} isClock={isClock}
                 />
-                <EventLog
-                    events={newEvents}
-                />
+                <ConditionalRender condition={logAccess}>
+                    <EventLog
+                        events={newEvents}
+                    />
+                </ConditionalRender>
             </Container>
         </IsLoading>
 	)
