@@ -4,36 +4,40 @@ import { firePing } from './notifications'
 // Objects
 import { CONVERSIONS } from './objects.js'
 
+const checkForEvents = (logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck = {}) => {
+    if (logAccess) {
+        const eventsArray = Object.keys(events)
+        const timeString = 
+            clock.year + ":" + clock.monthOfYear + ":" + 
+            clock.dayOfMonth + ":" + timer
+        if (eventsArray.includes(timeString)) {
+            events[timeString].forEach((description) => {
+                firePing(setNotification, "A Clock Event Has Fired", "An Event Has Happened: " + description)
+                setNewEvents(prev => (
+                    [...prev, 
+                        {
+                            description, timer,
+                            year: clock.year,
+                            month: clock.monthsOfYear[clock.monthOfYear],
+                            day: clock.dayOfMonth
+                        }
+                    ]
+                ))
+            })
+        }
+        eventCheck.checked = true
+    }
+}
+
 export const tickTimer = (
     id, timer, setTimer, 
     clock, setClock, setNotification, 
     isAdmin, isClock, logAccess, events, setNewEvents
 ) => {
-    let eventCheck = false
+    let eventCheck = {checked: false}
     setTimer(prev => prev + 10)
     if (timer % 60000 === 0) {
-        if (logAccess) {
-            const eventsArray = Object.keys(events)
-            const timeString = 
-                clock.year + ":" + clock.monthOfYear + ":" + 
-                clock.dayOfMonth + ":" + timer
-            if (eventsArray.includes(timeString)) {
-                events[timeString].forEach((description) => {
-                    firePing(setNotification, "A Clock Event Has Fired", "An Event Has Happened: " + description)
-                    setNewEvents(prev => (
-                        [...prev, 
-                            {
-                                description, timer,
-                                year: clock.year,
-                                month: clock.monthsOfYear[clock.monthOfYear],
-                                day: clock.dayOfMonth
-                            }
-                        ]
-                    ))
-                })
-            }
-            eventCheck = true
-        }
+        checkForEvents(logAccess, events, clock, timer, setNotification, setNewEvents, eventCheck)
         if (isAdmin) {
             updateDocument(
                 "clocks", id, 
@@ -46,7 +50,7 @@ export const tickTimer = (
         }
     }
     if (timer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck)
+        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck.checked)
     }
 }
 
