@@ -2,7 +2,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 // Components
-import { Timer, Controller } from '../components/Clock'
+import { Timer, Controller, EventLog } from '../components/Clock'
 import IsLoading from '../components/IsLoading'
 // UI
 import Container from '../ui/Container'
@@ -18,6 +18,8 @@ const Clock = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [timer, setTimer] = useState(0)
     const [clock, setClock] = useState({})
+    const [newEvents, setNewEvents] = useState([])
+    const [events, setEvents] = useState([])
     const [isClock, setIsClock] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [uid, setUID] = useState("")
@@ -33,7 +35,12 @@ const Clock = () => {
                         setIsAdmin(true)
                     }
                 })
-                setIsLoading(false)
+                getDocument("clockevents", data.data().clockEvent, setNotification, true).then((data) => {
+                    if (data !== "permission-denied") {
+                        setEvents(data.data().events)
+                    }
+                    setIsLoading(false)
+                })
             })
         }
     }, [id, isLoading, uid, setNotification, clock, timer])
@@ -49,6 +56,9 @@ const Clock = () => {
                     id={id} isAdmin={isAdmin}
                     timer={timer} setTimer={setTimer}
                     clock={clock} setClock={setClock} isClock={isClock}
+                />
+                <EventLog
+                    events={newEvents}
                 />
             </Container>
         </IsLoading>
