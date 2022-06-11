@@ -54,7 +54,6 @@ const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, s
                         (clock.daysInMonths.slice(0, time.month).reduce((a,b)=>a+b,0) * (clock.hoursInDay * 3600000)) +
                         (time.day * (clock.hoursInDay * 3600000)) + time.timer
                     if (CurrentClockMilliseconds >= EventInMiliseconds) {
-                        console.log(events[eventsArray[index]])
                         events[eventsArray[index]].forEach((description) => {
                             firePing(setNotification, "A Clock Event Has Fired", "An Event Has Happened: " + description)
                             setNewEvents(prev => (
@@ -71,7 +70,6 @@ const checkForEventsOnAdd = (logAccess, events, clock, timer, setNotification, s
                         })
                         const tempEvents = {...events}
                         delete tempEvents[eventsArray[index]]
-                        console.log(tempEvents)
                         setEvents(tempEvents)
                         index -= 1
                     } else {
@@ -101,7 +99,6 @@ const checkForEventsOnSubtract = (logAccess, events, clock, timer, setNewEvents,
                     setNewEvents(tempNewEvents)
                     breakWhileLoop = !breakWhileLoop
                 } else {
-                    console.log(newEvents[index])
                     const EventInMiliseconds =             
                         (newEvents[index].year * (clock.daysInMonths.reduce((a,b)=>a+b,0) * clock.hoursInDay * 3600000)) +
                         (clock.daysInMonths.slice(0, newEvents[index].monthIndex).reduce((a,b)=>a+b,0) * (clock.hoursInDay * 3600000)) +
