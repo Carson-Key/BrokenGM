@@ -22,12 +22,12 @@ const AddEventCard = (props) => {
             <div className="flex flex-col my-2 mx-4 w-72 scrollbar-hide overflow-scroll">
                 <div>
                     <p>Time Stamp</p>
-                    <p>HH:HH(24 hour)/DD/MM/YYYY</p>
+                    <p>hh:mm/DD/MM/YYYY</p>
                     <input 
                         className="border rounded-lg border-slate-400 h-9 px-2 py-2 w-full"
                         type="text" 
                         name="Add Time Stamp"
-                        placeholder="HH:HH(24 hour)/DD/MM/YYYY"
+                        placeholder="hh:mm/DD/MM/YYYY"
                         value={timeToAdd}
                         onChange={(event) => {
                             setTimeToAdd(event.target.value)
