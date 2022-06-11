@@ -16,6 +16,7 @@ const Controller = (props) => {
         id, isAdmin,
         timer, setTimer,
         clock, setClock, isClock, 
+        logAccess, events, setNewEvents, newEvents, setEvents, eventId
     } = props
     const setNotification = useContext(NotificationContext)[1]
     const startStopButtonStyleObject = {
@@ -39,14 +40,14 @@ const Controller = (props) => {
                 tickTimer(
                     id, timer, setTimer, 
                     clock, setClock, setNotification, 
-                    isAdmin, isClock
+                    isAdmin, isClock, logAccess, events, setNewEvents, setEvents
                 )
             }, 10)
         } else if (!clock.isActive) {
             clearInterval(interval)
         }
         return () => clearInterval(interval)
-    }, [id, timer, clock, isAdmin, isClock, setClock, setTimer, setNotification])
+    }, [id, timer, clock, isAdmin, isClock, setClock, setTimer, setNotification, logAccess, events, setNewEvents, setEvents])
     useEffect(() => {
         if (clock.isActive) {
             setTimerStateButtonText(startStopButtonStyleObject.stop.text)
@@ -55,7 +56,7 @@ const Controller = (props) => {
             setTimerStateButtonText(startStopButtonStyleObject.start.text)
             setTimerStateButtonColor(startStopButtonStyleObject.start.css)
         }
-    }, [clock, startStopButtonStyleObject.stop, startStopButtonStyleObject.start])
+    }, [clock, startStopButtonStyleObject.stop, startStopButtonStyleObject.start, events])
 
     const toggleTimerStateButtonCSS = () => {
         if (timerStateButtonText === startStopButtonStyleObject.start.text) {
@@ -122,9 +123,9 @@ const Controller = (props) => {
                                         const intChangedTimerValue = parseInt(changeTimerValue)
                                         if (changeTimerValue && !isNaN(intChangedTimerValue)) {
                                             if (intChangedTimerValue > 0) {
-                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin)
+                                                addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, setEvents)
                                             } else {
-                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin)
+                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, newEvents, setEvents, eventId)
                                             }
                                         } else {
                                             fireError(

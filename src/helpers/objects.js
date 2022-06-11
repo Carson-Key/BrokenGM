@@ -1,3 +1,4 @@
+export const CLOCKEVENTUNITS = ['year', 'month', 'day', 'timer']
 export const TIMEUNITS = ['mins', 'hours', 'days', 'weeks', 'months', 'years']
 export const CONVERSIONS = {
     [TIMEUNITS[0]]: (amount) => {return amount * 60000},
