@@ -16,7 +16,7 @@ const Controller = (props) => {
         id, isAdmin,
         timer, setTimer,
         clock, setClock, isClock, 
-        logAccess, events, setNewEvents, newEvents, setEvents
+        logAccess, events, setNewEvents, newEvents, setEvents, eventId
     } = props
     const setNotification = useContext(NotificationContext)[1]
     const startStopButtonStyleObject = {
@@ -125,7 +125,7 @@ const Controller = (props) => {
                                             if (intChangedTimerValue > 0) {
                                                 addTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents)
                                             } else {
-                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, newEvents, setEvents)
+                                                subtractTime(intChangedTimerValue, timeUnit, clock, timer, setTimer, setClock, id, setNotification, isClock, isAdmin, logAccess, events, setNewEvents, newEvents, setEvents, eventId)
                                             }
                                         } else {
                                             fireError(

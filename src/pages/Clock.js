@@ -26,6 +26,7 @@ const Clock = () => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [logAccess, setLogAccess] = useState(false)
     const [uid, setUID] = useState("")
+    const [eventId, setEventId] = useState("")
 
     useEffect(() => {
         if (isLoading) {
@@ -39,6 +40,7 @@ const Clock = () => {
                         setIsAdmin(true)
                     }
                 })
+                setEventId(data.data().clockEvent)
                 getDocument("clockevents", data.data().clockEvent, setNotification, true).then((data) => {
                     if (data !== "permission-denied") {
                         if (data) {
@@ -48,32 +50,36 @@ const Clock = () => {
                                 let index = eventsDB.length - 1
                                 let tempEvents = {}
                                 while (!breakWhileLoop) {
-                                    const {time, description} = parseEventString(eventsDB[index])
-                                    const timeStamp = eventsDB[index].match(/(?<=\[).+?(?=\])/g)[0]
-                                    if (
-                                        time.year > tempClock.year || 
-                                        (
-                                            time.month > tempClock.monthOfYear && 
-                                            time.year === tempClock.year
-                                        ) || (
-                                            time.day > tempClock.dayOfMonth && 
-                                            time.month === tempClock.monthOfYear && 
-                                            time.year === tempClock.year
-                                        ) || (
-                                            time.timer > tempClock.timer &&
-                                            time.day === tempClock.dayOfMonth && 
-                                            time.month === tempClock.monthOfYear && 
-                                            time.year === tempClock.year
-                                        )
-                                    ) {
-                                        if (tempEvents[timeStamp]) {
-                                            tempEvents[timeStamp] = [...tempEvents[timeStamp], description]
-                                        } else {
-                                            tempEvents[timeStamp] = [description]
-                                        }
-                                        index -= 1
-                                    } else {
+                                    if (index < 0) {
                                         breakWhileLoop = !breakWhileLoop
+                                    } else {
+                                        const {time, description} = parseEventString(eventsDB[index])
+                                        const timeStamp = eventsDB[index].match(/(?<=\[).+?(?=\])/g)[0]
+                                        if (
+                                            time.year > tempClock.year || 
+                                            (
+                                                time.month > tempClock.monthOfYear && 
+                                                time.year === tempClock.year
+                                            ) || (
+                                                time.day > tempClock.dayOfMonth && 
+                                                time.month === tempClock.monthOfYear && 
+                                                time.year === tempClock.year
+                                            ) || (
+                                                time.timer > tempClock.timer &&
+                                                time.day === tempClock.dayOfMonth && 
+                                                time.month === tempClock.monthOfYear && 
+                                                time.year === tempClock.year
+                                            )
+                                        ) {
+                                            if (tempEvents[timeStamp]) {
+                                                tempEvents[timeStamp] = [...tempEvents[timeStamp], description]
+                                            } else {
+                                                tempEvents[timeStamp] = [description]
+                                            }
+                                            index -= 1
+                                        } else {
+                                            breakWhileLoop = !breakWhileLoop
+                                        }
                                     }
                                 }
                                 setEvents(tempEvents)
@@ -96,13 +102,14 @@ const Clock = () => {
                 />
                 <Controller
                     id={id} isAdmin={isAdmin} logAccess={logAccess} 
-                    timer={timer} setTimer={setTimer} 
+                    timer={timer} setTimer={setTimer} eventId={eventId}
                     clock={clock} setClock={setClock} isClock={isClock} setEvents={setEvents}
                     events={events} setNewEvents={setNewEvents} newEvents={newEvents}
                 />
                 <ConditionalRender condition={logAccess}>
                     <EventLog
                         events={newEvents}
+                        eventsTwo={events}
                     />
                 </ConditionalRender>
             </Container>

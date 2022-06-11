@@ -6,11 +6,12 @@ import CardTitle from '../../ui/CardTitle'
 import { useEffect } from 'react'
 
 const EventLog = (props) => {
-    const { events } = props
+    const { events, eventsTwo } = props
 
     useEffect(() => {
         console.log(events)
-    }, [events])
+        console.log(eventsTwo)
+    }, [events, eventsTwo])
 
     return (
             <Card className="mt-8 h-96 mx-auto w-5/6">
