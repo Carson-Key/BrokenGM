@@ -19,12 +19,14 @@ const ClockEventsSettings = (props) => {
     const [activePlayers, setActivePlayers] = useState([])
     const [clockNames, setClockNames] = useState([])
     const [clockIDs, setClockIDs] = useState([])
+    const [currentClock, setCurrentClock] = useState("")
 
     useEffect(() => {
         getDocument("clockevents", id, setNotification).then((data)  => {
             const clockPlayersDB = data.data().players
             setActivePlayers(clockPlayersDB)
             setIsClockEvents(data.exists())
+            setCurrentClock(data.data().clock)
             let tempEnabledPlayers = {...players}
             clockPlayersDB.forEach((player) => {    
                 tempEnabledPlayers[player] = {id: player, name: returnChildOfObject(players, [player, "name"], ''), access: true}
@@ -52,7 +54,10 @@ const ClockEventsSettings = (props) => {
             <SettingsSection>
                 <SettingsSectionTitle>Associated Clock</SettingsSectionTitle>
                 <h4 className="ml-2 mr-1 inline text-lg font-medium">Clock:</h4>
-                <select>
+                <select value={currentClock} onChange={(event) => {
+                    setCurrentClock(event.target.value)
+                    updateDocument("clockevents", id, {clock: event.target.value}, setNotification, isClockEvents)
+                }}>
                     {
                         clockIDs.map((clock, i) => {
                             console.log()
