@@ -1,14 +1,39 @@
 // Helpers
 import { getDocument, updateDocument } from './firestore.js'
+import { firePing } from './notifications'
+// Objects
 import { CONVERSIONS } from './objects.js'
 
 export const tickTimer = (
     id, timer, setTimer, 
     clock, setClock, setNotification, 
-    isAdmin, isClock 
+    isAdmin, isClock, logAccess, events, setNewEvents
 ) => {
+    let eventCheck = false
     setTimer(prev => prev + 10)
-    if (timer % 90000 === 0 && isAdmin) {
+    if (timer % 60000 === 0) {
+        if (logAccess) {
+            const eventsArray = Object.keys(events)
+            const timeString = 
+                clock.year + ":" + clock.monthOfYear + ":" + 
+                clock.dayOfMonth + ":" + timer
+            if (eventsArray.includes(timeString)) {
+                events[timeString].forEach((description) => {
+                    firePing(setNotification, "A Clock Event Has Fired", "An Event Has Happened: " + description)
+                    setNewEvents(prev => (
+                        [...prev, 
+                            {
+                                description, timer,
+                                year: clock.year,
+                                month: clock.monthsOfYear[clock.monthOfYear],
+                                day: clock.dayOfMonth
+                            }
+                        ]
+                    ))
+                })
+            }
+            eventCheck = true
+        }
         if (isAdmin) {
             updateDocument(
                 "clocks", id, 
@@ -21,7 +46,7 @@ export const tickTimer = (
         }
     }
     if (timer >= (3600000 * clock.hoursInDay)) {
-        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin)
+        checkForOverflow(timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck)
     }
 }
 
@@ -70,7 +95,7 @@ export const subtractTime = (
     }
 }
 
-const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin) => {
+const checkForOverflow = (timer, clock, setTimer, setClock, id, setNotification, isClock, isAdmin, eventCheck = true) => {
     const tempClock = {...clock}
     let newDays = Math.floor(timer / (3600000 * clock.hoursInDay))
     const newTimer = timer - ((3600000 * clock.hoursInDay) * newDays)

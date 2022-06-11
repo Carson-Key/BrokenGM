@@ -3,9 +3,14 @@ import ConditionalRender from '../ConditionalRender'
 // UI
 import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
+import { useEffect } from 'react'
 
 const EventLog = (props) => {
     const { events } = props
+
+    useEffect(() => {
+        console.log(events)
+    }, [events])
 
     return (
             <Card className="mt-8 h-96 mx-auto w-5/6">
