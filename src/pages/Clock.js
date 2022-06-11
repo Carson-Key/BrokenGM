@@ -109,7 +109,6 @@ const Clock = () => {
                 <ConditionalRender condition={logAccess}>
                     <EventLog
                         events={newEvents}
-                        eventsTwo={events}
                     />
                 </ConditionalRender>
             </Container>

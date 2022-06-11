@@ -3,15 +3,11 @@ import ConditionalRender from '../ConditionalRender'
 // UI
 import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
-import { useEffect } from 'react'
+// Helpers
+import { getNumberSuffix, capitalizeFirstLetter } from '../../helpers/misc'
 
 const EventLog = (props) => {
-    const { events, eventsTwo } = props
-
-    useEffect(() => {
-        console.log(events)
-        console.log(eventsTwo)
-    }, [events, eventsTwo])
+    const { events } = props
 
     return (
             <Card className="mt-8 h-96 mx-auto w-5/6">
@@ -26,7 +22,24 @@ const EventLog = (props) => {
                         </p>
                     }
                 >
-                    <p>yes</p>
+                    <div className="h-full scrollbar-hide overflow-scroll divide-y my-2">
+                        {
+                            events.map((event, i) => {
+                                return (
+                                    <div className="flex w-full justify-center text-lg">
+                                        <h4 key={i} className="w-1/4 text-center border-r font-medium">
+                                            {
+                                                (("0" + Math.floor((event.timer / 3600000) % 60)).slice(-2) + ":" +
+                                                ("0" + Math.floor((event.timer / 60000) % 60)).slice(-2)) +
+                                                " on the " + event.day + getNumberSuffix(event.day) + " of " + capitalizeFirstLetter(event.month) + " " + event.year
+                                            }
+                                        </h4>
+                                        <p className="w-3/4 mx-2">{event.description}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </ConditionalRender>
             </Card>
     )
