@@ -60,13 +60,7 @@ const Clock = () => {
                                             time.month === tempClock.monthOfYear && 
                                             time.year === tempClock.year
                                         ) || (
-                                            time.day > tempClock.dayOfMonth && 
-                                            time.day === tempClock.dayOfMonth && 
-                                            time.month === tempClock.monthOfYear && 
-                                            time.year === tempClock.year
-                                        ) || (
                                             time.timer > tempClock.timer &&
-                                            time.day === tempClock.dayOfMonth && 
                                             time.day === tempClock.dayOfMonth && 
                                             time.month === tempClock.monthOfYear && 
                                             time.year === tempClock.year

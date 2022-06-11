@@ -22,13 +22,7 @@ const CurrentEvents = (props) => {
                         time.month === clockData.monthOfYear && 
                         time.year === clockData.year
                     ) || (
-                        time.day > clockData.dayOfMonth && 
-                        time.day === clockData.dayOfMonth && 
-                        time.month === clockData.monthOfYear && 
-                        time.year === clockData.year
-                    ) || (
                         time.timer > clockData.timer &&
-                        time.day === clockData.dayOfMonth && 
                         time.day === clockData.dayOfMonth && 
                         time.month === clockData.monthOfYear && 
                         time.year === clockData.year
