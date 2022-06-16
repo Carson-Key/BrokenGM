@@ -1,7 +1,8 @@
 // Packages
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 // Character Notes
 import Block from './Block'
+import List from './List'
 import BasicInfo from './BasicInfo'
 import Footer from './Footer'
 // UI
@@ -12,7 +13,6 @@ const NoteCard = (props) => {
     const { isAdmin, character } = props
     const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
     const characterElements = useState(Object.keys(character).slice(1))[0]
-
 
     return (
         <Card className={"transition-all duration-500 ease-out" + cardExpandedClass}>
@@ -30,12 +30,20 @@ const NoteCard = (props) => {
                         const element = character[elementIndex]
                         if (element.type === "block") {
                             return (<Block 
+                                key={i}
                                 isAdmin={isAdmin} 
                                 content={element.content}
                                 name={element.name}
                             />)
+                        } else if (element.type === "list") {
+                            return (<List
+                                key={i}
+                                isAdmin={isAdmin} 
+                                list={element.list}
+                                name={element.name}
+                            />)
                         } else {
-                            return <></>
+                            return <Fragment key={i} />
                         }
                     })
                 }
