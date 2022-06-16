@@ -7,7 +7,7 @@ import { moreLessTextDecider } from '../../helpers/misc'
 
 const NamedList = (props) => {
     const { isAdmin, name, list } = props
-    const [expandNamedList, setExpandNamedList] = useState(false)
+    const [expandNamedList, setExpandNamedList] = useState((list.length > 5) ? false : true)
     const namedListArray = useState(list)[0]
 
     return (
@@ -21,7 +21,7 @@ const NamedList = (props) => {
                     returnComponent={
                         namedListArray.map((element, i) => {
                             return (
-                                <div className="mt-1 mb-4" key={i}>
+                                <div className="mt-1" key={i}>
                                     <div className="flex flex-wrap mx-2 gap-2">
                                         <h5 className="font-semibold">{element.name}:</h5>
                                         <p>{element.content}</p>
@@ -34,8 +34,8 @@ const NamedList = (props) => {
                     {
                         namedListArray.map((element, i) => {
                             return (
-                                <div className="mt-1 mb-4" key={i}>
-                                    <div className="flex flex-wrap mx-2 gap-2">
+                                <div className="mt-1" key={i}>
+                                    <div className="flex flex-wrap gap-2">
                                         <h5 className="font-semibold">{element.name}:</h5>
                                         <p>{element.content}</p>
                                     </div>

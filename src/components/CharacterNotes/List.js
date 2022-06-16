@@ -7,7 +7,7 @@ import { moreLessTextDecider } from '../../helpers/misc'
 
 const List = (props) => {
     const { isAdmin, list, name } = props
-    const [expandList, setExpandList] = useState(false)
+    const [expandList, setExpandList] = useState((list.length > 5) ? false : true)
     const listArray = useState(list)[0]
 
     return (

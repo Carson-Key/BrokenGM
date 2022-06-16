@@ -7,7 +7,7 @@ import { moreLessTextDecider } from '../../helpers/misc'
 
 const Block = (props) => {
     const { isAdmin, content, name } = props
-    const [expandBlock, setExpandBlock] = useState(false)
+    const [expandBlock, setExpandBlock] = useState(content.match(/(\w+)/g).length > 100 ? false : true)
 
     return (
         <div>
