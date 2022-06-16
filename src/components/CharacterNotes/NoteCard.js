@@ -3,6 +3,7 @@ import { useState, Fragment } from 'react'
 // Character Notes
 import Block from './Block'
 import List from './List'
+import NamedList from './NamedList'
 import BasicInfo from './BasicInfo'
 import Footer from './Footer'
 // UI
@@ -44,6 +45,13 @@ const NoteCard = (props) => {
                             />)
                         } else if (element.type === "list") {
                             return (<List
+                                key={i}
+                                isAdmin={isAdmin} 
+                                list={element.list}
+                                name={element.name}
+                            />)
+                        } else if (element.type === "namedlist") {
+                            return (<NamedList
                                 key={i}
                                 isAdmin={isAdmin} 
                                 list={element.list}
