@@ -5,28 +5,28 @@ import ConditionalRender from '../ConditionalRender'
 // Helpers
 import { moreLessTextDecider } from '../../helpers/misc'
 
-const Backstory = (props) => {
-    const { isAdmin, backstory } = props
-    const [expandBackstory, setExpandBackstory] = useState(false)
+const Block = (props) => {
+    const { isAdmin, content, name } = props
+    const [expandBlock, setExpandBlock] = useState(false)
 
     return (
         <div>
-            <h4 className="text-xl font-semibold">Backstory</h4>
+            <h4 className="text-xl font-semibold">{name}</h4>
             <ConditionalRender 
-                condition={expandBackstory}
+                condition={expandBlock}
             >
                 <ConditionalRender 
                     condition={isAdmin}
-                    returnComponent={<p>{backstory}</p>}
+                    returnComponent={<p>{content}</p>}
                 >
-                    <p>{backstory}</p>
+                    <p>{content}</p>
                 </ConditionalRender>
             </ConditionalRender>
             <button className="flex text-lg text-blue-500 my-2" 
-                onClick={() => {setExpandBackstory(!expandBackstory)}
-            }>{moreLessTextDecider(expandBackstory)}</button>
+                onClick={() => {setExpandBlock(!expandBlock)}
+            }>{moreLessTextDecider(expandBlock)}</button>
         </div>
 	)
 }
 
-export default Backstory
+export default Block

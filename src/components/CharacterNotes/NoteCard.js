@@ -1,7 +1,7 @@
 // Packages
 import { useState } from 'react'
 // Character Notes
-import Backstory from './Backstory'
+import Block from './Block'
 import BasicInfo from './BasicInfo'
 import Footer from './Footer'
 // UI
@@ -11,6 +11,8 @@ import CardTitle from '../../ui/CardTitle'
 const NoteCard = (props) => {
     const { isAdmin, character } = props
     const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
+    const characterElements = useState(Object.keys(character).slice(1))[0]
+
 
     return (
         <Card className={"transition-all duration-500 ease-out" + cardExpandedClass}>
@@ -23,7 +25,20 @@ const NoteCard = (props) => {
                     position={character[0].position}
                     status={character[0].status}
                 />
-                {/* <Backstory isAdmin={isAdmin} backstory={character.backstory} /> */}
+                {
+                    characterElements.map((elementIndex, i) => {
+                        const element = character[elementIndex]
+                        if (element.type === "block") {
+                            return (<Block 
+                                isAdmin={isAdmin} 
+                                content={element.content}
+                                name={element.name}
+                            />)
+                        } else {
+                            return <></>
+                        }
+                    })
+                }
             </div>
             <Footer setCardExpandedClass={setCardExpandedClass} />
         </Card>
