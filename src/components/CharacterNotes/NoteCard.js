@@ -15,15 +15,15 @@ const NoteCard = (props) => {
     return (
         <Card className={"transition-all duration-500 ease-out" + cardExpandedClass}>
             <CardTitle>
-                {character.name + " (" + character.position + ")"}
+                {character[0].name + " (" + character[0].position + ")"}
             </CardTitle>
             <div className="px-4 scrollbar-hide overflow-scroll divide-y w-full">
                 <BasicInfo 
-                    isAdmin={isAdmin} name={character.name} 
-                    position={character.position} dob={character.dob}
-                    status={character.status}
+                    isAdmin={isAdmin} name={character[0].name} 
+                    position={character[0].position}
+                    status={character[0].status}
                 />
-                <Backstory isAdmin={isAdmin} backstory={character.backstory} />
+                {/* <Backstory isAdmin={isAdmin} backstory={character.backstory} /> */}
             </div>
             <Footer setCardExpandedClass={setCardExpandedClass} />
         </Card>
