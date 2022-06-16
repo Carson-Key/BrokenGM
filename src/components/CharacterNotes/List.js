@@ -19,11 +19,11 @@ const List = (props) => {
                 <ConditionalRender 
                     condition={isAdmin}
                 >
-                    <ul className="mx-2">
+                    <div className="flex flex-col w-full px-2 break-words">
                         {listArray.map((element, i) => {
-                            return (<li key={i} className="my-2">{element}</li>)
+                            return (<p key={i} className="my-2">{element}</p>)
                         })}
-                    </ul>
+                    </div>
                 </ConditionalRender>
             </ConditionalRender>
             <button className="flex text-lg text-blue-500 my-2" 
