@@ -4,7 +4,7 @@ import ConditionalRender from '../ConditionalRender'
 import { generateStatusClasses } from '../../helpers/characternotes'
 
 const BasicInfo = (props) => {
-    const { isAdmin, name, position, dob, status } = props
+    const { isAdmin, name, position, status } = props
 
     return (
         <div>
