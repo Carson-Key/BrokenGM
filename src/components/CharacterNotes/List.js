@@ -19,10 +19,10 @@ const List = (props) => {
                 <ConditionalRender 
                     condition={isAdmin}
                 >
-                    <ul>
+                    <ul className="mx-2">
                         {listArray.map((listIndex, i) => {
                             const listElement = list[listIndex]
-                            return (<li key={i}>{listElement}</li>)
+                            return (<li key={i} className="my-2">{listElement}</li>)
                         })}
                     </ul>
                 </ConditionalRender>
