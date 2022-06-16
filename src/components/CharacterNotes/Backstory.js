@@ -2,7 +2,7 @@
 import { useState } from 'react'
 // Components
 import ConditionalRender from '../ConditionalRender'
-// UI
+// Helpers
 import { moreLessTextDecider } from '../../helpers/misc'
 
 const Backstory = (props) => {
@@ -10,7 +10,7 @@ const Backstory = (props) => {
     const [expandBackstory, setExpandBackstory] = useState(false)
 
     return (
-        <div className="h-fit">
+        <div>
             <h4 className="text-xl font-semibold">Backstory</h4>
             <ConditionalRender 
                 condition={expandBackstory}
