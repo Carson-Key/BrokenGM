@@ -15,7 +15,7 @@ const Footer = (props) => {
                     setCardExpandedClass(
                         prev => (
                         (prev === " h-80") ? 
-                            " h-1/2 w-1/2" : 
+                            " h-160 md:h-168 md:w-162" : 
                             " h-80"
                         )
                     )

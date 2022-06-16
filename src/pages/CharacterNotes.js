@@ -37,7 +37,7 @@ const CharacterNote = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="w-screen h-screen flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
+            <Container className="w-screen flex-1 flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 {
                     notes.map((note, i) => {
                         return (
