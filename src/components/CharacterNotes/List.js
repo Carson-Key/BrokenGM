@@ -8,7 +8,6 @@ import { moreLessTextDecider } from '../../helpers/misc'
 const List = (props) => {
     const { isAdmin, list, name } = props
     const [expandList, setExpandList] = useState((list.length > 5) ? false : true)
-    const listArray = useState(list)[0]
 
     return (
         <div>
@@ -18,9 +17,16 @@ const List = (props) => {
             >
                 <ConditionalRender 
                     condition={isAdmin}
+                    returnComponent={                    
+                        <div className="flex flex-col w-full px-2 break-words">
+                            {list.map((element, i) => {
+                                return (<p key={i} className="my-2">{element}</p>)
+                            })}
+                        </div>
+                    }
                 >
                     <div className="flex flex-col w-full px-2 break-words">
-                        {listArray.map((element, i) => {
+                        {list.map((element, i) => {
                             return (<p key={i} className="my-2">{element}</p>)
                         })}
                     </div>
