@@ -17,7 +17,14 @@ const NoteCard = (props) => {
     return (
         <Card className={"transition-all duration-500 ease-out" + cardExpandedClass}>
             <CardTitle>
-                {character[0].name + " (" + character[0].position + ")"}
+                {character[0].name + (character[0].position ? ((
+                    character[0].position.toLowerCase() === "n/a" ||
+                    character[0].position.toLowerCase() === "" ||
+                    character[0].position.toLowerCase() === "none" || 
+                    character[0].position.toLowerCase() === "unknown"
+                )
+                    ? "" : " (" + character[0].position + ")") : "")
+                }
             </CardTitle>
             <div className="px-4 scrollbar-hide overflow-scroll divide-y w-full">
                 <BasicInfo 
