@@ -1,3 +1,7 @@
+
+// Packages
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+
 export const splitNumberToReverseArray = (number) => {
     return (number + '').split('').reverse()
 }
@@ -58,4 +62,12 @@ export const removeElementFromArray = (array, value) => {
     return array.filter((ele) => { 
         return ele !== value;
     })
+}
+
+export const moreLessTextDecider = (state) => {
+    if (state) {
+        return  (<><IoIosArrowDown className="my-auto mr-1"/> More</>)
+    } else {
+        return  (<><IoIosArrowUp className="my-auto mr-1"/> Less</>)
+    }
 }

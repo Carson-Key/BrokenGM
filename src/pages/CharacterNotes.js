@@ -37,11 +37,14 @@ const CharacterNote = () => {
 
     return (
         <IsLoading isLoading={isLoading}>
-            <Container className="flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
+            <Container className="w-screen h-screen flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 {
                     notes.map((note, i) => {
                         return (
-                            <NoteCard name={note.name} isAdmin={isAdmin} />
+                            <NoteCard 
+                                key={i}
+                                character={note} isAdmin={isAdmin} 
+                            />
                         )
                     })
                 }
