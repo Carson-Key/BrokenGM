@@ -38,7 +38,7 @@ const Block = (props) => {
                     >{content}</textarea>
                 </ConditionalRender>
             </ConditionalRender>
-            <div className={"w-full flex mt-2 py-2 " + (expandBlock ? "justify-between" : "justify-end")}>
+            <div className={"w-full flex mt-2 py-2 " + (expandBlock && isAdmin ? "justify-between" : "justify-end")}>
                 <ConditionalRender 
                     condition={isAdmin}
                 >

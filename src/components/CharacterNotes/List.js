@@ -97,7 +97,7 @@ const List = (props) => {
                     </div>
                 </ConditionalRender>
             </ConditionalRender>
-            <div className={"w-full flex mt-2 py-2 " + (expandList ? "justify-between" : "justify-end")}>
+            <div className={"w-full flex mt-2 py-2 " + (expandList && isAdmin ? "justify-between" : "justify-end")}>
                 <ConditionalRender 
                     condition={isAdmin}
                 >
