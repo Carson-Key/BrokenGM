@@ -44,7 +44,12 @@ const NamedList = (props) => {
                                     <div className="mt-1" key={i}>
                                         <div className="flex flex-wrap mx-2 gap-2">
                                             <h5 className="font-semibold">{element.name}:</h5>
-                                            <p>{element.content}</p>
+                                            <ConditionalRender
+                                                condition={element.content.match(/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi)}
+                                                returnComponent={<p>{element.content}</p>}
+                                            >
+                                                <a href={element.content} target="_blank" rel="noreferrer noopener" className="text-sky-500 underline">To Link</a>
+                                            </ConditionalRender>
                                         </div>
                                     </div>
                                 )

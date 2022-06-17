@@ -25,13 +25,13 @@ const NoteCard = (props) => {
         notes, isCharacterNotes, id
     } = props
     const setNotification = useContext(NotificationContext)[1]
-    const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
+    const [cardExpandedClass, setCardExpandedClass] = useState(" h-112")
     const [characterElements, setCharacterElements] = useState(Object.keys(character).slice(1))
     const [locked, setLocked] = useState(character[0].locked)
     const [popUp, setPopUp] = useState(false)
 
     return (
-        <Card className={"transition-all duration-500 ease-out w-112 h-112 " + cardExpandedClass}>
+        <Card className={"transition-all duration-500 ease-out w-112 " + cardExpandedClass}>
             <CardTitle className="flex justify-between">
                 <div className="w-5">
                     <ConditionalRender condition={isAdmin && !locked}>
