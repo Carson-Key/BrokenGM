@@ -2,6 +2,8 @@
 import { useState, useContext } from 'react'
 // Components
 import ConditionalRender from '../ConditionalRender'
+// UI
+import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
@@ -16,6 +18,7 @@ const Block = (props) => {
     const setNotification = useContext(NotificationContext)[1]
     const [expandBlock, setExpandBlock] = useState(content.match(/(\w+)/g).length > 100 ? false : true)
     const [contentState, setContentState] = useState(content)
+    const [popUp, setPopUp] = useState(false)
 
     return (
         <div>
@@ -62,14 +65,7 @@ const Block = (props) => {
                             "hidden"
                         }
                         onClick={() => {
-                            let tempNotes = [...notes]
-                            tempNotes[index][elementIndex] = {
-                                ...tempNotes[index][elementIndex],
-                                content: contentState
-                            }
-                            delete tempNotes[index][elementIndex]
-                            setNotes(tempNotes)
-                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            setPopUp(true)
                         }}
                     >Delete</button>
                 </div>
@@ -77,6 +73,25 @@ const Block = (props) => {
                     onClick={() => {setExpandBlock(!expandBlock)}
                 }>{moreLessTextDecider(expandBlock)}</button>
             </div>
+            <ConditionalRender condition={popUp}>
+                <ConfirmationPopUp
+                    message={"Are you sure you want to delete " + name}
+                    onClick={() => {
+                        let tempNotes = [...notes]
+                        tempNotes[index][elementIndex] = {
+                            ...tempNotes[index][elementIndex],
+                            content: contentState
+                        }
+                        delete tempNotes[index][elementIndex]
+                        setNotes(tempNotes)
+                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        setPopUp(false)
+                    }}
+                    cancel={() => {
+                        setPopUp(false)
+                    }}
+                />
+            </ConditionalRender>
         </div>
 	)
 }
