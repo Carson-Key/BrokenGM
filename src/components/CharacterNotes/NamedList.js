@@ -1,6 +1,7 @@
 // Packages
 import { useState, useContext } from 'react'
 import { FaTrash } from "react-icons/fa"
+import { GrAddCircle } from 'react-icons/gr'
 // Character Notes
 import VariableInput from './VariableInput'
 // Components
@@ -23,6 +24,7 @@ const NamedList = (props) => {
     const [resetInputValues, setResetInputValues] = useState(namedList.length)
     const [popUp, setPopUp] = useState(false)
     const [indexToDelete, setIndexToDelete] = useState(null)
+    const [newItem, setNewItem] = useState("")
     const setNotification = useContext(NotificationContext)[1]
 
     return (
@@ -77,11 +79,34 @@ const NamedList = (props) => {
                             })
                         }
                     </div>
+                    <div className="flex justify-center mt-3">
+                        <input
+                            className="border rounded px-2 py-1"
+                            placeholder={"Add to " + name}
+                            value={newItem}
+                            onChange={(event) => {setNewItem(event.target.value)}}
+                        />
+                        <button 
+                            className="mx-2"
+                            onClick={() => {
+                                let tempNotes = [...notes]
+                                let tempNamedList = [...namedList]
+                                tempNamedList.push({name: newItem, content: ""})
+                                tempNotes[index][elementIndex] = {
+                                    ...tempNotes[index][elementIndex],
+                                    list: tempNamedList
+                                }
+                                setNotes(tempNotes)
+                                setNamedList(tempNamedList)
+                                updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            }}
+                        ><GrAddCircle/></button>
+                    </div>
                 </ConditionalRender>
             </ConditionalRender>
             <div className={"w-full flex mt-2 py-2 " + (expandNamedList ? "justify-between" : "justify-end")}>
                 <button 
-                    disabled={expandNamedList}
+                    disabled={!expandNamedList}
                     className={
                         expandNamedList ?
                         "bg-green-500 text-white rounded px-2 py-1" :
