@@ -6,7 +6,7 @@ const VariableTextArea = (props) => {
         value, placeholder, index, values, 
         setValue, changeValues, resetInputValues, setResetInputValues
     } = props
-    const [inputValue, setInputValue] = useState("")
+    const [inputValue, setInputValue] = useState(value ? value : "")
 
     useEffect(() => {
         if (resetInputValues < values.length) {

@@ -109,7 +109,6 @@ const List = (props) => {
                             list: listState
                         }
                         setNotes(tempNotes)
-                        setResetInputValues(0)
                         updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                     }}
                 >Update</button>
