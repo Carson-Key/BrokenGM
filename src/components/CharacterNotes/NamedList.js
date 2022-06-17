@@ -55,19 +55,21 @@ const NamedList = (props) => {
                             namedList.map((element, i) => {
                                 return (
                                     <div key={i} className="flex flex-wrap justify-between gap-2 mt-1">
-                                        <h5 className="font-semibold">{element.name}:</h5>
-                                        <VariableInput 
-                                            value={element.content}
-                                            placeholder={"Change " + element.name + " Value"}
-                                            index={i}
-                                            values={namedList} 
-                                            setValue={setNamedList}
-                                            changeValues={(tempValues, index, inputValue) => {
-                                                tempValues[index].content = inputValue
-                                            }}
-                                            resetInputValues={resetInputValues}
-                                            setResetInputValues={setResetInputValues}
-                                        />
+                                        <div className="flex gap-2">
+                                            <h5 className="font-semibold">{element.name}:</h5>
+                                            <VariableInput 
+                                                value={element.content}
+                                                placeholder={"Change " + element.name + " Value"}
+                                                index={i}
+                                                values={namedList} 
+                                                setValue={setNamedList}
+                                                changeValues={(tempValues, index, inputValue) => {
+                                                    tempValues[index].content = inputValue
+                                                }}
+                                                resetInputValues={resetInputValues}
+                                                setResetInputValues={setResetInputValues}
+                                            />
+                                        </div>
                                         <button onClick={() => {
                                             setIndexToDelete(i)
                                             setPopUp(true)
