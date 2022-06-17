@@ -11,7 +11,10 @@ import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
 
 const NoteCard = (props) => {
-    const { isAdmin, character } = props
+    const { 
+        isAdmin, character, setNotes, index, 
+        notes, isCharacterNotes, id 
+    } = props
     const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
     const characterElements = useState(Object.keys(character).slice(1))[0]
 
@@ -30,8 +33,9 @@ const NoteCard = (props) => {
             <div className="px-4 scrollbar-hide overflow-scroll divide-y w-full">
                 <BasicInfo 
                     isAdmin={isAdmin} name={character[0].name} 
-                    position={character[0].position}
-                    status={character[0].status}
+                    position={character[0].position} setNotes={setNotes}
+                    status={character[0].status} index={index} notes={notes}
+                    isCharacterNotes={isCharacterNotes} id={id}
                 />
                 {
                     characterElements.map((elementIndex, i) => {

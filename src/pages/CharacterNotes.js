@@ -19,6 +19,7 @@ const CharacterNote = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [notes, setNotes] = useState([])
     const [isAdmin, setIsAdmin] = useState(false)
+    const [isCharacterNotes, setIsCharacterNotes] = useState(false)
     const [uid, setUID] = useState("")
 
     useEffect(() => {
@@ -30,6 +31,7 @@ const CharacterNote = () => {
                         setIsAdmin(true)
                     }
                 })
+                setIsCharacterNotes(data.exists())
                 setIsLoading(false)
             })
         }
@@ -42,8 +44,9 @@ const CharacterNote = () => {
                     notes.map((note, i) => {
                         return (
                             <NoteCard 
-                                key={i}
-                                character={note} isAdmin={isAdmin} 
+                                key={i} setNotes={setNotes} index={i}
+                                character={note} isAdmin={isAdmin} notes={notes}
+                                isCharacterNotes={isCharacterNotes} id={id}
                             />
                         )
                     })
