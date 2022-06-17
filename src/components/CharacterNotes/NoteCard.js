@@ -19,7 +19,7 @@ const NoteCard = (props) => {
     const characterElements = useState(Object.keys(character).slice(1))[0]
 
     return (
-        <Card className={"transition-all duration-500 ease-out w-96 " + cardExpandedClass}>
+        <Card className={"transition-all duration-500 ease-out w-112 h-112 " + cardExpandedClass}>
             <CardTitle>
                 {character[0].name + (character[0].position ? ((
                     character[0].position.toLowerCase() === "n/a" ||

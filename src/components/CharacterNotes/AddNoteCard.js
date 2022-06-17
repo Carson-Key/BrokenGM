@@ -5,7 +5,7 @@ import CardTitle from '../../ui/CardTitle'
 const AddNoteCard = () => {
 
     return (
-        <Card className="h-80">
+        <Card className="w-112 h-112">
             <CardTitle>
                 Add New Note
             </CardTitle>
