@@ -26,5 +26,9 @@ service cloud.firestore {
       allow read: if request.auth != null && request.auth.uid in resource.data.players;
       allow update, write, delete, read: if request.auth != null && request.auth.uid in resource.data.admins;
     }
+    match /characternotes/{documentId} {
+      allow read: if request.auth != null && request.auth.uid in resource.data.players;
+      allow update, write, delete, read: if request.auth != null && request.auth.uid in resource.data.admins;
+    }
   }
 }
