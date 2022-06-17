@@ -91,6 +91,7 @@ const List = (props) => {
                                 setNotes(tempNotes)
                                 setListState(tempList)
                                 updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                                setNewItem("")
                             }}
                         ><GrAddCircle/></button>
                     </div>
