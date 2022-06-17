@@ -1,5 +1,6 @@
 // Packages
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useContext } from 'react'
+import { FaLockOpen, FaLock } from "react-icons/fa";
 // Character Notes
 import Block from './Block'
 import List from './List'
@@ -9,30 +10,51 @@ import Footer from './Footer'
 // UI
 import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
+// Contexts
+import { NotificationContext } from '../../contexts/Notification'
+// Helpers
+import { updateDocument } from '../../helpers/firestore'
 
 const NoteCard = (props) => {
     const { 
         isAdmin, character, setNotes, index, 
-        notes, isCharacterNotes, id 
+        notes, isCharacterNotes, id
     } = props
+    const setNotification = useContext(NotificationContext)[1]
     const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
     const [characterElements, setCharacterElements] = useState(Object.keys(character).slice(1))
+    const [locked, setLocked] = useState(character[0].locked)
 
     return (
         <Card className={"transition-all duration-500 ease-out w-112 h-112 " + cardExpandedClass}>
-            <CardTitle>
-                {character[0].name + (character[0].position ? ((
-                    character[0].position.toLowerCase() === "n/a" ||
-                    character[0].position.toLowerCase() === "" ||
-                    character[0].position.toLowerCase() === "none" || 
-                    character[0].position.toLowerCase() === "unknown"
-                )
-                    ? "" : " (" + character[0].position + ")") : "")
-                }
+            <CardTitle className="flex justify-between">
+                <div className="w-5"></div>
+                <p className="w-fit">
+                    {character[0].name + (character[0].position ? ((
+                        character[0].position.toLowerCase() === "n/a" ||
+                        character[0].position.toLowerCase() === "" ||
+                        character[0].position.toLowerCase() === "none" || 
+                        character[0].position.toLowerCase() === "unknown"
+                    )
+                        ? "" : " (" + character[0].position + ")") : "")
+                    }
+                </p>
+                <button className="w-4" onClick={() => {
+                    let tempNotes = [...notes]
+                    tempNotes[index][0] = {
+                        ...tempNotes[index][0],
+                        locked: !locked
+                    }
+                    setNotes(tempNotes)
+                    setLocked(!locked)
+                    updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                }}>
+                    {(locked) ? <FaLock/> : <FaLockOpen/>}
+                </button>
             </CardTitle>
             <div className="px-4 scrollbar-hide overflow-scroll divide-y w-full">
                 <BasicInfo 
-                    isAdmin={isAdmin} name={character[0].name} 
+                    isAdmin={isAdmin && !locked} name={character[0].name} 
                     position={character[0].position} setNotes={setNotes}
                     status={character[0].status} index={index} notes={notes}
                     isCharacterNotes={isCharacterNotes} id={id}
@@ -43,19 +65,19 @@ const NoteCard = (props) => {
                         if (element) {
                             if (element.type === "block") {
                                 return (<Block 
-                                    key={i} isAdmin={isAdmin} content={element.content} elementIndex={i+1}
+                                    key={i} isAdmin={isAdmin && !locked} content={element.content} elementIndex={i+1}
                                     name={element.name} setNotes={setNotes} index={index}
                                     notes={notes} isCharacterNotes={isCharacterNotes} id={id}
                                 />)
                             } else if (element.type === "list") {
                                 return (<List
-                                    key={i} isAdmin={isAdmin} list={element.list} elementIndex={i+1}
+                                    key={i} isAdmin={isAdmin && !locked} list={element.list} elementIndex={i+1}
                                     name={element.name} setNotes={setNotes} index={index}
                                     notes={notes} isCharacterNotes={isCharacterNotes} id={id}
                                 />)
                             } else if (element.type === "namedlist") {
                                 return (<NamedList
-                                    key={i} isAdmin={isAdmin} list={element.list} elementIndex={i+1}
+                                    key={i} isAdmin={isAdmin && !locked} list={element.list} elementIndex={i+1}
                                     name={element.name} setNotes={setNotes} index={index}
                                     notes={notes} isCharacterNotes={isCharacterNotes} id={id}
                                 />)
@@ -69,7 +91,7 @@ const NoteCard = (props) => {
                 }
             </div>
             <Footer 
-                isAdmin={isAdmin} setCardExpandedClass={setCardExpandedClass} 
+                isAdmin={isAdmin && !locked} setCardExpandedClass={setCardExpandedClass} 
                 setNotes={setNotes} notes={notes} id={id} 
                 index={index} isCharacterNotes={isCharacterNotes}
                 setCharacterElements={setCharacterElements}
