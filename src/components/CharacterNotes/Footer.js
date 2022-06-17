@@ -16,7 +16,7 @@ const Footer = (props) => {
         id, index, isCharacterNotes, setCharacterElements 
     } = props
     const setNotification = useContext(NotificationContext)[1]
-    const [expandCard, setExpandCard] = useState(false)
+    const [expandCard, setExpandCard] = useState(true)
     const [newItem, setNewItem] = useState("")
     const [popUp, setPopUp] = useState(false)
     const [newType, setNewType] = useState(false)
@@ -68,16 +68,16 @@ const Footer = (props) => {
             </ConditionalRender>
             <button className="flex text-lg text-blue-500 my-2 mx-4" 
                 onClick={() => {
-                    setExpandCard(!expandCard)
+                    setExpandCard(prev => !prev)
                     setCardExpandedClass(
                         prev => (
-                        (prev === " h-80") ? 
+                        (prev === " h-112") ? 
                             " h-160 md:h-168 md:w-162" : 
-                            " h-80"
+                            " h-112"
                         )
                     )
                 }
-            }>{moreLessTextDecider(expandCard)}</button>
+            }>{moreLessTextDecider(!expandCard)}</button>
             <ConditionalRender condition={popUp}>
                 <ConfirmationPopUp
                     message={<>
