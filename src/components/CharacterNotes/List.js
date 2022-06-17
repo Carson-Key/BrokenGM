@@ -1,6 +1,7 @@
 // Packages
 import { useState, useContext } from 'react'
 import { FaTrash } from "react-icons/fa"
+import { GrAddCircle } from 'react-icons/gr'
 // Character Notes
 import VariableTextArea from './VariableTextArea'
 // Components
@@ -24,6 +25,7 @@ const List = (props) => {
     const [resetInputValues, setResetInputValues] = useState(false)
     const setNotification = useContext(NotificationContext)[1]
     const [indexToDelete, setIndexToDelete] = useState(null)
+    const [newItem, setNewItem] = useState("")
 
     return (
         <div>
@@ -66,6 +68,29 @@ const List = (props) => {
                                 </div>
                             )
                         })}
+                    </div>
+                    <div className="flex justify-center px-8 mt-3">
+                        <textarea
+                            className="border w-full rounded px-1 py-1"
+                            placeholder={"Add to " + name}
+                            value={newItem}
+                            onChange={(event) => {setNewItem(event.target.value)}}
+                        />
+                        <button 
+                            className="mx-2"
+                            onClick={() => {
+                                let tempNotes = [...notes]
+                                let tempList = [...listState]
+                                tempList.push(newItem)
+                                tempNotes[index][elementIndex] = {
+                                    ...tempNotes[index][elementIndex],
+                                    list: tempList
+                                }
+                                setNotes(tempNotes)
+                                setListState(tempList)
+                                updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            }}
+                        ><GrAddCircle/></button>
                     </div>
                 </ConditionalRender>
             </ConditionalRender>
