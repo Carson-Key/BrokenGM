@@ -13,6 +13,7 @@ import { NotificationContext } from '../../contexts/Notification'
 // Helpers
 import { moreLessTextDecider } from '../../helpers/misc'
 import { updateDocument } from '../../helpers/firestore'
+import { fireError } from '../../helpers/notifications'
 
 const List = (props) => {
     const { 
@@ -95,23 +96,36 @@ const List = (props) => {
                 </ConditionalRender>
             </ConditionalRender>
             <div className={"w-full flex mt-2 py-2 " + (expandList ? "justify-between" : "justify-end")}>
-                <button 
-                    disabled={!expandList}
-                    className={
-                        expandList ?
-                        "bg-green-500 text-white rounded px-2 py-1" :
-                        "hidden"
-                    }
-                    onClick={() => {
-                        let tempNotes = [...notes]
-                        tempNotes[index][elementIndex] = {
-                            ...tempNotes[index][elementIndex],
-                            list: listState
+                <div className="flex gap-2">
+                    <button 
+                        disabled={!expandList}
+                        className={
+                            expandList ?
+                            "bg-green-500 text-white rounded px-2 py-1" :
+                            "hidden"
                         }
-                        setNotes(tempNotes)
-                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                    }}
-                >Update</button>
+                        onClick={() => {
+                            let tempNotes = [...notes]
+                            tempNotes[index][elementIndex] = {
+                                ...tempNotes[index][elementIndex],
+                                list: listState
+                            }
+                            setNotes(tempNotes)
+                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        }}
+                    >Update</button>
+                    <button 
+                        disabled={!expandList}
+                        className={
+                            expandList ?
+                            "bg-red-500 text-white rounded px-2 py-1" :
+                            "hidden"
+                        }
+                        onClick={() => {
+                            setPopUp(true)
+                        }}
+                    >Delete</button>
+                </div>
                 <button className="flex text-lg text-blue-500" 
                     onClick={() => {setExpandList(!expandList)}
                 }>{moreLessTextDecider(expandList)}</button>
@@ -132,8 +146,10 @@ const List = (props) => {
                             setListState(tempList)
                             updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                             setIndexToDelete(false)
-                            setPopUp(false)
+                        } else {
+                            fireError(setNotification, "Nothing to delete", "You have attempted to delete nothing")
                         }
+                        setPopUp(false)
                     }}
                     cancel={() => {
                         setIndexToDelete(false)
