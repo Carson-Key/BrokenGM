@@ -22,6 +22,7 @@ const NamedList = (props) => {
     const [expandNamedList, setExpandNamedList] = useState((list.length > 5) ? false : true)
     const [namedList, setNamedList] = useState(list)
     const [resetInputValues, setResetInputValues] = useState(namedList.length)
+    const [deleteCatPopUp, setDeleteCatPopUp] = useState(false)
     const [popUp, setPopUp] = useState(false)
     const [indexToDelete, setIndexToDelete] = useState(null)
     const [newItem, setNewItem] = useState("")
@@ -107,24 +108,37 @@ const NamedList = (props) => {
                 </ConditionalRender>
             </ConditionalRender>
             <div className={"w-full flex mt-2 py-2 " + (expandNamedList ? "justify-between" : "justify-end")}>
-                <button 
-                    disabled={!expandNamedList}
-                    className={
-                        expandNamedList ?
-                        "bg-green-500 text-white rounded px-2 py-1" :
-                        "hidden"
-                    }
-                    onClick={() => {
-                        let tempNotes = [...notes]
-                        tempNotes[index][elementIndex] = {
-                            ...tempNotes[index][elementIndex],
-                            list: namedList
+                <div className="flex gap-2">
+                    <button 
+                        disabled={!expandNamedList}
+                        className={
+                            expandNamedList ?
+                            "bg-green-500 text-white rounded px-2 py-1" :
+                            "hidden"
                         }
-                        setNotes(tempNotes)
-                        setResetInputValues(0)
-                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                    }}
-                >Update</button>
+                        onClick={() => {
+                            let tempNotes = [...notes]
+                            tempNotes[index][elementIndex] = {
+                                ...tempNotes[index][elementIndex],
+                                list: namedList
+                            }
+                            setNotes(tempNotes)
+                            setResetInputValues(0)
+                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        }}
+                    >Update</button>
+                    <button 
+                        disabled={!expandNamedList}
+                        className={
+                            expandNamedList ?
+                            "bg-red-500 text-white rounded px-2 py-1" :
+                            "hidden"
+                        }
+                        onClick={() => {
+                            setDeleteCatPopUp(true)
+                        }}
+                    >Delete</button>
+                </div>
                 <button className="flex text-lg text-blue-500" 
                     onClick={() => {setExpandNamedList(!expandNamedList)}
                 }>{moreLessTextDecider(expandNamedList)}</button>
@@ -151,6 +165,21 @@ const NamedList = (props) => {
                     cancel={() => {
                         setIndexToDelete(false)
                         setPopUp(false)
+                    }}
+                />
+            </ConditionalRender>
+            <ConditionalRender condition={deleteCatPopUp}>
+                <ConfirmationPopUp
+                    message={"Are you sure you want to delete " + name}
+                    onClick={() => {
+                        let tempNotes = [...notes]
+                        delete tempNotes[index][elementIndex]
+                        setNotes(tempNotes)
+                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        setDeleteCatPopUp(false)
+                    }}
+                    cancel={() => {
+                        setDeleteCatPopUp(false)
                     }}
                 />
             </ConditionalRender>
