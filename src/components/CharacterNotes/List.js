@@ -45,7 +45,7 @@ const List = (props) => {
                                         condition={element.match(/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi)}
                                         returnComponent={<p key={i} className="my-2">{element}</p>}
                                     >
-                                        <a href={element} className="text-sky-500 underline my-2">To Link</a>
+                                        <a href={element} target="_blank" rel="noreferrer noopener" className="text-sky-500 underline my-2">To Link</a>
                                     </ConditionalRender>
                                 )
                             })}

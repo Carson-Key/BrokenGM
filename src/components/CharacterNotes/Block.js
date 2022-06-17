@@ -33,7 +33,7 @@ const Block = (props) => {
                             condition={content.match(/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi)}
                             returnComponent={<p className="mx-2">{content}</p>}
                         >
-                            <a href={content} className="text-sky-500 underline mx-2">To Link</a>
+                            <a href={content} target="_blank" rel="noreferrer noopener" className="text-sky-500 underline mx-2">To Link</a>
                         </ConditionalRender>
                     }
                 >
