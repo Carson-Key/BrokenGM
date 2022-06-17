@@ -42,24 +42,21 @@ const NoteCard = (props) => {
                         const element = character[elementIndex]
                         if (element.type === "block") {
                             return (<Block 
-                                key={i}
-                                isAdmin={isAdmin} 
-                                content={element.content}
-                                name={element.name}
+                                key={i} isAdmin={isAdmin} content={element.content} elementIndex={i}
+                                name={element.name} setNotes={setNotes} index={index}
+                                notes={notes} isCharacterNotes={isCharacterNotes} id={id}
                             />)
                         } else if (element.type === "list") {
                             return (<List
-                                key={i}
-                                isAdmin={isAdmin} 
-                                list={element.list}
-                                name={element.name}
+                                key={i} isAdmin={isAdmin} list={element.list} elementIndex={i}
+                                name={element.name} setNotes={setNotes} index={index}
+                                notes={notes} isCharacterNotes={isCharacterNotes} id={id}
                             />)
                         } else if (element.type === "namedlist") {
                             return (<NamedList
-                                key={i}
-                                isAdmin={isAdmin} 
-                                list={element.list}
-                                name={element.name}
+                                key={i} isAdmin={isAdmin} list={element.list} elementIndex={i}
+                                name={element.name} setNotes={setNotes} index={index}
+                                notes={notes} isCharacterNotes={isCharacterNotes} id={id}
                             />)
                         } else {
                             return <Fragment key={i} />
