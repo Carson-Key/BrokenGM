@@ -16,7 +16,7 @@ const NoteCard = (props) => {
         notes, isCharacterNotes, id 
     } = props
     const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
-    const characterElements = useState(Object.keys(character).slice(1))[0]
+    const [characterElements, setCharacterElements] = useState(Object.keys(character).slice(1))
 
     return (
         <Card className={"transition-all duration-500 ease-out w-112 h-112 " + cardExpandedClass}>
@@ -68,7 +68,12 @@ const NoteCard = (props) => {
                     })
                 }
             </div>
-            <Footer isAdmin={isAdmin} setCardExpandedClass={setCardExpandedClass} />
+            <Footer 
+                isAdmin={isAdmin} setCardExpandedClass={setCardExpandedClass} 
+                setNotes={setNotes} notes={notes} id={id} 
+                index={index} isCharacterNotes={isCharacterNotes}
+                setCharacterElements={setCharacterElements}
+            />
         </Card>
 	)
 }

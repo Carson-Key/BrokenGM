@@ -16,7 +16,7 @@ const Block = (props) => {
         notes, isCharacterNotes, id, elementIndex
     } = props
     const setNotification = useContext(NotificationContext)[1]
-    const [expandBlock, setExpandBlock] = useState(content.match(/(\w+)/g).length > 100 ? false : true)
+    const [expandBlock, setExpandBlock] = useState((content.match(/(\w+)/g) ? content.match(/(\w+)/g).length : 0) > 100 ? false : true)
     const [contentState, setContentState] = useState(content)
     const [popUp, setPopUp] = useState(false)
 
