@@ -7,7 +7,8 @@ import {
     ClockSettings, 
     RelationSettings ,
     VotingSystemSettings,
-    ClockEventsSettings
+    ClockEventsSettings,
+    CharacterNotesSettings
 } from '../components/Campaign'
 import IsLoading from '../components/IsLoading'
 // UI
@@ -29,6 +30,7 @@ const Campaign = () => {
     const [relations, setRelations] = useState([])
     const [votingSystems, setVotingSystems] = useState([])
     const [clockEvents, setClockEvents] = useState([])
+    const [characterNotes, setCharacterNotes] = useState([])
     const [players, setPlayers] = useState([])
 
     useEffect(() => {
@@ -38,6 +40,7 @@ const Campaign = () => {
             setRelations((campaignData.relations) ? campaignData.relations : [])
             setVotingSystems((campaignData.votingsystems) ? campaignData.votingsystems : [])
             setClockEvents((campaignData.clockevents) ? campaignData.clockevents : [])
+            setCharacterNotes((campaignData.characternotes) ? campaignData.characternotes : [])
             getCurrentUser(setUID, (uid) => {
                 if (campaignData.admins.includes(uid)) {
                     setIsAdmin(true)
@@ -90,6 +93,16 @@ const Campaign = () => {
                     players={players}
                     clocks={clocks}
                     Settings={ClockEventsSettings}
+                />
+                <CampaignLinkCard 
+                    docID="characternotes"
+                    path="characternotes"
+                    items={characterNotes} 
+                    isAdmin={isAdmin}
+                    playerBody="To Notes"
+                    players={players}
+                    clocks={clocks}
+                    Settings={CharacterNotesSettings}
                 />
             </Container>
         </IsLoading>
