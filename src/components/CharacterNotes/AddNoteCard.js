@@ -37,6 +37,7 @@ const AddNoteCard = (props) => {
                             }
                         })
                         setNotes(tempNotes)
+                        setNewName("")
                         updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                     }}
                 >Add Card</button>

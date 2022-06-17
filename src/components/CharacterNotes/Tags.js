@@ -68,6 +68,7 @@ const Tags = (props) => {
                             }
                             setNotes(tempNotes)
                             setTagsState(tempList)
+                            setNewTag("")
                             updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                         }}
                     ><GrAddCircle/></button>
