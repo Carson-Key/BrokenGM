@@ -19,7 +19,7 @@ const NoteCard = (props) => {
     const characterElements = useState(Object.keys(character).slice(1))[0]
 
     return (
-        <Card className={"transition-all duration-500 ease-out" + cardExpandedClass}>
+        <Card className={"transition-all duration-500 ease-out w-96 " + cardExpandedClass}>
             <CardTitle>
                 {character[0].name + (character[0].position ? ((
                     character[0].position.toLowerCase() === "n/a" ||
@@ -68,7 +68,7 @@ const NoteCard = (props) => {
                     })
                 }
             </div>
-            <Footer setCardExpandedClass={setCardExpandedClass} />
+            <Footer isAdmin={isAdmin} setCardExpandedClass={setCardExpandedClass} />
         </Card>
 	)
 }

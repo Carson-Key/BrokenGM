@@ -66,8 +66,8 @@ export const removeElementFromArray = (array, value) => {
 
 export const moreLessTextDecider = (state) => {
     if (!state) {
-        return  (<><IoIosArrowDown className="my-auto mr-1"/> More</>)
+        return  (<><IoIosArrowDown className="my-auto mr-1"/> <p className="inline my-auto">More</p></>)
     } else {
-        return  (<><IoIosArrowUp className="my-auto mr-1"/> Less</>)
+        return  (<><IoIosArrowUp className="my-auto mr-1"/> <p className="inline my-auto">Less</p></>)
     }
 }
