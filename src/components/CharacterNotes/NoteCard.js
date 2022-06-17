@@ -1,12 +1,14 @@
 // Packages
 import { useState, Fragment, useContext } from 'react'
-import { FaLockOpen, FaLock } from "react-icons/fa";
+import { FaLockOpen, FaLock, FaTrash } from "react-icons/fa"
 // Character Notes
 import Block from './Block'
 import List from './List'
 import NamedList from './NamedList'
 import BasicInfo from './BasicInfo'
 import Footer from './Footer'
+// Components
+import ConditionalRender from '../ConditionalRender'
 // UI
 import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
@@ -28,7 +30,11 @@ const NoteCard = (props) => {
     return (
         <Card className={"transition-all duration-500 ease-out w-112 h-112 " + cardExpandedClass}>
             <CardTitle className="flex justify-between">
-                <div className="w-5"></div>
+                <div className="w-5">
+                    <ConditionalRender condition={isAdmin && !locked}>
+                        <button><FaTrash/></button>
+                    </ConditionalRender>
+                </div>
                 <p className="w-fit">
                     {character[0].name + (character[0].position ? ((
                         character[0].position.toLowerCase() === "n/a" ||
