@@ -16,7 +16,7 @@ import { determinSearchQuerry } from '../helpers/characternotes'
 
 const CharacterNote = () => {
     const { id } = useParams()
-    const setNotification = useContext(NotificationContext)[1]
+    const [notification, setNotification] = useContext(NotificationContext)
     const [isLoading, setIsLoading] = useState(true)
     const [notes, setNotes] = useState([])
     const [isAdmin, setIsAdmin] = useState(false)
@@ -55,7 +55,7 @@ const CharacterNote = () => {
                     notes.map((note, i) => {
                         if (determinSearchQuerry(
                             note[0].name, note[0].position, note[0].status, 
-                            note[0].tags, searchQuerry)
+                            note[0].tags, searchQuerry, notification, setNotification)
                         ) {
                             return (
                                 <NoteCard 

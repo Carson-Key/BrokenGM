@@ -1,3 +1,6 @@
+// Helpers
+import { fireError } from "./notifications"
+
 export const generateStatusClasses = (status) => {
     const loweredStatus = status.toLowerCase()
     if (loweredStatus === "alive") {
@@ -11,11 +14,53 @@ export const generateStatusClasses = (status) => {
     }
 }
 
-export const determinSearchQuerry = (name, position, status, tags, searchQuerry) => {
-    const loweredName = name.toLowerCase()
-    const loweredPosition = position.toLowerCase()
-    const loweredStatus = status.toLowerCase()
-    const loweredQuerry = searchQuerry.toLowerCase()
+const searchWithAnds = (name, position, status, tags, searchQuerrys) => {
+    let returnBool = true
+    searchQuerrys.forEach((querry) => {
+        let tagBool
+        tags.forEach((tag, i) => {
+            const sreachTagBoolean = tag.toLowerCase().includes(querry)
+            if (sreachTagBoolean) {
+                tagBool = sreachTagBoolean
+            }
+        })
+
+        const querryBool = 
+            name.includes(querry) ||
+            position.includes(querry) ||
+            status.includes(querry) || tagBool
+    
+        if (!querryBool && returnBool) {
+            returnBool = false
+        }
+    })
+
+    return returnBool
+}
+const searchWithOrs = (name, position, status, tags, searchQuerrys) => {
+    let returnBool = false
+    searchQuerrys.forEach((querry) => {
+        let tagBool
+        tags.forEach((tag, i) => {
+            const sreachTagBoolean = tag.toLowerCase().includes(querry)
+            if (sreachTagBoolean) {
+                tagBool = sreachTagBoolean
+            }
+        })
+
+        const querryBool = 
+            name.includes(querry) ||
+            position.includes(querry) ||
+            status.includes(querry) || tagBool
+    
+        if (querryBool && !returnBool) {
+            returnBool = true
+        }
+    })
+
+    return returnBool
+}
+const searchWithSingle = (name, position, status, tags, searchQuerry) => {
     let returnBool = false
 
     tags.forEach((tag, i) => {
@@ -26,8 +71,28 @@ export const determinSearchQuerry = (name, position, status, tags, searchQuerry)
     })
 
     return (
-        loweredName.includes(loweredQuerry) ||
-        loweredPosition.includes(loweredQuerry) ||
-        loweredStatus.includes(loweredQuerry) || returnBool
+        name.includes(searchQuerry) ||
+        position.includes(searchQuerry) ||
+        status.includes(searchQuerry) || returnBool
     )
+}
+
+export const determinSearchQuerry = (name, position, status, tags, searchQuerry, notification, setNotification) => {
+    const loweredName = name.toLowerCase()
+    const loweredPosition = position.toLowerCase()
+    const loweredStatus = status.toLowerCase()
+    const loweredQuerry = searchQuerry.toLowerCase()
+
+    if (loweredQuerry.includes("&&") && !loweredQuerry.includes("||")) {
+        return searchWithAnds(loweredName, loweredPosition, loweredStatus, tags, loweredQuerry.split("&&"))
+    } else if (!loweredQuerry.includes("&&") && loweredQuerry.includes("||")) {
+        return searchWithOrs(loweredName, loweredPosition, loweredStatus, tags, loweredQuerry.split("||"))
+    } else if (!loweredQuerry.includes("&&") && !loweredQuerry.includes("||")) {
+        return searchWithSingle(loweredName, loweredPosition, loweredStatus, tags, loweredQuerry)
+    } else {
+        if (!notification.occurs) {
+            fireError(setNotification, "Invalid User Input", "Please use only &&'s or ||'s not both")
+        }
+        return true
+    }
 }
