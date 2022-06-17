@@ -19,30 +19,34 @@ const NamedList = (props) => {
                 <ConditionalRender 
                     condition={isAdmin}
                     returnComponent={
-                        namedListArray.map((element, i) => {
-                            return (
-                                <div className="mt-1" key={i}>
-                                    <div className="flex flex-wrap mx-2 gap-2">
-                                        <h5 className="font-semibold">{element.name}:</h5>
-                                        <p>{element.content}</p>
+                        <div className="px-2">{
+                            namedListArray.map((element, i) => {
+                                return (
+                                    <div className="mt-1" key={i}>
+                                        <div className="flex flex-wrap mx-2 gap-2">
+                                            <h5 className="font-semibold">{element.name}:</h5>
+                                            <p>{element.content}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })
+                                )
+                            })
+                        }</div>
                     }
                 >
-                    {
-                        namedListArray.map((element, i) => {
-                            return (
-                                <div className="mt-1" key={i}>
-                                    <div className="flex flex-wrap gap-2">
-                                        <h5 className="font-semibold">{element.name}:</h5>
-                                        <p>{element.content}</p>
+                    <div className="px-2">
+                        {
+                            namedListArray.map((element, i) => {
+                                return (
+                                    <div className="mt-1" key={i}>
+                                        <div className="flex flex-wrap gap-2">
+                                            <h5 className="font-semibold">{element.name}:</h5>
+                                            <p>{element.content}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </div>
                 </ConditionalRender>
             </ConditionalRender>
             <button className="flex text-lg text-blue-500 my-2" 
