@@ -109,37 +109,41 @@ const NamedList = (props) => {
                 </ConditionalRender>
             </ConditionalRender>
             <div className={"w-full flex mt-2 py-2 " + (expandNamedList ? "justify-between" : "justify-end")}>
-                <div className="flex gap-2">
-                    <button 
-                        disabled={!expandNamedList}
-                        className={
-                            expandNamedList ?
-                            "bg-green-500 text-white rounded px-2 py-1" :
-                            "hidden"
-                        }
-                        onClick={() => {
-                            let tempNotes = [...notes]
-                            tempNotes[index][elementIndex] = {
-                                ...tempNotes[index][elementIndex],
-                                list: namedList
+                <ConditionalRender 
+                    condition={isAdmin}
+                >
+                    <div className="flex gap-2">
+                        <button 
+                            disabled={!expandNamedList}
+                            className={
+                                expandNamedList ?
+                                "bg-green-500 text-white rounded px-2 py-1" :
+                                "hidden"
                             }
-                            setNotes(tempNotes)
-                            setResetInputValues(0)
-                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                        }}
-                    >Update</button>
-                    <button 
-                        disabled={!expandNamedList}
-                        className={
-                            expandNamedList ?
-                            "bg-red-500 text-white rounded px-2 py-1" :
-                            "hidden"
-                        }
-                        onClick={() => {
-                            setDeleteCatPopUp(true)
-                        }}
-                    >Delete</button>
-                </div>
+                            onClick={() => {
+                                let tempNotes = [...notes]
+                                tempNotes[index][elementIndex] = {
+                                    ...tempNotes[index][elementIndex],
+                                    list: namedList
+                                }
+                                setNotes(tempNotes)
+                                setResetInputValues(0)
+                                updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            }}
+                        >Update</button>
+                        <button 
+                            disabled={!expandNamedList}
+                            className={
+                                expandNamedList ?
+                                "bg-red-500 text-white rounded px-2 py-1" :
+                                "hidden"
+                            }
+                            onClick={() => {
+                                setDeleteCatPopUp(true)
+                            }}
+                        >Delete</button>
+                    </div>
+                </ConditionalRender>
                 <button className="flex text-lg text-blue-500" 
                     onClick={() => {setExpandNamedList(!expandNamedList)}
                 }>{moreLessTextDecider(expandNamedList)}</button>

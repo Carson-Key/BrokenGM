@@ -39,7 +39,7 @@ const Footer = (props) => {
     })[0]
 
     return (
-        <div className="border-t-2 border-secondary mt-auto flex justify-between">
+        <div className={"border-t-2 border-secondary mt-auto flex " + (isAdmin ? "justify-between" : "justify-end")}>
             <ConditionalRender condition={isAdmin}>
                 <div className="mx-1 my-1">
                     <h6>Add:</h6>
