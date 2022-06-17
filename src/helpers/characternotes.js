@@ -10,3 +10,14 @@ export const generateStatusClasses = (status) => {
         return "text-white bg-sky-400"
     }
 }
+
+export const determinSearchQuerry = (name, position, status, tags, searchQuerry) => {
+    const loweredName = name.toLowerCase()
+    const loweredPosition = position.toLowerCase()
+    const loweredStatus = status.toLowerCase()
+    const loweredQuerry = searchQuerry.toLowerCase()
+
+    return (loweredName.includes(loweredQuerry) ||
+    loweredPosition.includes(loweredQuerry) ||
+    loweredStatus.includes(loweredQuerry))
+}

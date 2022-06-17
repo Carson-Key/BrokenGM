@@ -12,6 +12,7 @@ import { NotificationContext } from "../contexts/Notification"
 // Helpers
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
+import { determinSearchQuerry } from '../helpers/characternotes'
 
 const CharacterNote = () => {
     const { id } = useParams()
@@ -52,10 +53,9 @@ const CharacterNote = () => {
             <Container className="w-screen flex-1 flex flex-wrap justify-evenly md:px-2 md:py-1 mx-auto">
                 {
                     notes.map((note, i) => {
-                        if (
-                            note[0].name.toLowerCase().includes(searchQuerry.toLowerCase()) ||
-                            note[0].position.toLowerCase().includes(searchQuerry.toLowerCase()) ||
-                            note[0].status.toLowerCase().includes(searchQuerry.toLowerCase())
+                        if (determinSearchQuerry(
+                            note[0].name, note[0].position, note[0].status, 
+                            note[0].tags, searchQuerry)
                         ) {
                             return (
                                 <NoteCard 
