@@ -52,7 +52,10 @@ const CharacterNote = () => {
                     })
                 }
                 <ConditionalRender condition={isAdmin}>
-                    <AddNoteCard />
+                    <AddNoteCard
+                        notes={notes} setNotes={setNotes} 
+                        id={id} isCharacterNotes={isCharacterNotes}
+                    />
                 </ConditionalRender>
             </Container>
         </IsLoading>
