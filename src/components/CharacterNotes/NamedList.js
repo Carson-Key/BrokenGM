@@ -79,9 +79,14 @@ const NamedList = (props) => {
                     </div>
                 </ConditionalRender>
             </ConditionalRender>
-            <div className="w-full flex justify-evenly mt-2 py-2">
+            <div className={"w-full flex mt-2 py-2 " + (expandNamedList ? "justify-between" : "justify-end")}>
                 <button 
-                    className="bg-green-500 text-white rounded px-2 py-1"
+                    disabled={expandNamedList}
+                    className={
+                        expandNamedList ?
+                        "bg-green-500 text-white rounded px-2 py-1" :
+                        "hidden"
+                    }
                     onClick={() => {
                         let tempNotes = [...notes]
                         tempNotes[index][elementIndex] = {
