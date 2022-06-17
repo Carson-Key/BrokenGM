@@ -17,7 +17,7 @@ const VariableInput = (props) => {
 
     return (
         <input
-            className="border rounded px-2 py-1 "
+            className="border rounded px-2 py-1 w-40"
             placeholder={value || value !== "" ? value : placeholder}
             value={inputValue}
             onChange={(event) => {

@@ -1,9 +1,12 @@
 // Packages
 import { useState, useContext } from 'react'
+import { FaTrash } from "react-icons/fa"
 // Character Notes
 import VariableInput from './VariableInput'
 // Components
 import ConditionalRender from '../ConditionalRender'
+// UI
+import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
@@ -18,6 +21,8 @@ const NamedList = (props) => {
     const [expandNamedList, setExpandNamedList] = useState((list.length > 5) ? false : true)
     const [namedList, setNamedList] = useState(list)
     const [resetInputValues, setResetInputValues] = useState(namedList.length)
+    const [popUp, setPopUp] = useState(false)
+    const [indexToDelete, setIndexToDelete] = useState(null)
     const setNotification = useContext(NotificationContext)[1]
 
     return (
@@ -47,22 +52,26 @@ const NamedList = (props) => {
                         {
                             namedList.map((element, i) => {
                                 return (
-                                    <div className="mt-1" key={i}>
-                                        <div className="flex flex-wrap gap-2">
-                                            <h5 className="font-semibold">{element.name}:</h5>
-                                            <VariableInput 
-                                                value={element.content}
-                                                placeholder={"Change " + element.name + " Value"}
-                                                index={i}
-                                                values={namedList} 
-                                                setValue={setNamedList}
-                                                changeValues={(tempValues, index, inputValue) => {
-                                                    tempValues[index].content = inputValue
-                                                }}
-                                                resetInputValues={resetInputValues}
-                                                setResetInputValues={setResetInputValues}
-                                            />
-                                        </div>
+                                    <div key={i} className="flex flex-wrap justify-between gap-2 mt-1">
+                                        <h5 className="font-semibold">{element.name}:</h5>
+                                        <VariableInput 
+                                            value={element.content}
+                                            placeholder={"Change " + element.name + " Value"}
+                                            index={i}
+                                            values={namedList} 
+                                            setValue={setNamedList}
+                                            changeValues={(tempValues, index, inputValue) => {
+                                                tempValues[index].content = inputValue
+                                            }}
+                                            resetInputValues={resetInputValues}
+                                            setResetInputValues={setResetInputValues}
+                                        />
+                                        <button onClick={() => {
+                                            setIndexToDelete(i)
+                                            setPopUp(true)
+                                        }}>
+                                            <FaTrash className="text-red-500"/>
+                                        </button>
                                     </div>
                                 )
                             })
@@ -88,6 +97,31 @@ const NamedList = (props) => {
                     onClick={() => {setExpandNamedList(!expandNamedList)}
                 }>{moreLessTextDecider(expandNamedList)}</button>
             </div>
+            <ConditionalRender condition={popUp}>
+                <ConfirmationPopUp
+                    message={"Are you sure you want to delete " + (namedList[indexToDelete] ? namedList[indexToDelete].name : "this note")}
+                    onClick={() => {
+                        if (indexToDelete) {
+                            let tempNotes = [...notes]
+                            let tempNamedList = [...namedList]
+                            tempNamedList.splice(indexToDelete, 1)
+                            tempNotes[index][elementIndex] = {
+                                ...tempNotes[index][elementIndex],
+                                list: tempNamedList
+                            }
+                            setNotes(tempNotes)
+                            setNamedList(tempNamedList)
+                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            setIndexToDelete(false)
+                            setPopUp(false)
+                        }
+                    }}
+                    cancel={() => {
+                        setIndexToDelete(false)
+                        setPopUp(false)
+                    }}
+                />
+            </ConditionalRender>
         </div>
 	)
 }
