@@ -23,6 +23,7 @@ const List = (props) => {
     const [expandList, setExpandList] = useState((list.length > 5) ? false : true)
     const [listState, setListState] = useState([...list])
     const [popUp, setPopUp] = useState(false)
+    const [deleteCatPopUp, setDeleteCatPopUp] = useState(false)
     const [resetInputValues, setResetInputValues] = useState(false)
     const setNotification = useContext(NotificationContext)[1]
     const [indexToDelete, setIndexToDelete] = useState(null)
@@ -122,7 +123,7 @@ const List = (props) => {
                             "hidden"
                         }
                         onClick={() => {
-                            setPopUp(true)
+                            setDeleteCatPopUp(true)
                         }}
                     >Delete</button>
                 </div>
@@ -154,6 +155,21 @@ const List = (props) => {
                     cancel={() => {
                         setIndexToDelete(false)
                         setPopUp(false)
+                    }}
+                />
+            </ConditionalRender>
+            <ConditionalRender condition={deleteCatPopUp}>
+                <ConfirmationPopUp
+                    message={"Are you sure you want to delete " + name}
+                    onClick={() => {
+                        let tempNotes = [...notes]
+                        delete tempNotes[index][elementIndex]
+                        setNotes(tempNotes)
+                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        setDeleteCatPopUp(false)
+                    }}
+                    cancel={() => {
+                        setDeleteCatPopUp(false)
                     }}
                 />
             </ConditionalRender>
