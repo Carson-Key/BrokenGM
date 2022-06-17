@@ -33,7 +33,7 @@ const AddNoteCard = (props) => {
                         tempNotes.push({
                             0: {
                                 name: newName, tags: [], locked: false,
-                                affiliations: [], status: "", position: ""
+                                status: "", position: ""
                             }
                         })
                         setNotes(tempNotes)
