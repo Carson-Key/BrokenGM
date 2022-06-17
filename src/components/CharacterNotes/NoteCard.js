@@ -12,6 +12,7 @@ import ConditionalRender from '../ConditionalRender'
 // UI
 import Card from '../../ui/Card'
 import CardTitle from '../../ui/CardTitle'
+import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
@@ -26,13 +27,18 @@ const NoteCard = (props) => {
     const [cardExpandedClass, setCardExpandedClass] = useState(" h-80")
     const [characterElements, setCharacterElements] = useState(Object.keys(character).slice(1))
     const [locked, setLocked] = useState(character[0].locked)
+    const [popUp, setPopUp] = useState(false)
 
     return (
         <Card className={"transition-all duration-500 ease-out w-112 h-112 " + cardExpandedClass}>
             <CardTitle className="flex justify-between">
                 <div className="w-5">
                     <ConditionalRender condition={isAdmin && !locked}>
-                        <button><FaTrash/></button>
+                        <button
+                            onClick={() => {
+                                setPopUp(true)
+                            }}
+                        ><FaTrash/></button>
                     </ConditionalRender>
                 </div>
                 <p className="w-fit">
@@ -102,6 +108,21 @@ const NoteCard = (props) => {
                 index={index} isCharacterNotes={isCharacterNotes}
                 setCharacterElements={setCharacterElements}
             />
+            <ConditionalRender condition={popUp}>
+                <ConfirmationPopUp
+                    message="Are you sure you want to delete this note card"
+                    onClick={() => {
+                        let tempNotes = [...notes]
+                        tempNotes.splice(index, 1)
+                        setNotes(tempNotes)
+                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        setPopUp(false)
+                    }}
+                    cancel={() => {
+                        setPopUp(false)
+                    }}
+                />
+            </ConditionalRender>
         </Card>
 	)
 }
