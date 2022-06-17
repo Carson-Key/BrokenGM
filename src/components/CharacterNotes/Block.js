@@ -36,23 +36,43 @@ const Block = (props) => {
                 </ConditionalRender>
             </ConditionalRender>
             <div className={"w-full flex mt-2 py-2 " + (expandBlock ? "justify-between" : "justify-end")}>
-                <button 
-                    disabled={!expandBlock}
-                    className={
-                        expandBlock ?
-                        "bg-green-500 text-white rounded px-2 py-1" :
-                        "hidden"
-                    }
-                    onClick={() => {
-                        let tempNotes = [...notes]
-                        tempNotes[index][elementIndex] = {
-                            ...tempNotes[index][elementIndex],
-                            content: contentState
+                <div>
+                    <button 
+                        disabled={!expandBlock}
+                        className={
+                            expandBlock ?
+                            "bg-green-500 text-white rounded px-2 py-1" :
+                            "hidden"
                         }
-                        setNotes(tempNotes)
-                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                    }}
-                >Update</button>
+                        onClick={() => {
+                            let tempNotes = [...notes]
+                            tempNotes[index][elementIndex] = {
+                                ...tempNotes[index][elementIndex],
+                                content: contentState
+                            }
+                            setNotes(tempNotes)
+                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        }}
+                    >Update</button>
+                    <button 
+                        disabled={!expandBlock}
+                        className={
+                            expandBlock ?
+                            "bg-red-500 text-white rounded px-2 py-1" :
+                            "hidden"
+                        }
+                        onClick={() => {
+                            let tempNotes = [...notes]
+                            tempNotes[index][elementIndex] = {
+                                ...tempNotes[index][elementIndex],
+                                content: contentState
+                            }
+                            delete tempNotes[index][elementIndex]
+                            setNotes(tempNotes)
+                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                        }}
+                    >Delete</button>
+                </div>
                 <button className="flex text-lg text-blue-500" 
                     onClick={() => {setExpandBlock(!expandBlock)}
                 }>{moreLessTextDecider(expandBlock)}</button>

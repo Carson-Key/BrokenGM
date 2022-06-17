@@ -46,7 +46,7 @@ const List = (props) => {
                     <div className="flex flex-col w-full px-2 break-words">
                         {listState.map((element, i) => {
                             return (
-                                <div className="flex gap-2">
+                                <div className="flex gap-2" key={i}>
                                     <VariableTextArea
                                         value={element}
                                         placeholder={"Change the Value of this Item"}

@@ -40,24 +40,28 @@ const NoteCard = (props) => {
                 {
                     characterElements.map((elementIndex, i) => {
                         const element = character[elementIndex]
-                        if (element.type === "block") {
-                            return (<Block 
-                                key={i} isAdmin={isAdmin} content={element.content} elementIndex={i+1}
-                                name={element.name} setNotes={setNotes} index={index}
-                                notes={notes} isCharacterNotes={isCharacterNotes} id={id}
-                            />)
-                        } else if (element.type === "list") {
-                            return (<List
-                                key={i} isAdmin={isAdmin} list={element.list} elementIndex={i+1}
-                                name={element.name} setNotes={setNotes} index={index}
-                                notes={notes} isCharacterNotes={isCharacterNotes} id={id}
-                            />)
-                        } else if (element.type === "namedlist") {
-                            return (<NamedList
-                                key={i} isAdmin={isAdmin} list={element.list} elementIndex={i+1}
-                                name={element.name} setNotes={setNotes} index={index}
-                                notes={notes} isCharacterNotes={isCharacterNotes} id={id}
-                            />)
+                        if (element) {
+                            if (element.type === "block") {
+                                return (<Block 
+                                    key={i} isAdmin={isAdmin} content={element.content} elementIndex={i+1}
+                                    name={element.name} setNotes={setNotes} index={index}
+                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id}
+                                />)
+                            } else if (element.type === "list") {
+                                return (<List
+                                    key={i} isAdmin={isAdmin} list={element.list} elementIndex={i+1}
+                                    name={element.name} setNotes={setNotes} index={index}
+                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id}
+                                />)
+                            } else if (element.type === "namedlist") {
+                                return (<NamedList
+                                    key={i} isAdmin={isAdmin} list={element.list} elementIndex={i+1}
+                                    name={element.name} setNotes={setNotes} index={index}
+                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id}
+                                />)
+                            } else {
+                                return <Fragment key={i} />
+                            }
                         } else {
                             return <Fragment key={i} />
                         }
