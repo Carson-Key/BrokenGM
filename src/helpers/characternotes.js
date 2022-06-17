@@ -16,8 +16,18 @@ export const determinSearchQuerry = (name, position, status, tags, searchQuerry)
     const loweredPosition = position.toLowerCase()
     const loweredStatus = status.toLowerCase()
     const loweredQuerry = searchQuerry.toLowerCase()
+    let returnBool = false
 
-    return (loweredName.includes(loweredQuerry) ||
-    loweredPosition.includes(loweredQuerry) ||
-    loweredStatus.includes(loweredQuerry))
+    tags.forEach((tag, i) => {
+        const sreachTagBoolean = tag.toLowerCase().includes(searchQuerry)
+        if (sreachTagBoolean) {
+            returnBool = sreachTagBoolean
+        }
+    })
+
+    return (
+        loweredName.includes(loweredQuerry) ||
+        loweredPosition.includes(loweredQuerry) ||
+        loweredStatus.includes(loweredQuerry) || returnBool
+    )
 }
