@@ -6,6 +6,7 @@ import Block from './Block'
 import List from './List'
 import NamedList from './NamedList'
 import BasicInfo from './BasicInfo'
+import Tags from './Tags'
 import Footer from './Footer'
 // Components
 import ConditionalRender from '../ConditionalRender'
@@ -101,6 +102,13 @@ const NoteCard = (props) => {
                         }
                     })
                 }
+                <ConditionalRender condition={isAdmin && !locked}>
+                    <Tags 
+                        isAdmin={isAdmin} tags={character[0].tags} setNotes={setNotes} 
+                        index={index} notes={notes} isCharacterNotes={isCharacterNotes} 
+                        id={id}
+                    />
+                </ConditionalRender>
             </div>
             <Footer 
                 isAdmin={isAdmin && !locked} setCardExpandedClass={setCardExpandedClass} 
