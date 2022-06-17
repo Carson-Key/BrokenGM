@@ -1,9 +1,12 @@
 // Packages
 import { useState, useContext } from 'react'
+import { FaTrash } from "react-icons/fa"
 // Character Notes
 import VariableTextArea from './VariableTextArea'
 // Components
 import ConditionalRender from '../ConditionalRender'
+// UI
+import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
@@ -17,8 +20,10 @@ const List = (props) => {
     } = props
     const [expandList, setExpandList] = useState((list.length > 5) ? false : true)
     const [listState, setListState] = useState([...list])
+    const [popUp, setPopUp] = useState(false)
     const [resetInputValues, setResetInputValues] = useState(false)
     const setNotification = useContext(NotificationContext)[1]
+    const [indexToDelete, setIndexToDelete] = useState(null)
 
     return (
         <div>
@@ -39,18 +44,26 @@ const List = (props) => {
                     <div className="flex flex-col w-full px-2 break-words">
                         {listState.map((element, i) => {
                             return (
-                                <VariableTextArea
-                                    value={element}
-                                    placeholder={"Change the Value of this Item"}
-                                    index={i}
-                                    values={listState} 
-                                    setValue={setListState}
-                                    changeValues={(tempValues, index, inputValue) => {
-                                        tempValues[index] = inputValue
-                                    }}
-                                    resetInputValues={resetInputValues}
-                                    setResetInputValues={setResetInputValues}
-                                />
+                                <div className="flex gap-2">
+                                    <VariableTextArea
+                                        value={element}
+                                        placeholder={"Change the Value of this Item"}
+                                        index={i}
+                                        values={listState} 
+                                        setValue={setListState}
+                                        changeValues={(tempValues, index, inputValue) => {
+                                            tempValues[index] = inputValue
+                                        }}
+                                        resetInputValues={resetInputValues}
+                                        setResetInputValues={setResetInputValues}
+                                    />
+                                    <button onClick={() => {
+                                        setIndexToDelete(i)
+                                        setPopUp(true)
+                                    }}>
+                                        <FaTrash className="text-red-500"/>
+                                    </button>
+                                </div>
                             )
                         })}
                     </div>
@@ -79,6 +92,31 @@ const List = (props) => {
                     onClick={() => {setExpandList(!expandList)}
                 }>{moreLessTextDecider(expandList)}</button>
             </div>
+            <ConditionalRender condition={popUp}>
+                <ConfirmationPopUp
+                    message="Are you sure you want to delete this list item"
+                    onClick={() => {
+                        if (indexToDelete) {
+                            let tempNotes = [...notes]
+                            let tempList = [...listState]
+                            tempList.splice(indexToDelete, 1)
+                            tempNotes[index][elementIndex] = {
+                                ...tempNotes[index][elementIndex],
+                                list: tempList
+                            }
+                            setNotes(tempNotes)
+                            setListState(tempList)
+                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            setIndexToDelete(false)
+                            setPopUp(false)
+                        }
+                    }}
+                    cancel={() => {
+                        setIndexToDelete(false)
+                        setPopUp(false)
+                    }}
+                />
+            </ConditionalRender>
         </div>
 	)
 }
