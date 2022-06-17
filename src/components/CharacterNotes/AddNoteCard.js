@@ -19,7 +19,7 @@ const AddNoteCard = (props) => {
                 Add New Note
             </CardTitle>
             <div className="flex flex-col mx-auto my-auto">
-                <lable className="font-semibold text-lg">Name: </lable>
+                <label className="font-semibold text-lg">Name: </label>
                 <input
                     className="border rounded px-2 py-1"
                     placeholder="Name for new card"
