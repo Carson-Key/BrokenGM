@@ -40,21 +40,23 @@ const searchWithAnds = (name, position, status, tags, searchQuerrys) => {
 const searchWithOrs = (name, position, status, tags, searchQuerrys) => {
     let returnBool = false
     searchQuerrys.forEach((querry) => {
-        let tagBool
-        tags.forEach((tag, i) => {
-            const sreachTagBoolean = tag.toLowerCase().includes(querry)
-            if (sreachTagBoolean) {
-                tagBool = sreachTagBoolean
-            }
-        })
-
-        const querryBool = 
-            name.includes(querry) ||
-            position.includes(querry) ||
-            status.includes(querry) || tagBool
+        if (querry !== "") {
+            let tagBool
+            tags.forEach((tag, i) => {
+                const sreachTagBoolean = tag.toLowerCase().includes(querry)
+                if (sreachTagBoolean) {
+                    tagBool = sreachTagBoolean
+                }
+            })
     
-        if (querryBool && !returnBool) {
-            returnBool = true
+            const querryBool = 
+                name.includes(querry) ||
+                position.includes(querry) ||
+                status.includes(querry) || tagBool
+        
+            if (querryBool && !returnBool) {
+                returnBool = true
+            }
         }
     })
 
