@@ -28,7 +28,14 @@ const Block = (props) => {
             >
                 <ConditionalRender 
                     condition={isAdmin}
-                    returnComponent={<p>{content}</p>}
+                    returnComponent={
+                        <ConditionalRender
+                            condition={content.match(/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi)}
+                            returnComponent={<p className="mx-2">{content}</p>}
+                        >
+                            <a href={content} className="text-sky-500 underline mx-2">To Link</a>
+                        </ConditionalRender>
+                    }
                 >
                     <textarea
                         className="border w-full rounded px-1 py-1 h-96"
