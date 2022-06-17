@@ -36,7 +36,7 @@ const Block = (props) => {
                 </ConditionalRender>
             </ConditionalRender>
             <div className={"w-full flex mt-2 py-2 " + (expandBlock ? "justify-between" : "justify-end")}>
-                <div>
+                <div className="flex gap-2">
                     <button 
                         disabled={!expandBlock}
                         className={
