@@ -13,6 +13,7 @@ import { NotificationContext } from '../../contexts/Notification'
 // Helpers
 import { moreLessTextDecider } from '../../helpers/misc'
 import { updateDocument } from '../../helpers/firestore'
+import { fireError } from '../../helpers/notifications'
 
 const NamedList = (props) => {
     const { 
@@ -159,8 +160,10 @@ const NamedList = (props) => {
                             setNamedList(tempNamedList)
                             updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                             setIndexToDelete(false)
-                            setPopUp(false)
+                        } else {
+                            fireError(setNotification, "Nothing to delete", "You have attempted to delete nothing")
                         }
+                        setPopUp(false)
                     }}
                     cancel={() => {
                         setIndexToDelete(false)
