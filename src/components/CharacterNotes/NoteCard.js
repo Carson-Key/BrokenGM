@@ -42,7 +42,7 @@ const NoteCard = (props) => {
                         ><FaTrash/></button>
                     </ConditionalRender>
                 </div>
-                <p className="w-fit">
+                <p className="w-fit mx-3">
                     {character[0].name + (character[0].position ? ((
                         character[0].position.toLowerCase() === "n/a" ||
                         character[0].position.toLowerCase() === "" ||
