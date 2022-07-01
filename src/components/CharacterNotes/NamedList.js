@@ -107,6 +107,7 @@ const NamedList = (props) => {
                                 }
                                 setNotes(tempNotes)
                                 setNamedList(tempNamedList)
+                                setNewItem("")
                                 updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                             }}
                         ><GrAddCircle/></button>
