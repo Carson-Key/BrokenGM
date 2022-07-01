@@ -13,9 +13,9 @@ const BasicInfo = (props) => {
         isAdmin, name, position, status, 
         setNotes, index, notes, isCharacterNotes, id
     } = props
-    const [nameValue, setNameValue] = useState("")
-    const [positionValue, setPositionValue] = useState("")
-    const [statusValue, setStatusValue] = useState("")
+    const [nameValue, setNameValue] = useState(name)
+    const [positionValue, setPositionValue] = useState(position)
+    const [statusValue, setStatusValue] = useState(status)
     const setNotification = useContext(NotificationContext)[1]
 
     return (
@@ -85,13 +85,10 @@ const BasicInfo = (props) => {
                                 let tempNotes = [...notes]
                                 tempNotes[index][0] = {
                                     ...tempNotes[index][0], 
-                                    name: nameValue === "" ? (name ? name : "" ) : nameValue, 
-                                    position: positionValue === "" ? (position ? position : "" ) : positionValue, 
-                                    status: statusValue === "" ? (status ? status : "" ) : statusValue
+                                    name: nameValue, 
+                                    position: positionValue, 
+                                    status: statusValue
                                 }
-                                setNameValue("")
-                                setPositionValue("")
-                                setStatusValue("")
                                 setNotes(tempNotes)
                                 updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                             }}
