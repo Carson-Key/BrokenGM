@@ -4,6 +4,7 @@ import { useState, useContext } from 'react'
 import ConditionalRender from '../ConditionalRender'
 // UI
 import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
+import Input from '../../ui/Input'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
@@ -13,10 +14,10 @@ import { updateDocument } from '../../helpers/firestore'
 const Block = (props) => {
     const {       
         isAdmin, name, content, setNotes, index, 
-        notes, isCharacterNotes, id, elementIndex
+        notes, isCharacterNotes, id, elementIndex, openStatus
     } = props
     const setNotification = useContext(NotificationContext)[1]
-    const [expandBlock, setExpandBlock] = useState((content.match(/(\w+)/g) ? content.match(/(\w+)/g).length : 0) > 100 ? false : true)
+    const [expandBlock, setExpandBlock] = useState(openStatus)
     const [contentState, setContentState] = useState(content)
     const [popUp, setPopUp] = useState(false)
 
@@ -80,9 +81,32 @@ const Block = (props) => {
                         >Delete</button>
                     </div>
                 </ConditionalRender>
-                <button className="flex text-lg text-blue-500" 
-                    onClick={() => {setExpandBlock(!expandBlock)}
-                }>{moreLessTextDecider(expandBlock)}</button>
+                <div className="flex">
+                    <ConditionalRender 
+                        condition={isAdmin}
+                    >
+                        <Input 
+                            onChange={(event) => {
+                                let tempNotes = [...notes]
+                                tempNotes[index][elementIndex] = {
+                                    ...tempNotes[index][elementIndex],
+                                    openStatus: !openStatus
+                                }
+                                setNotes(tempNotes)
+                                updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            }}
+                            labelClass="px-2 my-auto"
+                            inputClass="mr-1"
+                            name={"Default Expanded checkbox for " + name}
+                            labelText="Default to Expanded"
+                            checked={openStatus}
+                            type="checkbox"
+                        />
+                    </ConditionalRender>
+                    <button className="flex text-lg text-blue-500" 
+                        onClick={() => {setExpandBlock(!expandBlock)}
+                    }>{moreLessTextDecider(expandBlock)}</button>
+                </div>
             </div>
             <ConditionalRender condition={popUp}>
                 <ConfirmationPopUp

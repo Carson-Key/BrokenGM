@@ -80,19 +80,19 @@ const NoteCard = (props) => {
                                 return (<Block 
                                     key={i} isAdmin={isAdmin && !locked} content={element.content} elementIndex={i+1}
                                     name={element.name} setNotes={setNotes} index={index}
-                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id}
+                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id} openStatus={element.openStatus}
                                 />)
                             } else if (element.type === "list") {
                                 return (<List
                                     key={i} isAdmin={isAdmin && !locked} list={element.list} elementIndex={i+1}
                                     name={element.name} setNotes={setNotes} index={index}
-                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id}
+                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id} openStatus={element.openStatus}
                                 />)
                             } else if (element.type === "namedlist") {
                                 return (<NamedList
                                     key={i} isAdmin={isAdmin && !locked} list={element.list} elementIndex={i+1}
                                     name={element.name} setNotes={setNotes} index={index}
-                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id}
+                                    notes={notes} isCharacterNotes={isCharacterNotes} id={id} openStatus={element.openStatus}
                                 />)
                             } else {
                                 return <Fragment key={i} />
