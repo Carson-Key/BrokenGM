@@ -42,6 +42,7 @@ const List = (props) => {
                             {list.map((element, i) => {
                                 return (
                                     <ConditionalRender
+                                        key={i}
                                         condition={element.match(/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi)}
                                         returnComponent={<p key={i} className="my-2">{element}</p>}
                                     >
