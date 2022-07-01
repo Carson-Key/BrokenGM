@@ -8,6 +8,7 @@ import VariableInput from './VariableInput'
 import ConditionalRender from '../ConditionalRender'
 // UI
 import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
+import Input from '../../ui/Input'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
 // Helpers
@@ -18,9 +19,9 @@ import { fireError } from '../../helpers/notifications'
 const NamedList = (props) => {
     const { 
         isAdmin, name, list, setNotes, index, 
-        notes, isCharacterNotes, id, elementIndex
+        notes, isCharacterNotes, id, elementIndex, openStatus
     } = props
-    const [expandNamedList, setExpandNamedList] = useState((list.length > 5) ? false : true)
+    const [expandNamedList, setExpandNamedList] = useState(openStatus)
     const [namedList, setNamedList] = useState(list)
     const [resetInputValues, setResetInputValues] = useState(namedList.length)
     const [deleteCatPopUp, setDeleteCatPopUp] = useState(false)
@@ -107,6 +108,7 @@ const NamedList = (props) => {
                                 }
                                 setNotes(tempNotes)
                                 setNamedList(tempNamedList)
+                                setNewItem("")
                                 updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                             }}
                         ><GrAddCircle/></button>
@@ -149,9 +151,33 @@ const NamedList = (props) => {
                         >Delete</button>
                     </div>
                 </ConditionalRender>
-                <button className="flex text-lg text-blue-500" 
-                    onClick={() => {setExpandNamedList(!expandNamedList)}
-                }>{moreLessTextDecider(expandNamedList)}</button>
+                <div className="flex">
+                    <ConditionalRender 
+                        condition={isAdmin}
+                    >
+                        <Input 
+                            onChange={(event) => {
+                                let tempNotes = [...notes]
+                                tempNotes[index][elementIndex] = {
+                                    ...tempNotes[index][elementIndex],
+                                    openStatus: !openStatus
+                                }
+                                setNotes(tempNotes)
+                                setResetInputValues(0)
+                                updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                            }}
+                            labelClass="px-2 my-auto"
+                            inputClass="mr-1"
+                            name={"Default Expanded checkbox for " + name}
+                            labelText="Default to Expanded"
+                            checked={openStatus}
+                            type="checkbox"
+                        />
+                    </ConditionalRender>
+                    <button className="flex text-lg text-blue-500" 
+                        onClick={() => {setExpandNamedList(!expandNamedList)}
+                    }>{moreLessTextDecider(expandNamedList)}</button>
+                </div>
             </div>
             <ConditionalRender condition={popUp}>
                 <ConfirmationPopUp

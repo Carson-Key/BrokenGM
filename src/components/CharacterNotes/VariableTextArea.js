@@ -1,19 +1,12 @@
 // Packages
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const VariableTextArea = (props) => {
     const { 
         value, placeholder, index, values, 
-        setValue, changeValues, resetInputValues, setResetInputValues
+        setValue, changeValues
     } = props
     const [inputValue, setInputValue] = useState(value ? value : "")
-
-    useEffect(() => {
-        if (resetInputValues < values.length) {
-            setInputValue("")
-            setResetInputValues(prev => prev + 1)
-        }
-    }, [resetInputValues, values, setResetInputValues])
 
     return (
         <textarea

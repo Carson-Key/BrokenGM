@@ -14,49 +14,19 @@ export const generateStatusClasses = (status) => {
     }
 }
 
-const searchWithAnds = (name, position, status, tags, searchQuerrys) => {
-    let returnBool = true
-    searchQuerrys.forEach((querry) => {
-        let tagBool
-        tags.forEach((tag, i) => {
-            const sreachTagBoolean = tag.toLowerCase().includes(querry)
-            if (sreachTagBoolean) {
-                tagBool = sreachTagBoolean
-            }
-        })
+const searchWithOperator = (
+    name, position, status, tags, 
+    searchQuerrys, startingReturnBoolean, onTrueValue
+) => {
+    let returnBool = startingReturnBoolean
 
-        const querryBool = 
-            name.includes(querry) ||
-            position.includes(querry) ||
-            status.includes(querry) || tagBool
-    
-        if (!querryBool && returnBool) {
-            returnBool = false
-        }
-    })
-
-    return returnBool
-}
-const searchWithOrs = (name, position, status, tags, searchQuerrys) => {
-    let returnBool = false
     searchQuerrys.forEach((querry) => {
-        if (querry !== "") {
-            let tagBool
-            tags.forEach((tag, i) => {
-                const sreachTagBoolean = tag.toLowerCase().includes(querry)
-                if (sreachTagBoolean) {
-                    tagBool = sreachTagBoolean
-                }
-            })
-    
-            const querryBool = 
-                name.includes(querry) ||
-                position.includes(querry) ||
-                status.includes(querry) || tagBool
-        
-            if (querryBool && !returnBool) {
-                returnBool = true
-            }
+        const singleQuerryBool = searchWithSingle(
+            name, position, status, tags, querry
+        )
+
+        if (singleQuerryBool === onTrueValue) {
+            returnBool = !startingReturnBoolean
         }
     })
 
@@ -65,18 +35,34 @@ const searchWithOrs = (name, position, status, tags, searchQuerrys) => {
 const searchWithSingle = (name, position, status, tags, searchQuerry) => {
     let returnBool = false
 
-    tags.forEach((tag, i) => {
-        const sreachTagBoolean = tag.toLowerCase().includes(searchQuerry)
-        if (sreachTagBoolean) {
-            returnBool = sreachTagBoolean
-        }
-    })
-
-    return (
-        name.includes(searchQuerry) ||
-        position.includes(searchQuerry) ||
-        status.includes(searchQuerry) || returnBool
-    )
+    if (searchQuerry.startsWith("!!")) {
+        const pureQuerry = searchQuerry.substring(2)
+        tags.forEach((tag, i) => {
+            const sreachTagBoolean = tag.toLowerCase() === pureQuerry
+            if (sreachTagBoolean) {
+                returnBool = sreachTagBoolean
+            }
+        })
+    
+        return (
+            name === pureQuerry ||
+            position === pureQuerry ||
+            status === pureQuerry || returnBool
+        )
+    } else {
+        tags.forEach((tag, i) => {
+            const sreachTagBoolean = tag.toLowerCase().includes(searchQuerry)
+            if (sreachTagBoolean) {
+                returnBool = sreachTagBoolean
+            }
+        })
+    
+        return (
+            name.includes(searchQuerry) ||
+            position.includes(searchQuerry) ||
+            status.includes(searchQuerry) || returnBool
+        )
+    }
 }
 
 export const determinSearchQuerry = (name, position, status, tags, searchQuerry, notification, setNotification) => {
@@ -86,11 +72,20 @@ export const determinSearchQuerry = (name, position, status, tags, searchQuerry,
     const loweredQuerry = searchQuerry.toLowerCase()
 
     if (loweredQuerry.includes("&&") && !loweredQuerry.includes("||")) {
-        return searchWithAnds(loweredName, loweredPosition, loweredStatus, tags, loweredQuerry.split("&&"))
+        return searchWithOperator(
+            loweredName, loweredPosition, loweredStatus, tags, 
+            loweredQuerry.split(" && "), true, false
+        )
     } else if (!loweredQuerry.includes("&&") && loweredQuerry.includes("||")) {
-        return searchWithOrs(loweredName, loweredPosition, loweredStatus, tags, loweredQuerry.split("||"))
+        return searchWithOperator(
+            loweredName, loweredPosition, loweredStatus, tags, 
+            loweredQuerry.split(" || "), false, true
+        )
     } else if (!loweredQuerry.includes("&&") && !loweredQuerry.includes("||")) {
-        return searchWithSingle(loweredName, loweredPosition, loweredStatus, tags, loweredQuerry)
+        return searchWithSingle(
+            loweredName, loweredPosition, loweredStatus, 
+            tags, loweredQuerry
+        )
     } else {
         if (!notification.occurs) {
             fireError(setNotification, "Invalid User Input", "Please use only &&'s or ||'s not both")

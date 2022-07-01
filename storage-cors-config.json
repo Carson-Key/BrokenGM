@@ -1,0 +1,7 @@
+[
+    {
+      "origin": ["https://azgaar.github.io", "azgaar.github.io", "brokengm.com"],
+      "method": [ "GET" ],
+      "maxAgeSeconds": 3600
+    }
+]
