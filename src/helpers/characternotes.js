@@ -35,18 +35,34 @@ const searchWithOperator = (
 const searchWithSingle = (name, position, status, tags, searchQuerry) => {
     let returnBool = false
 
-    tags.forEach((tag, i) => {
-        const sreachTagBoolean = tag.toLowerCase().includes(searchQuerry)
-        if (sreachTagBoolean) {
-            returnBool = sreachTagBoolean
-        }
-    })
-
-    return (
-        name.includes(searchQuerry) ||
-        position.includes(searchQuerry) ||
-        status.includes(searchQuerry) || returnBool
-    )
+    if (searchQuerry.startsWith("!!")) {
+        const pureQuerry = searchQuerry.substring(2)
+        tags.forEach((tag, i) => {
+            const sreachTagBoolean = tag.toLowerCase() === pureQuerry
+            if (sreachTagBoolean) {
+                returnBool = sreachTagBoolean
+            }
+        })
+    
+        return (
+            name === pureQuerry ||
+            position === pureQuerry ||
+            status === pureQuerry || returnBool
+        )
+    } else {
+        tags.forEach((tag, i) => {
+            const sreachTagBoolean = tag.toLowerCase().includes(searchQuerry)
+            if (sreachTagBoolean) {
+                returnBool = sreachTagBoolean
+            }
+        })
+    
+        return (
+            name.includes(searchQuerry) ||
+            position.includes(searchQuerry) ||
+            status.includes(searchQuerry) || returnBool
+        )
+    }
 }
 
 export const determinSearchQuerry = (name, position, status, tags, searchQuerry, notification, setNotification) => {
