@@ -6,12 +6,12 @@ const VariableInput = (props) => {
         value, placeholder, index, values, 
         setValue, changeValues
     } = props
-    const [inputValue, setInputValue] = useState("")
+    const [inputValue, setInputValue] = useState(value)
 
     return (
         <input
             className="border rounded px-2 py-1 w-40"
-            placeholder={value || value !== "" ? value : placeholder}
+            placeholder={placeholder}
             value={inputValue}
             onChange={(event) => {
                 let tempValues = [...values]

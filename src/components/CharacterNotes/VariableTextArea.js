@@ -6,12 +6,12 @@ const VariableTextArea = (props) => {
         value, placeholder, index, values, 
         setValue, changeValues
     } = props
-    const [inputValue, setInputValue] = useState(value ? value : "")
+    const [inputValue, setInputValue] = useState(value)
 
     return (
         <textarea
             className="border rounded px-2 py-1 my-2 w-full"
-            placeholder={value || value !== "" ? value : placeholder}
+            placeholder={placeholder}
             value={inputValue}
             onChange={(event) => {
                 let tempValues = [...values]
