@@ -24,17 +24,20 @@ const Footer = (props) => {
         list: {
             type: "list",
             list: [],
-            name: "List"
+            name: "List",
+            openStatus: false
         },
         block: {
             type: "block",
             content: "",
-            name: "Block"
+            name: "Block",
+            openStatus: false
         },
         namedlist: {
             type: "namedlist",
             list: [],
-            name: "Named List"
+            name: "Named List",
+            openStatus: false
         }
     })[0]
 
