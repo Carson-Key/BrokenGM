@@ -6,8 +6,8 @@ import { updateDocumentWithPromise } from './firestore'
 import { CLOCKEVENTUNITS } from './objects'
 
 export const parseEventString = (eventString) => {
-    const timeStamp = eventString.match(/(?<=\[).+?(?=\])/g)[0]
-    const description = eventString.match(/(?<=\{).+?(?=\})/g)[0]
+    const timeStamp = eventString.match(/\[([^\]]*)\]/g)[0].slice(1, -1)
+    const description = eventString.match(/{([^}]*)}/g)[0].slice(1, -1)
 
     const timeArray = timeStamp.split(":")
     let time = {}

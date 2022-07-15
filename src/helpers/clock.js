@@ -128,7 +128,7 @@ const checkForEventsOnSubtract = (logAccess, events, clock, timer, setNewEvents,
                                 breakWhileLoopTwo = !breakWhileLoopTwo
                             } else {
                                 const {time, description} = parseEventString(eventsDB[index])
-                                const timeStamp = eventsDB[index].match(/(?<=\[).+?(?=\])/g)[0]
+                                const timeStamp = eventsDB[index].match(/\[([^\]]*)\]/g)[0].slice(1, -1)
                                 if (
                                     time.year > clock.year || 
                                     (

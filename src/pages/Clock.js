@@ -54,7 +54,8 @@ const Clock = () => {
                                         breakWhileLoop = !breakWhileLoop
                                     } else {
                                         const {time, description} = parseEventString(eventsDB[index])
-                                        const timeStamp = eventsDB[index].match(/(?<=\[).+?(?=\])/g)[0]
+                                        const timeStamp = eventsDB[index].match(/\[([^\]]*)\]/g)[0].slice(1, -1)
+
                                         if (
                                             time.year > tempClock.year || 
                                             (
