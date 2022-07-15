@@ -174,7 +174,7 @@ const List = (props) => {
                 <ConfirmationPopUp
                     message="Are you sure you want to delete this list item"
                     onClick={() => {
-                        if (indexToDelete) {
+                        if (indexToDelete || indexToDelete === 0) {
                             let tempNotes = [...notes]
                             let tempList = [...listState]
                             tempList.splice(indexToDelete, 1)
