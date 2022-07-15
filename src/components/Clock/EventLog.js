@@ -26,8 +26,8 @@ const EventLog = (props) => {
                         {
                             events.map((event, i) => {
                                 return (
-                                    <div className="flex w-full justify-center text-lg">
-                                        <h4 key={i} className="w-1/4 text-center border-r font-medium">
+                                    <div key={i} className="flex w-full justify-center text-lg">
+                                        <h4 className="w-1/4 text-center border-r font-medium">
                                             {
                                                 (("0" + Math.floor((event.timer / 3600000) % 60)).slice(-2) + ":" +
                                                 ("0" + Math.floor((event.timer / 60000) % 60)).slice(-2)) +
