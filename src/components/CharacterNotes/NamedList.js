@@ -183,7 +183,7 @@ const NamedList = (props) => {
                 <ConfirmationPopUp
                     message={"Are you sure you want to delete " + (namedList[indexToDelete] ? namedList[indexToDelete].name : "this note")}
                     onClick={() => {
-                        if (indexToDelete) {
+                        if (indexToDelete || indexToDelete === 0) {
                             let tempNotes = [...notes]
                             let tempNamedList = [...namedList]
                             tempNamedList.splice(indexToDelete, 1)
