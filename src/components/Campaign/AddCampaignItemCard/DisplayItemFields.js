@@ -1,14 +1,14 @@
+// AddCampaignItemCard
+import NotesFields from './NotesFields'
 // Objects
 import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
 
 const DisplayItemFields = (props) => {
-    const { itemIndex } = props
-
-    console.log(itemIndex)
+    const { itemIndex, id } = props
     
     switch (itemIndex) {
         case "0":
-            return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
+            return (<NotesFields id={id} />)
         case "1":
             return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
         case "2":

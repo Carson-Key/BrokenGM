@@ -106,7 +106,7 @@ const Campaign = () => {
                     Settings={CharacterNotesSettings}
                 />
                 <AddCampaignItemCard
-                
+                    id={id}
                 />
             </Container>
         </IsLoading>
