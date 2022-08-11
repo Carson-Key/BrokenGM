@@ -5,9 +5,10 @@ import Card from '../../../ui/Card'
 import CardTitle from '../../../ui/CardTitle'
 // Objects
 import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
+import DisplayItemFields from './DisplayItemFields'
 
 const AddCampaignItemCard = (props) => {
-    const [selectedItemType, setSelectedItemType] = useState(0)
+    const [selectedItemType, setSelectedItemType] = useState("0")
 
     return (
         <Card>
@@ -27,6 +28,9 @@ const AddCampaignItemCard = (props) => {
                         }
                     </select>
                 </div>
+                <DisplayItemFields
+                    itemIndex={selectedItemType}
+                />
             </div>
         </Card>
     )
