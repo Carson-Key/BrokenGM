@@ -6,7 +6,7 @@ import Name from './Name'
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
-import { getDocument, updateDocument } from '../../../helpers/firestore'
+import { getDocument, updateDocumentWithPromise } from '../../../helpers/firestore'
 import { getCurrentUser } from '../../../helpers/auth'
 // Objects
 import { CHARACTERNNOTES } from '../../../helpers/emptycampaignitems'
@@ -36,8 +36,11 @@ const NotesFields = (props) => {
                             const campaignData = data.data()
                             let campaign = {...campaignData}
                             campaign.characternotes = [...campaignData.characternotes, noteID]
-                            updateDocument("characternotes", noteID, newNote, setNotification)
-                            updateDocument("campaigns", id, campaign, setNotification)
+                            updateDocumentWithPromise("characternotes", noteID, newNote, setNotification).then(() => {
+                                updateDocumentWithPromise("campaigns", id, campaign, setNotification).then(() => {
+                                    window.location.reload(false)
+                                })
+                            })
                         })
                     }}
                 >
