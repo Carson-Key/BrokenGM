@@ -48,3 +48,11 @@ export const VOTINGSYSTEMSREALTIME = {
     voters: {},
     votes: {}
 }
+
+export const ALLCAMPAIGNITEMS = [
+    { name: "Note", emptyObject: CHARACTERNNOTES }, 
+    { name: "Clock Event", emptyObject: CLOCKEVENTS },
+    { name: "Clock", emptyObject: CLOCKS },
+    { name: "Relation", emptyObject: RELATIONS },
+    { name: "VotingSystem", emptyObject: VOTINGSYSTEMSFIRESTORE, realTimeEmptyObject: VOTINGSYSTEMSREALTIME },
+]

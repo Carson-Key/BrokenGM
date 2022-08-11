@@ -8,7 +8,8 @@ import {
     RelationSettings ,
     VotingSystemSettings,
     ClockEventsSettings,
-    CharacterNotesSettings
+    CharacterNotesSettings,
+    AddCampaignItemCard
 } from '../components/Campaign'
 import IsLoading from '../components/IsLoading'
 // UI
@@ -103,6 +104,9 @@ const Campaign = () => {
                     players={players}
                     clocks={clocks}
                     Settings={CharacterNotesSettings}
+                />
+                <AddCampaignItemCard
+                
                 />
             </Container>
         </IsLoading>
