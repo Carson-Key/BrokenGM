@@ -9,7 +9,7 @@ import CardTitle from '../../../ui/CardTitle'
 import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
 
 const AddCampaignItemCard = (props) => {
-    const { id, clocks } = props
+    const { id, clocks, events } = props
     const [selectedItemType, setSelectedItemType] = useState("0")
 
     return (
@@ -34,6 +34,7 @@ const AddCampaignItemCard = (props) => {
                     id={id}
                     itemIndex={selectedItemType}
                     clocks={clocks}
+                    events={events}
                 />
             </div>
         </Card>

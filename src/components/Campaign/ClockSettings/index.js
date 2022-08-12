@@ -1,15 +1,15 @@
 // Packages
 import { useState, useEffect, useContext } from "react"
 // Campaign
-import EditPlayers from "./EditPlayers"
-import SettingsBody from "./SettingsBody"
-import SettingsSection from "./SettingsSection"
-import SettingsSectionTitle from "./SettingsSectionTitle"
+import EditPlayers from "../EditPlayers"
+import SettingsBody from "../SettingsBody"
+import SettingsSection from "../SettingsSection"
+import SettingsSectionTitle from "../SettingsSectionTitle"
 // Contexts
-import { NotificationContext } from "../../contexts/Notification"
+import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
-import { getDocument, updateDocument } from "../../helpers/firestore"
-import { returnChildOfObject, removeElementFromArray } from "../../helpers/misc"
+import { getDocument, updateDocument } from "../../../helpers/firestore"
+import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
 
 const ClockSettings = (props) => {
     const { players, id } = props

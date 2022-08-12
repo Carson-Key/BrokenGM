@@ -108,6 +108,7 @@ const Campaign = () => {
                 <AddCampaignItemCard
                     id={id}
                     clocks={clocks}
+                    events={clockEvents}
                 />
             </Container>
         </IsLoading>
