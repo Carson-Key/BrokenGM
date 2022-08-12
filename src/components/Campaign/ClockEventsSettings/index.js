@@ -5,12 +5,12 @@ import EditPlayers from "../EditPlayers"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
+import AssociatedClock from "./AssociatedClock"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
-import AssociatedClock from "./AssociatedClock"
 
 const ClockEventsSettings = (props) => {
     const { players, id, clocks } = props

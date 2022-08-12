@@ -1,8 +1,5 @@
 // Packages
 import { useState, useEffect, useContext } from "react"
-// Campaign
-import SettingsSection from "../SettingsSection"
-import SettingsSectionTitle from "../SettingsSectionTitle"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
@@ -33,9 +30,8 @@ const AssociatedClock = (props) => {
     }, [setNotification, clocks, clockIDs])
 
     return (
-        <SettingsSection>
-            <SettingsSectionTitle>Associated Clock</SettingsSectionTitle>
-            <h4 className="ml-2 mr-1 inline text-lg font-medium">Clock:</h4>
+        <div className="ml-2">
+            <h4 className="mr-1 inline text-lg font-medium">Clock:</h4>
             <select value={currentClock} onChange={(event) => {
                 setCurrentClock(event.target.value)
                 selectEvent(event)
@@ -47,7 +43,7 @@ const AssociatedClock = (props) => {
                     })
                 }
             </select>
-        </SettingsSection>
+        </div>
     )
 }
 

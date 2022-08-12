@@ -1,6 +1,9 @@
 // Packages
 import { useEffect, useState, useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+// Campaign
+import SettingsSection from "../SettingsSection"
+import SettingsSectionTitle from "../SettingsSectionTitle"
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -23,8 +26,11 @@ const NotesFields = (props) => {
 
     return (
         <>
-            <Name name={name} setName={setName}/>
-            <div className="mx-2 py-4 flex justify-center">
+            <SettingsSection>
+                <SettingsSectionTitle>Name</SettingsSectionTitle>
+                <Name name={name} setName={setName}/>
+            </SettingsSection>
+            <div className="py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {

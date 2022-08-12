@@ -1,6 +1,10 @@
 // Packages
 import { useEffect, useState, useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+// Campaign
+import SettingsSection from "../SettingsSection"
+import SettingsSectionTitle from "../SettingsSectionTitle"
+import AssociatedClock from '../ClockEventsSettings/AssociatedClock'
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -10,7 +14,6 @@ import { getDocument, updateDocumentWithPromise } from '../../../helpers/firesto
 import { getCurrentUser } from '../../../helpers/auth'
 // Objects
 import { CLOCKEVENTS } from '../../../helpers/emptycampaignitems'
-import AssociatedClock from '../ClockEventsSettings/AssociatedClock'
 
 const ClockEventsFields = (props) => {
     const { id, clocks } = props
@@ -25,14 +28,20 @@ const ClockEventsFields = (props) => {
 
     return (
         <>
-            <Name name={name} setName={setName}/>
-            <AssociatedClock 
-                clocks={clocks}
-                selectEvent={() => {}}
-                currentClock={currentClock}
-                setCurrentClock={setCurrentClock}
-            />
-            <div className="mx-2 py-4 flex justify-center">
+            <SettingsSection>
+                <SettingsSectionTitle>Name</SettingsSectionTitle>
+                <Name name={name} setName={setName}/>
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Associated Clock</SettingsSectionTitle>
+                <AssociatedClock 
+                    clocks={clocks}
+                    selectEvent={() => {}}
+                    currentClock={currentClock}
+                    setCurrentClock={setCurrentClock}
+                />
+            </SettingsSection>
+            <div className="py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {
