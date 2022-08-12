@@ -10,50 +10,28 @@ import { getDocument, updateDocumentWithPromise } from '../../../helpers/firesto
 import { getCurrentUser } from '../../../helpers/auth'
 // Objects
 import { CLOCKEVENTS } from '../../../helpers/emptycampaignitems'
+import AssociatedClock from '../ClockEventsSettings/AssociatedClock'
 
 const ClockEventsFields = (props) => {
     const { id, clocks } = props
     const [name, setName] = useState("")
     const [currentClock, setCurrentClock] = useState(clocks[0] ? clocks[0] : "")
     const [userID, setUserID] = useState("")
-    const [clockNames, setClockNames] = useState([])
-    const [clockIDs, setClockIDs] = useState([])
     const setNotification = useContext(NotificationContext)[1]
 
     useEffect(() => {
         getCurrentUser(setUserID)
-        clocks.forEach((clock, i) => {
-            getDocument("clocks", clock, setNotification, true).then((data)  => {
-                if (data !== "permission-denied" && data) {
-                    const clockData = data.data()
-                    if (clockData) {
-                        if (!clockIDs.includes(clock)) {
-                            setClockIDs(prev => ([...new Set([...prev, clock])]))
-                            setClockNames(prev => ({...prev, [clock]: clockData.name}))
-                        }
-                    }
-                }
-            })
-        })
-    }, [userID, clocks, clockIDs, setNotification])
+    }, [userID])
 
     return (
         <>
             <Name name={name} setName={setName}/>
-            <div className="mx-2 py-4 px-2">
-                <h4 className="w-40">Associated Clock</h4>
-                <h4 className="ml-2 mr-1 inline text-lg font-medium">Clock:</h4>
-                <select value={currentClock} onChange={(event) => {
-                    setCurrentClock(event.target.value)
-                    console.log(event.target.value)
-                }}>
-                    {
-                        clockIDs.map((clock, i) => {
-                            return (<option key={i} value={clock}>{clockNames[clock]}</option>)
-                        })
-                    }
-                </select>
-            </div>
+            <AssociatedClock 
+                clocks={clocks}
+                selectEvent={() => {}}
+                currentClock={currentClock}
+                setCurrentClock={setCurrentClock}
+            />
             <div className="mx-2 py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
