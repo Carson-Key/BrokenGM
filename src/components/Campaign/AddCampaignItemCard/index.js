@@ -8,7 +8,7 @@ import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
 import DisplayItemFields from './DisplayItemFields'
 
 const AddCampaignItemCard = (props) => {
-    const { id } = props
+    const { id, clocks } = props
     const [selectedItemType, setSelectedItemType] = useState("0")
 
     return (
@@ -16,7 +16,7 @@ const AddCampaignItemCard = (props) => {
             <CardTitle>
                 Add New Item
             </CardTitle>
-            <div className="h-60 divide-y">
+            <div className="h-60 divide-y overflow-scroll scrollbar-hide">
                 <div className="flex justify-center py-2">
                     <h3 className="text-lg font-medium">Item to Add:</h3>
                     <select className="border rounded ml-2" value={selectedItemType} onChange={(event) => {
@@ -32,6 +32,7 @@ const AddCampaignItemCard = (props) => {
                 <DisplayItemFields
                     id={id}
                     itemIndex={selectedItemType}
+                    clocks={clocks}
                 />
             </div>
         </Card>

@@ -1,16 +1,17 @@
 // AddCampaignItemCard
 import NotesFields from './NotesFields'
+import ClockEventsFields from './ClockEventsFields'
 // Objects
 import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
 
 const DisplayItemFields = (props) => {
-    const { itemIndex, id } = props
+    const { itemIndex, id, clocks } = props
     
     switch (itemIndex) {
         case "0":
             return (<NotesFields id={id} />)
         case "1":
-            return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
+            return (<ClockEventsFields id={id} clocks={clocks} />)
         case "2":
             return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
         case "3":
