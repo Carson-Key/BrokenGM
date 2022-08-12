@@ -10,6 +10,7 @@ import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
+import AssociatedClock from "./AssociatedClock"
 
 const ClockEventsSettings = (props) => {
     const { players, id, clocks } = props
@@ -17,8 +18,6 @@ const ClockEventsSettings = (props) => {
     const [clockEventsPlayers, setClockEventsPlayers] = useState({...players})
     const [isClockEvents, setIsClockEvents] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
-    const [clockNames, setClockNames] = useState([])
-    const [clockIDs, setClockIDs] = useState([])
     const [currentClock, setCurrentClock] = useState("")
 
     useEffect(() => {
@@ -34,37 +33,20 @@ const ClockEventsSettings = (props) => {
             
             setClockEventsPlayers(tempEnabledPlayers)
         })
-        clocks.forEach((clock, i) => {
-            getDocument("clocks", clock, setNotification, true).then((data)  => {
-                if (data !== "permission-denied" && data) {
-                    const clockData = data.data()
-                    if (clockData) {
-                        if (!clockIDs.includes(clock)) {
-                            setClockIDs(prev => ([...new Set([...prev, clock])]))
-                            setClockNames(prev => ({...prev, [clock]: clockData.name}))
-                        }
-                    }
-                }
-            })
-        })
-    }, [players, id, setNotification, clocks, clockIDs])
+    }, [players, id, setNotification, clocks])
 
     return (
         <SettingsBody>
             <SettingsSection>
                 <SettingsSectionTitle>Associated Clock</SettingsSectionTitle>
-                <h4 className="ml-2 mr-1 inline text-lg font-medium">Clock:</h4>
-                <select value={currentClock} onChange={(event) => {
-                    setCurrentClock(event.target.value)
-                    updateDocument("clockevents", id, {clock: event.target.value}, setNotification, isClockEvents)
-                }}>
-                    {
-                        clockIDs.map((clock, i) => {
-                            console.log()
-                            return (<option key={i} value={clock}>{clockNames[clock]}</option>)
-                        })
-                    }
-                </select>
+                <AssociatedClock
+                    clocks={clocks}
+                    selectEvent={(event) => {
+                        updateDocument("clockevents", id, {clock: event.target.value}, setNotification, isClockEvents)
+                    }}
+                    currentClock={currentClock}
+                    setCurrentClock={setCurrentClock}
+                />
             </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>

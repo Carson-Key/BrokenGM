@@ -38,7 +38,7 @@ const AssociatedClock = (props) => {
             <h4 className="ml-2 mr-1 inline text-lg font-medium">Clock:</h4>
             <select value={currentClock} onChange={(event) => {
                 setCurrentClock(event.target.value)
-                selectEvent()
+                selectEvent(event)
             }}>
                 {
                     clockIDs.map((clock, i) => {
