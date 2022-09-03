@@ -15,7 +15,7 @@ const AssociatedEvents = (props) => {
 
     useEffect(() => {
         events.forEach((event, i) => {
-            getDocument("clockevents", event, setNotification, true).then((data) => {
+            getDocument("clocks", event, setNotification, true).then((data) => {
                 if (data !== "permission-denied" && data) {
                     const eventData = data.data()
                     if (eventData) {

@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
 import AssociatedEvents from '../ClockSettings/AssociatedEvents'
+import DaysInWeek from '../ClockSettings/DaysInWeek'
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -20,6 +21,7 @@ const ClockEventsFields = (props) => {
     const [name, setName] = useState("")
     const [currentEvent, setCurrentEvent] = useState(events[0] ? events[0] : "")
     const [userID, setUserID] = useState("")
+    const [daysInWeek, setDaysInWeek] = useState([])
     const setNotification = useContext(NotificationContext)[1]
 
     useEffect(() => {
@@ -41,6 +43,14 @@ const ClockEventsFields = (props) => {
                     setCurrentEvent={setCurrentEvent}
                 />
             </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Days in Week</SettingsSectionTitle>
+                <DaysInWeek
+                    daysInWeek={daysInWeek} setDaysInWeek={setDaysInWeek} 
+                    afterAddFunc={() => {}} afterRemoveFunc={() => {}}
+                    
+                />
+            </SettingsSection>
             <div className="py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
@@ -50,6 +60,7 @@ const ClockEventsFields = (props) => {
                         newClock.name = name
                         newClock.admins = [userID]
                         newClock.clockEvent = currentEvent
+                        newClock.daysInWeek = daysInWeek
                         getDocument("campaigns", id, setNotification).then((data) => {
                             const campaignData = data.data()
                             let campaign = {...campaignData}
