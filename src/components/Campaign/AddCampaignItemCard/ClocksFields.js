@@ -6,6 +6,7 @@ import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
 import AssociatedEvents from '../ClockSettings/AssociatedEvents'
 import DaysInWeek from '../ClockSettings/DaysInWeek'
+import HoursInDay from '../ClockSettings/HoursInDay'
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -13,6 +14,7 @@ import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocumentWithPromise } from '../../../helpers/firestore'
 import { getCurrentUser } from '../../../helpers/auth'
+import { fireError } from "../../../helpers/notifications"
 // Objects
 import { CLOCKS } from '../../../helpers/emptycampaignitems'
 
@@ -21,6 +23,7 @@ const ClockEventsFields = (props) => {
     const [name, setName] = useState("")
     const [currentEvent, setCurrentEvent] = useState(events[0] ? events[0] : "")
     const [userID, setUserID] = useState("")
+    const [hoursInDay, setHoursInDay] = useState(24)
     const [daysInWeek, setDaysInWeek] = useState([])
     const setNotification = useContext(NotificationContext)[1]
 
@@ -44,6 +47,12 @@ const ClockEventsFields = (props) => {
                 />
             </SettingsSection>
             <SettingsSection>
+                <SettingsSectionTitle>Hours in Day</SettingsSectionTitle>
+                <HoursInDay
+                    hoursInDay={hoursInDay} setHoursInDay={setHoursInDay}
+                />
+            </SettingsSection>
+            <SettingsSection>
                 <SettingsSectionTitle>Days in Week</SettingsSectionTitle>
                 <DaysInWeek
                     daysInWeek={daysInWeek} setDaysInWeek={setDaysInWeek} 
@@ -61,6 +70,11 @@ const ClockEventsFields = (props) => {
                         newClock.admins = [userID]
                         newClock.clockEvent = currentEvent
                         newClock.daysInWeek = daysInWeek
+                        if (hoursInDay === "") {
+                            fireError(setNotification, 1, "Please enter a value for Hours in Day")
+                        } else {
+                            newClock.hoursInDay = hoursInDay
+                        }
                         getDocument("campaigns", id, setNotification).then((data) => {
                             const campaignData = data.data()
                             let campaign = {...campaignData}
