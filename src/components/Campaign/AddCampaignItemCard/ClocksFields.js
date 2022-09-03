@@ -64,27 +64,31 @@ const ClockEventsFields = (props) => {
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {
-                        const eventsID = uuidv4()
-                        let newClock = CLOCKS
-                        newClock.name = name
-                        newClock.admins = [userID]
-                        newClock.clockEvent = currentEvent
-                        newClock.daysInWeek = daysInWeek
                         if (hoursInDay === "") {
-                            fireError(setNotification, 1, "Please enter a value for Hours in Day")
+                            let errorWithError = ""
+                            if (hoursInDay === "") {
+                                errorWithError += "Hours in Day "
+                            }
+                            fireError(setNotification, 1, "Please enter a value for " + errorWithError)
                         } else {
+                            const eventsID = uuidv4()
+                            let newClock = CLOCKS
+                            newClock.name = name
+                            newClock.admins = [userID]
+                            newClock.clockEvent = currentEvent
+                            newClock.daysInWeek = daysInWeek
                             newClock.hoursInDay = hoursInDay
-                        }
-                        getDocument("campaigns", id, setNotification).then((data) => {
-                            const campaignData = data.data()
-                            let campaign = {...campaignData}
-                            campaign.clocks = [...campaignData.clocks, eventsID]
-                            updateDocumentWithPromise("clocks", eventsID, newClock, setNotification).then(() => {
-                                updateDocumentWithPromise("campaigns", id, campaign, setNotification).then(() => {
-                                    window.location.reload(false)
+                            getDocument("campaigns", id, setNotification).then((data) => {
+                                const campaignData = data.data()
+                                let campaign = {...campaignData}
+                                campaign.clocks = [...campaignData.clocks, eventsID]
+                                updateDocumentWithPromise("clocks", eventsID, newClock, setNotification).then(() => {
+                                    updateDocumentWithPromise("campaigns", id, campaign, setNotification).then(() => {
+                                        window.location.reload(false)
+                                    })
                                 })
                             })
-                        })
+                        }
                     }}
                 >
                     Add
