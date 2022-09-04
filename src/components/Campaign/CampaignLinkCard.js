@@ -15,6 +15,7 @@ import { PopUpContext } from "../../contexts/PopUp"
 import { getDocument, deleteDocumentWithPromise, updateDocumentWithPromise } from '../../helpers/firestore'
 import { firePopUp } from '../../helpers/popup'
 import { removeElementFromArray } from '../../helpers/misc'
+import { updateRealtimeDB } from '../../helpers/database'
 
 const CampaignLinkCard = (props) => {
     const { id, items, isAdmin, docID, playerBody, path, Settings, players, clocks, events, gm } = props
@@ -66,18 +67,17 @@ const CampaignLinkCard = (props) => {
                                             firePopUp(
                                                 "Are you sure you want to delete " + item.name,
                                                 () => {
-                                                    if (docID === "votingsystems") {
-                                                        console.log("vote")
-                                                    } else {
-                                                        deleteDocumentWithPromise(docID, item.id, setNotification, itemExists).then(() => {
-                                                            getDocument("campaigns", id, setNotification, true).then((data) => {
-                                                                let tempItems = removeElementFromArray([...data.data()[docID]], item.id)
-                                                                updateDocumentWithPromise("campaigns", id, { [docID]: tempItems }, setNotification, true).then(() => {
-                                                                    window.location.reload(false)
-                                                                })
+                                                    deleteDocumentWithPromise(docID, item.id, setNotification, itemExists).then(() => {
+                                                        getDocument("campaigns", id, setNotification, true).then((data) => {
+                                                            let tempItems = removeElementFromArray([...data.data()[docID]], item.id)
+                                                            updateDocumentWithPromise("campaigns", id, { [docID]: tempItems }, setNotification, true).then(() => {
+                                                                if (docID === "votingsystems") {
+                                                                    updateRealtimeDB({}, ["votingsystems/" + item.id + "/"])
+                                                                }
+                                                                window.location.reload(false)
                                                             })
                                                         })
-                                                    }
+                                                    })
                                                 },
                                                 () => {},
                                                 setPopUp
