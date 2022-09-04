@@ -11,6 +11,8 @@ import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
+import HoursInDay from "./HoursInDay"
+import { firePing } from "../../../helpers/notifications"
 
 const ClockSettings = (props) => {
     const { players, id, gm } = props
@@ -19,6 +21,7 @@ const ClockSettings = (props) => {
     const [isClocks, setIsClock] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
     const [admins, setAdmins] = useState([])
+    const [hoursInDay, setHoursInDay] = useState(0)
 
     useEffect(() => {
         getDocument("clocks", id, setNotification).then((data)  => {
@@ -27,6 +30,7 @@ const ClockSettings = (props) => {
             setActivePlayers(clockPlayersDB)
             setAdmins(clockAdminsDB)
             setIsClock(data.exists())
+            setHoursInDay(data.data().hoursInDay)
             let tempEnabledPlayers = {...players}
             clockPlayersDB.forEach((player) => {    
                 tempEnabledPlayers[player] = {id: player, name: returnChildOfObject(players, [player, "name"], ''), access: true}
@@ -38,6 +42,22 @@ const ClockSettings = (props) => {
 
     return (
         <SettingsBody>
+            <SettingsSection>
+                <SettingsSectionTitle>Hours in Day</SettingsSectionTitle>
+                <HoursInDay 
+                    hoursInDay={hoursInDay}
+                    setHoursInDay={setHoursInDay}
+                />
+                <button 
+                    className="px-2 py-1 ml-4 text-white rounded bg-green-400"
+                    onClick={() => {
+                        updateDocument("clocks", id, {hoursInDay: hoursInDay}, setNotification, isClocks)
+                        firePing(setNotification, 0, "You have successfully updated hours in a day")
+                    }}
+                >
+                    Update
+                </button>
+            </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers
