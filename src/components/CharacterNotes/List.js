@@ -7,7 +7,6 @@ import VariableTextArea from './VariableTextArea'
 // Components
 import ConditionalRender from '../ConditionalRender'
 // UI
-import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 import Input from '../../ui/Input'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
@@ -25,11 +24,9 @@ const List = (props) => {
     } = props
     const [expandList, setExpandList] = useState(openStatus)
     const [listState, setListState] = useState([...list])
-    const [popUp, setPopUp] = useState(false)
-    const [deleteCatPopUp, setDeleteCatPopUp] = useState(false)
     const [resetInputValues, setResetInputValues] = useState(false)
     const setNotification = useContext(NotificationContext)[1]
-    const setPopUpOne = useContext(PopUpContext)[1]
+    const setPopUp = useContext(PopUpContext)[1]
     const [indexToDelete, setIndexToDelete] = useState(null)
     const [newItem, setNewItem] = useState("")
 
@@ -75,7 +72,30 @@ const List = (props) => {
                                     />
                                     <button onClick={() => {
                                         setIndexToDelete(i)
-                                        setPopUp(true)
+                                        firePopUp(
+                                            "Are you sure you want to delete this list item",
+                                            () => {
+                                                if (indexToDelete || indexToDelete === 0) {
+                                                    let tempNotes = [...notes]
+                                                    let tempList = [...listState]
+                                                    tempList.splice(indexToDelete, 1)
+                                                    tempNotes[index][elementIndex] = {
+                                                        ...tempNotes[index][elementIndex],
+                                                        list: tempList
+                                                    }
+                                                    setNotes(tempNotes)
+                                                    setListState(tempList)
+                                                    updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                                                    setIndexToDelete(false)
+                                                } else {
+                                                    fireError(setNotification, "Nothing to delete", "You have attempted to delete nothing")
+                                                }
+                                            },
+                                            () => {
+                                                setIndexToDelete(false)
+                                            },
+                                            setPopUp
+                                        )
                                     }}>
                                         <FaTrash className="text-red-500"/>
                                     </button>
@@ -147,10 +167,9 @@ const List = (props) => {
                                         delete tempNotes[index][elementIndex]
                                         setNotes(tempNotes)
                                         updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                                        setDeleteCatPopUp(false)
                                     },
                                     () => {},
-                                    setPopUpOne
+                                    setPopUp
                                 )
                             }}
                         >Delete</button>
@@ -184,48 +203,6 @@ const List = (props) => {
                     }>{moreLessTextDecider(expandList)}</button>
                 </div>
             </div>
-            <ConditionalRender condition={popUp}>
-                <ConfirmationPopUp
-                    message="Are you sure you want to delete this list item"
-                    onClick={() => {
-                        if (indexToDelete || indexToDelete === 0) {
-                            let tempNotes = [...notes]
-                            let tempList = [...listState]
-                            tempList.splice(indexToDelete, 1)
-                            tempNotes[index][elementIndex] = {
-                                ...tempNotes[index][elementIndex],
-                                list: tempList
-                            }
-                            setNotes(tempNotes)
-                            setListState(tempList)
-                            updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                            setIndexToDelete(false)
-                        } else {
-                            fireError(setNotification, "Nothing to delete", "You have attempted to delete nothing")
-                        }
-                        setPopUp(false)
-                    }}
-                    cancel={() => {
-                        setIndexToDelete(false)
-                        setPopUp(false)
-                    }}
-                />
-            </ConditionalRender>
-            <ConditionalRender condition={deleteCatPopUp}>
-                <ConfirmationPopUp
-                    message={"Are you sure you want to delete " + name}
-                    onClick={() => {
-                        let tempNotes = [...notes]
-                        delete tempNotes[index][elementIndex]
-                        setNotes(tempNotes)
-                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                        setDeleteCatPopUp(false)
-                    }}
-                    cancel={() => {
-                        setDeleteCatPopUp(false)
-                    }}
-                />
-            </ConditionalRender>
         </div>
 	)
 }
