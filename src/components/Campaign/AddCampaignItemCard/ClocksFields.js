@@ -22,7 +22,7 @@ import { CLOCKS } from '../../../helpers/emptycampaignitems'
 const ClockEventsFields = (props) => {
     const { id, events } = props
     const [name, setName] = useState("")
-    const [currentEvent, setCurrentEvent] = useState(events[0] ? events[0] : "")
+    const [currentEvent, setCurrentEvent] = useState("")
     const [userID, setUserID] = useState("")
     const [hoursInDay, setHoursInDay] = useState(24)
     const [daysInWeek, setDaysInWeek] = useState([])
@@ -47,6 +47,7 @@ const ClockEventsFields = (props) => {
                     selectEvent={() => {}}
                     currentEvent={currentEvent}
                     setCurrentEvent={setCurrentEvent}
+                    afterSelect={() => {}}
                 />
             </SettingsSection>
             <SettingsSection>

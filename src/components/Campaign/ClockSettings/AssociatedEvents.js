@@ -7,7 +7,7 @@ import { getDocument } from "../../../helpers/firestore"
 
 const AssociatedEvents = (props) => {
     const { 
-        events, selectEvent, currentEvent, setCurrentEvent
+        events, selectEvent, currentEvent, setCurrentEvent, afterSelect
     } = props
     const setNotification = useContext(NotificationContext)[1]
     const [eventNames, setEventNames] = useState([])
@@ -15,7 +15,7 @@ const AssociatedEvents = (props) => {
 
     useEffect(() => {
         events.forEach((event, i) => {
-            getDocument("clocks", event, setNotification, true).then((data) => {
+            getDocument("clockevents", event, setNotification, true).then((data) => {
                 if (data !== "permission-denied" && data) {
                     const eventData = data.data()
                     if (eventData) {
@@ -35,7 +35,9 @@ const AssociatedEvents = (props) => {
             <select value={currentEvent} onChange={(event) => {
                 setCurrentEvent(event.target.value)
                 selectEvent(event)
+                afterSelect(event.target.value)
             }}>
+                <option value={""}>none</option>
                 {
                     eventIDs.map((event, i) => {
                         return (<option key={i} value={event}>{eventNames[event]}</option>)

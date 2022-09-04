@@ -6,22 +6,24 @@ import EditAdmins from "../EditAdmins"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
+import AssociatedEvents from "./AssociatedEvents"
+import HoursInDay from "./HoursInDay"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
-import HoursInDay from "./HoursInDay"
 import { firePing } from "../../../helpers/notifications"
 
 const ClockSettings = (props) => {
-    const { players, id, gm } = props
+    const { players, id, gm, events } = props
     const setNotification = useContext(NotificationContext)[1]
     const [clockPlayers, setClockPlayers] = useState({...players})
     const [isClocks, setIsClock] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
     const [admins, setAdmins] = useState([])
     const [hoursInDay, setHoursInDay] = useState(0)
+    const [currentEvent, setCurrentEvent] = useState("")
 
     useEffect(() => {
         getDocument("clocks", id, setNotification).then((data)  => {
@@ -29,6 +31,7 @@ const ClockSettings = (props) => {
             const clockAdminsDB = data.data().admins
             setActivePlayers(clockPlayersDB)
             setAdmins(clockAdminsDB)
+            setCurrentEvent(data.data().clockEvent)
             setIsClock(data.exists())
             setHoursInDay(data.data().hoursInDay)
             let tempEnabledPlayers = {...players}
@@ -42,6 +45,18 @@ const ClockSettings = (props) => {
 
     return (
         <SettingsBody>
+            <SettingsSection>
+                <SettingsSectionTitle>Associated Clock Events</SettingsSectionTitle>
+                <AssociatedEvents
+                    events={events}
+                    selectEvent={() => {}}
+                    currentEvent={currentEvent}
+                    setCurrentEvent={setCurrentEvent}
+                    afterSelect={(eventID) => {
+                        updateDocument("clocks", id, {clockEvent: eventID}, setNotification, isClocks)
+                    }}
+                />
+            </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Hours in Day</SettingsSectionTitle>
                 <HoursInDay 

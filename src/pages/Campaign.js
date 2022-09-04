@@ -39,7 +39,6 @@ const Campaign = () => {
         getDocument("campaigns", id, setNotification).then((data) => {
             const campaignData = data.data()
             setGM((campaignData.gm) ? campaignData.gm : "")
-            console.log(campaignData.gm)
             setClocks((campaignData.clocks) ? campaignData.clocks : [])
             setRelations((campaignData.relations) ? campaignData.relations : [])
             setVotingSystems((campaignData.votingsystems) ? campaignData.votingsystems : [])
@@ -71,6 +70,7 @@ const Campaign = () => {
                     playerBody="To Clock"
                     players={players}
                     clocks={[]}
+                    events={clockEvents}
                     Settings={ClockSettings}
                     gm={gm}
                 />
@@ -82,6 +82,7 @@ const Campaign = () => {
                     playerBody="To Relation"
                     players={players}
                     clocks={[]}
+                    events={[]}
                     Settings={RelationSettings}
                     gm={gm}
                 />
@@ -93,6 +94,7 @@ const Campaign = () => {
                     playerBody="To Voting System"
                     players={players}
                     clocks={[]}
+                    events={[]}
                     Settings={VotingSystemSettings}
                     gm={gm}
                 />
@@ -104,6 +106,7 @@ const Campaign = () => {
                     playerBody="To Clock Events"
                     players={players}
                     clocks={clocks}
+                    events={[]}
                     Settings={ClockEventsSettings}
                     gm={gm}
                 />
@@ -114,7 +117,8 @@ const Campaign = () => {
                     isAdmin={isAdmin}
                     playerBody="To Notes"
                     players={players}
-                    clocks={clocks}
+                    clocks={[]}
+                    events={[]}
                     Settings={CharacterNotesSettings}
                     gm={gm}
                 />
