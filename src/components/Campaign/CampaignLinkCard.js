@@ -1,6 +1,7 @@
 // Packages
 import { useContext, useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { FaTrash } from "react-icons/fa"
 // Components
 import ConditionalRender from '../ConditionalRender'
 // UI
@@ -47,9 +48,24 @@ const CampaignLinkCard = (props) => {
                         }
                     >   
                         <Card>
-                            <Link to={"/" + path + "/" + item.id}>
-                                <CardTitle>{item.name}</CardTitle>
-                            </Link>
+                                <CardTitle className="flex justify-between" >
+                                    <div className="w-11/12 flex justify-center">
+                                        <Link to={"/" + path + "/" + item.id}>
+                                            <p>{item.name}</p>
+                                        </Link>  
+                                    </div>
+                                    <div className="w-5">
+                                        <button
+                                            onClick={() => {
+                                                if (docID === "votingsystems") {
+                                                    console.log("vote")
+                                                } else {
+                                                    console.log("yes")
+                                                }
+                                            }}
+                                        ><FaTrash/></button>
+                                    </div>  
+                                </CardTitle>     
                             {<Settings gm={gm} players={players} id={item.id} clocks={clocks} events={events} />}
                         </Card>
                     </ConditionalRender>
