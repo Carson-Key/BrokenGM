@@ -60,6 +60,17 @@ const VotingSystemSettings = (props) => {
                     setDefaultVoters={setDefaultVoters}
                     defaultVotersObject={defaultVotersObject} 
                     setDefaultVotersObject={setDefaultVotersObject}
+                    afterAddFunc={(formattedName) => {
+                        updateRealtimeDB(
+                            "", ["votingsystems/" + id + "/defaultVoters/" + formattedName]
+                        )
+                    }} 
+                    afterRemoveFunc={(tempDefaultVotersObject) => {
+                        updateRealtimeDB(
+                            tempDefaultVotersObject, 
+                            ["votingsystems/" + id + "/defaultVoters/"]
+                        )
+                    }}
                 />
             </SettingsSection>
             <SettingsSection>
