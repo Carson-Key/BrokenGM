@@ -20,6 +20,7 @@ import { NotificationContext } from "../contexts/Notification"
 import { getDocument } from "../helpers/firestore"
 import { getCurrentUser } from '../helpers/auth'
 import { getPlayerObject } from '../helpers/campaign'
+import ConditionalRender from '../components/ConditionalRender'
 
 const Campaign = () => {
     const { id } = useParams()
@@ -57,11 +58,13 @@ const Campaign = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <Container className="flex flex-wrap justify-evenly">
-                <AddCampaignItemCard
-                    id={id}
-                    clocks={clocks}
-                    events={clockEvents}
-                />
+                <ConditionalRender condition={isAdmin}>
+                    <AddCampaignItemCard
+                        id={id}
+                        clocks={clocks}
+                        events={clockEvents}
+                    />
+                </ConditionalRender>
                 <CampaignLinkCard 
                     id={id}
                     docID="clocks"
