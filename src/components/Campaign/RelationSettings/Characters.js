@@ -6,7 +6,6 @@ import { FaTrash } from "react-icons/fa"
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { fireError } from "../../../helpers/notifications"
-import { removeElementFromArray } from "../../../helpers/misc"
 import { formatCharacterName, reverseFormatCharacterName } from "../../../helpers/relation"
 
 const Characters = (props) => {
