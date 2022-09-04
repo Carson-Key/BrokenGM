@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 // Campaign
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
+import Characters from '../RelationSettings/Characters'
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -18,6 +19,7 @@ const RelationsFields = (props) => {
     const { id } = props
     const [name, setName] = useState("")
     const [userID, setUserID] = useState("")
+    const [characters, setCharacters] = useState({})
     const setNotification = useContext(NotificationContext)[1]
 
     useEffect(() => {
@@ -30,6 +32,13 @@ const RelationsFields = (props) => {
                 <SettingsSectionTitle>Name</SettingsSectionTitle>
                 <Name name={name} setName={setName}/>
             </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Days in Week</SettingsSectionTitle>
+                <Characters
+                    characters={characters} setCharacters={setCharacters} 
+                    afterAddFunc={() => {}} afterRemoveFunc={() => {}}
+                />
+            </SettingsSection>
             <div className="py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
@@ -38,6 +47,7 @@ const RelationsFields = (props) => {
                         let newRelations = RELATIONS
                         newRelations.name = name
                         newRelations.admins = [userID]
+                        newRelations.playerCharacters = characters
                         getDocument("campaigns", id, setNotification).then((data) => {
                             const campaignData = data.data()
                             let campaign = {...campaignData}
