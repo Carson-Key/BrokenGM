@@ -2,6 +2,7 @@
 import NotesFields from './NotesFields'
 import ClockEventsFields from './ClockEventsFields'
 import ClocksFields from './ClocksFields'
+import RelationsFields from './RelationsFields'
 // Objects
 import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
 
@@ -16,7 +17,7 @@ const DisplayItemFields = (props) => {
         case "2":
             return (<ClocksFields id={id} events={events} />)
         case "3":
-            return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
+            return (<RelationsFields id={id} />)
         case "4":
             return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
         default:
