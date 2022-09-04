@@ -14,7 +14,6 @@ import { PopUpContext } from '../../contexts/PopUp'
 // Helpers
 import { moreLessTextDecider } from '../../helpers/misc'
 import { updateDocument } from '../../helpers/firestore'
-import { fireError } from '../../helpers/notifications'
 import { firePopUp } from '../../helpers/popup'
 
 const List = (props) => {
@@ -27,7 +26,6 @@ const List = (props) => {
     const [resetInputValues, setResetInputValues] = useState(false)
     const setNotification = useContext(NotificationContext)[1]
     const setPopUp = useContext(PopUpContext)[1]
-    const [indexToDelete, setIndexToDelete] = useState(null)
     const [newItem, setNewItem] = useState("")
 
     return (
@@ -71,28 +69,21 @@ const List = (props) => {
                                         setResetInputValues={setResetInputValues}
                                     />
                                     <button onClick={() => {
-                                        setIndexToDelete(i)
                                         firePopUp(
                                             "Are you sure you want to delete this list item",
                                             () => {
-                                                if (indexToDelete || indexToDelete === 0) {
-                                                    let tempNotes = [...notes]
-                                                    let tempList = [...listState]
-                                                    tempList.splice(indexToDelete, 1)
-                                                    tempNotes[index][elementIndex] = {
-                                                        ...tempNotes[index][elementIndex],
-                                                        list: tempList
-                                                    }
-                                                    setNotes(tempNotes)
-                                                    setListState(tempList)
-                                                    updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
-                                                    setIndexToDelete(false)
-                                                } else {
-                                                    fireError(setNotification, "Nothing to delete", "You have attempted to delete nothing")
+                                                let tempNotes = [...notes]
+                                                let tempList = [...listState]
+                                                tempList.splice(i, 1)
+                                                tempNotes[index][elementIndex] = {
+                                                    ...tempNotes[index][elementIndex],
+                                                    list: tempList
                                                 }
+                                                setNotes(tempNotes)
+                                                setListState(tempList)
+                                                updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
                                             },
                                             () => {
-                                                setIndexToDelete(false)
                                             },
                                             setPopUp
                                         )
