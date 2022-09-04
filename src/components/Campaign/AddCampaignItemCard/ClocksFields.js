@@ -7,6 +7,7 @@ import SettingsSectionTitle from "../SettingsSectionTitle"
 import AssociatedEvents from '../ClockSettings/AssociatedEvents'
 import DaysInWeek from '../ClockSettings/DaysInWeek'
 import HoursInDay from '../ClockSettings/HoursInDay'
+import Months from '../ClockSettings/Months'
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -25,6 +26,8 @@ const ClockEventsFields = (props) => {
     const [userID, setUserID] = useState("")
     const [hoursInDay, setHoursInDay] = useState(24)
     const [daysInWeek, setDaysInWeek] = useState([])
+    const [monthsOfYear, setMonthsOfYear] = useState([])
+    const [daysInMonths, setDaysInMonths] = useState([])
     const setNotification = useContext(NotificationContext)[1]
 
     useEffect(() => {
@@ -57,27 +60,43 @@ const ClockEventsFields = (props) => {
                 <DaysInWeek
                     daysInWeek={daysInWeek} setDaysInWeek={setDaysInWeek} 
                     afterAddFunc={() => {}} afterRemoveFunc={() => {}}
-                    
+                />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Months</SettingsSectionTitle>
+                <Months
+                    monthsOfYear={monthsOfYear} setMonthsOfYear={setMonthsOfYear}
+                    daysInMonths={daysInMonths} setDaysInMonths={setDaysInMonths}
+                    afterAddFunc={() => {}} afterRemoveFunc={() => {}}
                 />
             </SettingsSection>
             <div className="py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {
-                        if (hoursInDay === "") {
-                            let errorWithError = ""
+                        if (
+                            hoursInDay === "" || daysInMonths.includes("") ||
+                            daysInMonths.length < 1 || daysInWeek < 1
+                        ) {
                             if (hoursInDay === "") {
-                                errorWithError += "Hours in Day "
+                                fireError(setNotification, 1, "Please enter a value for Hours in Day")
+                            } else if (daysInMonths.includes("")) {
+                                fireError(setNotification, 1, "Please enter a value for the amount of days in each month")
+                            } else if (daysInMonths.length < 1) {
+                                fireError(setNotification, 1, "Please enter at least one month")
+                            } else if (daysInWeek < 1) {
+                                fireError(setNotification, 1, "Please enter at least one day of week")
                             }
-                            fireError(setNotification, 1, "Please enter a value for " + errorWithError)
                         } else {
                             const eventsID = uuidv4()
                             let newClock = CLOCKS
                             newClock.name = name
                             newClock.admins = [userID]
                             newClock.clockEvent = currentEvent
-                            newClock.daysInWeek = daysInWeek
+                            newClock.daysOfWeek = daysInWeek
                             newClock.hoursInDay = hoursInDay
+                            newClock.monthsOfYear = monthsOfYear
+                            newClock.daysInMonths = daysInMonths
                             getDocument("campaigns", id, setNotification).then((data) => {
                                 const campaignData = data.data()
                                 let campaign = {...campaignData}

@@ -17,7 +17,7 @@ export const CLOCKS = {
     dayOfMonth: 0,
     dayOfWeek: 0,
     daysInMonths: [],
-    daysInWeek: [],
+    daysOfWeek: [],
     hoursInDay: 0,
     isActive: false,
     monthOfYear: 0,
