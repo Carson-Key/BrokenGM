@@ -48,24 +48,24 @@ const CampaignLinkCard = (props) => {
                         }
                     >   
                         <Card>
-                                <CardTitle className="flex justify-between" >
-                                    <div className="w-11/12 flex justify-center">
-                                        <Link to={"/" + path + "/" + item.id}>
-                                            <p>{item.name}</p>
-                                        </Link>  
-                                    </div>
-                                    <div className="w-5">
-                                        <button
-                                            onClick={() => {
-                                                if (docID === "votingsystems") {
-                                                    console.log("vote")
-                                                } else {
-                                                    console.log("yes")
-                                                }
-                                            }}
-                                        ><FaTrash/></button>
-                                    </div>  
-                                </CardTitle>     
+                            <CardTitle className="flex justify-between" >
+                                <div className="w-11/12 flex justify-center">
+                                    <Link to={"/" + path + "/" + item.id}>
+                                        <p>{item.name}</p>
+                                    </Link>  
+                                </div>
+                                <div className="w-5">
+                                    <button
+                                        onClick={() => {
+                                            if (docID === "votingsystems") {
+                                                console.log("vote")
+                                            } else {
+                                                console.log("yes")
+                                            }
+                                        }}
+                                    ><FaTrash/></button>
+                                </div>  
+                            </CardTitle>     
                             {<Settings gm={gm} players={players} id={item.id} clocks={clocks} events={events} />}
                         </Card>
                     </ConditionalRender>
