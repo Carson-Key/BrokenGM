@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from "react"
 // Campaign
 import EditPlayers from "../EditPlayers"
+import EditAdmins from "../EditAdmins"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
@@ -59,6 +60,26 @@ const ClockSettings = (props) => {
                             ...relationPlayers, 
                             [player]: {...playerObject, access: !playerObject.access}
                         })
+                    }}
+                />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Edit Admin Access</SettingsSectionTitle>
+                <EditAdmins
+                    admins={admins}
+                    gm={gm}
+                    players={relationPlayers}
+                    toggleAccess={(event, player) => {
+                        if (admins.includes(player)) {
+                            let tempAdmins = [...admins]
+                            tempAdmins = removeElementFromArray(tempAdmins, player)
+                            setAdmins(tempAdmins)
+                            updateDocument("relations", id, {admins: tempAdmins}, setNotification, isRealion)
+                        } else {
+                            let tempAdmins = [...admins, player]
+                            setAdmins(tempAdmins)
+                            updateDocument("relations", id, {admins: tempAdmins}, setNotification, isRealion)
+                        }
                     }}
                 />
             </SettingsSection>
