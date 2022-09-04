@@ -1,5 +1,5 @@
 // Packages
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { GrAddCircle } from 'react-icons/gr'
 import { FaTrash } from "react-icons/fa"
 // Contexts
@@ -14,12 +14,17 @@ const Characters = (props) => {
     } = props
     const setNotification = useContext(NotificationContext)[1]
     const [newCharacter, setNewCharacter] = useState("")
+    const [charactersArray, setCharactersArray] = useState(Object.keys(characters))
+
+    useEffect(() => {
+        setCharactersArray(Object.keys(characters))
+    }, [characters])
 
     return (
         <div className="ml-2">
             <div className="flex flex-wrap">
                 {
-                    Object.keys(characters).map((character, i) => {
+                    charactersArray.map((character, i) => {
                         return (
                             <div key={i} className={
                                     "w-1/2 py-2 px-2 flex justify-between" +
@@ -33,7 +38,7 @@ const Characters = (props) => {
                                         let tempCharacters = {...characters}
                                         delete tempCharacters[character]
                                         setCharacters(tempCharacters)
-                                        afterRemoveFunc()
+                                        afterRemoveFunc(tempCharacters)
                                     }}
                                 >
                                     <FaTrash/>
@@ -60,7 +65,7 @@ const Characters = (props) => {
                             if (newCharacter !== "") {
                                 setNewCharacter("")
                                 setCharacters({...characters, [reverseFormatCharacterName(newCharacter)]: 0})
-                                afterAddFunc()
+                                afterAddFunc({...characters, [reverseFormatCharacterName(newCharacter)]: 0})
                             } else {
                                 fireError(setNotification, 1, "Please fill the character field before adding a new entry")
                             }

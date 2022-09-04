@@ -6,6 +6,7 @@ import EditAdmins from "../EditAdmins"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
+import Characters from "./Characters"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
@@ -19,11 +20,13 @@ const ClockSettings = (props) => {
     const [isRealion, setIsRealtion] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
     const [admins, setAdmins] = useState([])
+    const [characters, setCharacters] = useState({})
 
     useEffect(() => {
         getDocument("relations", id, setNotification).then((data)  => {
             const clockPlayersDB = data.data().players
             const clockAdminsDB = data.data().admins
+            setCharacters(data.data().playerCharacters)
             setAdmins(clockAdminsDB)
             setActivePlayers(clockPlayersDB)
             setIsRealtion(data.exists())
@@ -38,6 +41,19 @@ const ClockSettings = (props) => {
 
     return (
         <SettingsBody>
+            <SettingsSection>
+                <SettingsSectionTitle>Player Characters</SettingsSectionTitle>
+                <Characters
+                    characters={characters} setCharacters={setCharacters} 
+                    afterAddFunc={(newPlayerCharacters) => {
+                        updateDocument("relations", id, {playerCharacters: newPlayerCharacters}, setNotification, isRealion)
+                    }} 
+                    afterRemoveFunc={(newPlayerCharacters) => {
+                        // TODO: Fix this ;(
+                        updateDocument("relations", id, {playerCharacters: {...newPlayerCharacters}}, setNotification, isRealion)
+                    }}
+                />
+            </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers

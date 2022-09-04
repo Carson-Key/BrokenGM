@@ -31,7 +31,7 @@ export const CLOCKS = {
 }
 export const RELATIONS = {
     admins: [],
-    names: "",
+    name: "",
     npcs: [],
     playerCharacters: [],
     players: []
