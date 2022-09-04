@@ -33,10 +33,13 @@ const Campaign = () => {
     const [clockEvents, setClockEvents] = useState([])
     const [characterNotes, setCharacterNotes] = useState([])
     const [players, setPlayers] = useState([])
+    const [gm, setGM] = useState("")
 
     useEffect(() => {
         getDocument("campaigns", id, setNotification).then((data) => {
             const campaignData = data.data()
+            setGM((campaignData.gm) ? campaignData.gm : "")
+            console.log(campaignData.gm)
             setClocks((campaignData.clocks) ? campaignData.clocks : [])
             setRelations((campaignData.relations) ? campaignData.relations : [])
             setVotingSystems((campaignData.votingsystems) ? campaignData.votingsystems : [])
@@ -69,6 +72,7 @@ const Campaign = () => {
                     players={players}
                     clocks={[]}
                     Settings={ClockSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
                     docID="relations"
@@ -79,6 +83,7 @@ const Campaign = () => {
                     players={players}
                     clocks={[]}
                     Settings={RelationSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
                     docID="votingsystems"
@@ -89,6 +94,7 @@ const Campaign = () => {
                     players={players}
                     clocks={[]}
                     Settings={VotingSystemSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
                     docID="clockevents"
@@ -99,6 +105,7 @@ const Campaign = () => {
                     players={players}
                     clocks={clocks}
                     Settings={ClockEventsSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
                     docID="characternotes"
@@ -109,6 +116,7 @@ const Campaign = () => {
                     players={players}
                     clocks={clocks}
                     Settings={CharacterNotesSettings}
+                    gm={gm}
                 />
             </Container>
         </IsLoading>

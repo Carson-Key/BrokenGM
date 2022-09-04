@@ -15,7 +15,7 @@ import { getRealtimeDBOnce, updateRealtimeDB } from "../../../helpers/database"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
 
 const VotingSystemSettings = (props) => {
-    const { players, id } = props
+    const { players, id, gm } = props
     const setNotification = useContext(NotificationContext)[1]
     const [votingSystemPlayers, setVotingSystemPlayers] = useState({...players})
     const [isVotingSystem, setIsVotingSystem] = useState(false)
@@ -24,15 +24,22 @@ const VotingSystemSettings = (props) => {
     const [defaultVotersObject, setDefaultVotersObject] = useState({})
     const [voters, setVoters] = useState([])
     const [votersObject, setVotersObject] = useState({})
+    const [admins, setAdmins] = useState([])
 
     useEffect(() => {
         getDocument("votingsystems", id, setNotification).then((data)  => {
             const clockPlayersDB = data.data().players
+            const clockAdminsDB = data.data().admins
             setActivePlayers(clockPlayersDB)
+            setAdmins(clockAdminsDB)
             setIsVotingSystem(data.exists())
             let tempEnabledPlayers = {...players}
+            let tempEnabledAdmins = {...players}
             clockPlayersDB.forEach((player) => {    
                 tempEnabledPlayers[player] = {id: player, name: returnChildOfObject(players, [player, "name"], ''), access: true}
+            })            
+            clockAdminsDB.forEach((admin) => {    
+                tempEnabledAdmins[admin] = {id: admin, name: returnChildOfObject(players, [admin, "name"], ''), access: true}
             })
             
             setVotingSystemPlayers(tempEnabledPlayers)
@@ -76,6 +83,8 @@ const VotingSystemSettings = (props) => {
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers
+                    admins={admins}
+                    gm={gm}
                     players={votingSystemPlayers}
                     toggleAccess={(event, player) => {
                         const playerObject = votingSystemPlayers[player]

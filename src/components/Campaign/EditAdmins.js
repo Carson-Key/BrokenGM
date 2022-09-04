@@ -2,13 +2,13 @@
 import Input from '../../ui/Input'
 
 const EditPlayers = (props) => {
-    const { players, toggleAccess, gm, admins } = props
+    const { admins, players, toggleAccess, gm } = props
     const playersArray = Object.keys(players)
 
     return (
         <div className="flex flex-wrap">{
             playersArray.map((playerID, i) => {
-                if (playerID !== gm && !admins.includes(playerID)) {
+                if (playerID !== gm) {
                     return (
                         <Input 
                             key={i}
@@ -19,7 +19,7 @@ const EditPlayers = (props) => {
                             inputClass="mr-1"
                             name={players[playerID].name}
                             labelText={players[playerID].name}
-                            checked={players[playerID].access}
+                            checked={admins[playerID].access}
                             type="checkbox"
                         />
                     )

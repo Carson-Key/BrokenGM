@@ -13,16 +13,19 @@ import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
 
 const ClockEventsSettings = (props) => {
-    const { players, id, clocks } = props
+    const { players, id, clocks, gm } = props
     const setNotification = useContext(NotificationContext)[1]
     const [clockEventsPlayers, setClockEventsPlayers] = useState({...players})
     const [isClockEvents, setIsClockEvents] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
     const [currentClock, setCurrentClock] = useState("")
+    const [admins, setAdmins] = useState([])
 
     useEffect(() => {
         getDocument("clockevents", id, setNotification).then((data)  => {
             const clockPlayersDB = data.data().players
+            const clockAdminsDB = data.data().admins
+            setAdmins(clockAdminsDB)
             setActivePlayers(clockPlayersDB)
             setIsClockEvents(data.exists())
             setCurrentClock(data.data().clock)
@@ -51,6 +54,8 @@ const ClockEventsSettings = (props) => {
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers
+                    gm={gm}
+                    admins={admins}
                     players={clockEventsPlayers}
                     toggleAccess={(event, player) => {
                         const playerObject = clockEventsPlayers[player]

@@ -12,15 +12,18 @@ import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
 
 const CharacterNotesSettings = (props) => {
-    const { players, id } = props
+    const { players, id, gm } = props
     const setNotification = useContext(NotificationContext)[1]
     const [notesPlayers, setNotesPlayers] = useState({...players})
     const [activePlayers, setActivePlayers] = useState([])
     const [isNotes, setIsNotes] = useState(false)
+    const [admins, setAdmins] = useState([])
 
     useEffect(() => {
         getDocument("characternotes", id, setNotification).then((data)  => {
             const notesPlayersDB = data.data().players
+            const clockAdminsDB = data.data().admins
+            setAdmins(clockAdminsDB)
             setActivePlayers(notesPlayersDB)
             setIsNotes(data.exists())
             let tempEnabledPlayers = {...players}
@@ -37,6 +40,8 @@ const CharacterNotesSettings = (props) => {
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers
+                    gm={gm}
+                    admins={admins}
                     players={notesPlayers}
                     toggleAccess={(event, player) => {
                         const playerObject = notesPlayers[player]
