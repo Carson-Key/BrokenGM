@@ -14,7 +14,7 @@ export const CLOCKEVENTS = {
 export const CLOCKS = {
     admins: [],
     clockEvent: "",
-    dayOfMonth: 0,
+    dayOfMonth: 1,
     dayOfWeek: 0,
     daysInMonths: [],
     daysOfWeek: [],
