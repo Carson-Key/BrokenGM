@@ -3,8 +3,7 @@ import NotesFields from './NotesFields'
 import ClockEventsFields from './ClockEventsFields'
 import ClocksFields from './ClocksFields'
 import RelationsFields from './RelationsFields'
-// Objects
-import { ALLCAMPAIGNITEMS } from '../../../helpers/emptycampaignitems'
+import VotingsystemsFields from './VotingsystemsFields'
 
 const DisplayItemFields = (props) => {
     const { itemIndex, id, clocks, events } = props
@@ -19,7 +18,7 @@ const DisplayItemFields = (props) => {
         case "3":
             return (<RelationsFields id={id} />)
         case "4":
-            return (<p>{ALLCAMPAIGNITEMS[itemIndex].name}</p>)
+            return (<VotingsystemsFields id={id} />)
         default:
             return (<p>This campaign item does not exsist</p>)
     }
