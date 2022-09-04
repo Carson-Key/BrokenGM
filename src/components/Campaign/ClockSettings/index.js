@@ -10,6 +10,7 @@ import AssociatedEvents from "./AssociatedEvents"
 import HoursInDay from "./HoursInDay"
 import DaysInWeek from "./DaysInWeek"
 import Months from "./Months"
+import Years from "./Years"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
@@ -26,6 +27,8 @@ const ClockSettings = (props) => {
     const [admins, setAdmins] = useState([])
     const [hoursInDay, setHoursInDay] = useState(0)
     const [currentEvent, setCurrentEvent] = useState("")
+    const [yearSuffix, setYearSuffix] = useState("")
+    const [yearPrefix, setYearPrefix] = useState("")
     const [daysInWeek, setDaysInWeek] = useState([])
     const [monthsOfYear, setMonthsOfYear] = useState([])
     const [daysInMonths, setDaysInMonths] = useState([])
@@ -40,6 +43,8 @@ const ClockSettings = (props) => {
             setMonthsOfYear(data.data().monthsOfYear)
             setDaysInMonths(data.data().daysInMonths)
             setCurrentEvent(data.data().clockEvent)
+            setYearSuffix(data.data().yearSuffix)
+            setYearPrefix(data.data().preYearSuffix)
             setIsClock(data.exists())
             setHoursInDay(data.data().hoursInDay)
             let tempEnabledPlayers = {...players}
@@ -122,6 +127,24 @@ const ClockSettings = (props) => {
                         )
                     }}
                 />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Years</SettingsSectionTitle>
+                <Years 
+                    yearSuffix={yearSuffix} setYearSuffix={setYearSuffix} 
+                    yearPrefix={yearPrefix} setYearPrefix={setYearPrefix}
+                />
+                <div className="w-full flex justify-center my-1">
+                    <button 
+                        className="px-2 py-1 text-white rounded bg-green-400"
+                        onClick={() => {
+                            updateDocument("clocks", id, {preYearSuffix: yearPrefix, yearSuffix: yearSuffix}, setNotification, isClocks)
+                            firePing(setNotification, 0, "You have successfully updated Years")
+                        }}
+                    >
+                        Update
+                    </button>
+                </div>
             </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
