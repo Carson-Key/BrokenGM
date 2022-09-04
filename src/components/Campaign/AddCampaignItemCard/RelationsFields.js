@@ -33,7 +33,7 @@ const RelationsFields = (props) => {
                 <Name name={name} setName={setName}/>
             </SettingsSection>
             <SettingsSection>
-                <SettingsSectionTitle>Days in Week</SettingsSectionTitle>
+                <SettingsSectionTitle>Player Characters</SettingsSectionTitle>
                 <Characters
                     characters={characters} setCharacters={setCharacters} 
                     afterAddFunc={() => {}} afterRemoveFunc={() => {}}
