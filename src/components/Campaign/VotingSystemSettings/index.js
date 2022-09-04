@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from "react"
 // VotingSystemSettings
 import DefaultVoters from "./DefaultVoters"
+import SetVoters from "./SetVoters"
 // Campaign
 import EditPlayers from "../EditPlayers"
 import EditAdmins from "../EditAdmins"
@@ -14,6 +15,7 @@ import { NotificationContext } from "../../../contexts/Notification"
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { getRealtimeDBOnce, updateRealtimeDB } from "../../../helpers/database"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
+import { firePing } from "../../../helpers/notifications"
 
 const VotingSystemSettings = (props) => {
     const { players, id, gm } = props
@@ -82,6 +84,24 @@ const VotingSystemSettings = (props) => {
                         )
                     }}
                 />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Edit Voter Access</SettingsSectionTitle>
+                <SetVoters
+                    id={id} defaultVoters={defaultVoters} voters={voters}
+                    votersObject={votersObject} setVotersObject={setVotersObject}
+                />
+                <div className="w-full flex justify-center my-1">
+                    <button 
+                        className="px-2 py-1 text-white rounded bg-green-400"
+                        onClick={() => {
+                            updateRealtimeDB(votersObject, ["votingsystems/" + id + "/voters/"])
+                            firePing(setNotification, 0, "You have successfully updated Voter Access")
+                        }}
+                    >
+                        Update
+                    </button>
+                </div>
             </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
