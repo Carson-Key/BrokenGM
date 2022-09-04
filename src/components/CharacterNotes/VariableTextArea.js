@@ -1,5 +1,5 @@
 // Packages
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const VariableTextArea = (props) => {
     const { 
@@ -7,6 +7,10 @@ const VariableTextArea = (props) => {
         setValue, changeValues
     } = props
     const [inputValue, setInputValue] = useState(value)
+
+    useEffect(() => {
+        setInputValue(value)
+    }, [value])
 
     return (
         <textarea
