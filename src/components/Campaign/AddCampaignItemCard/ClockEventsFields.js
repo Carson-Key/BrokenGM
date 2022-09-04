@@ -18,7 +18,7 @@ import { CLOCKEVENTS } from '../../../helpers/emptycampaignitems'
 const ClockEventsFields = (props) => {
     const { id, clocks } = props
     const [name, setName] = useState("")
-    const [currentClock, setCurrentClock] = useState(clocks[0] ? clocks[0] : "")
+    const [currentClock, setCurrentClock] = useState("")
     const [userID, setUserID] = useState("")
     const setNotification = useContext(NotificationContext)[1]
 
