@@ -27,7 +27,7 @@ const DefaultVoters = (props) => {
                                 <button className="text-red-500"
                                     onClick={() => {
                                         let tempDefaultVotersObject = {...defaultVotersObject}
-                                        let tempDefaultVoters = removeElementFromArray(defaultVoters, voter)
+                                        let tempDefaultVoters = removeElementFromArray([...defaultVoters], voter)
                                         delete tempDefaultVotersObject[voter]
                                         updateRealtimeDB(tempDefaultVotersObject, ["votingsystems/" + id + "/defaultVoters/"])
                                         setDefaultVoters(tempDefaultVoters)
