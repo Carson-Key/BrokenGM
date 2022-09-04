@@ -1,5 +1,5 @@
 // Packages
-import { doc, getDoc, setDoc } from "firebase/firestore" 
+import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore" 
 // Firebase
 import { db } from './firebase'
 // Helpers
@@ -52,6 +52,32 @@ export async function updateDocumentWithPromise(collection, document, dataToAdd,
 
 		if (documentExsists) {
 			return setDoc(userDoc, dataToAdd, { merge: true })
+		}
+	} catch (error) {
+		return {
+			then: () => {
+				fireBaseError(setNotification, error.code, error.message)
+			}
+		}
+	}
+}
+export async function deleteDocument(collection, document, setNotification, documentExsists = true) {
+	try {
+		const userDoc = doc(db, collection, document)
+
+		if (documentExsists) {
+			await deleteDoc(userDoc)
+		}
+	} catch (error) {
+		fireBaseError(setNotification, error.code, error.message)
+	}
+}
+export async function deleteDocumentWithPromise(collection, document, setNotification, documentExsists = true) {
+	try {
+		const userDoc = doc(db, collection, document)
+
+		if (documentExsists) {
+			return deleteDoc(userDoc)
 		}
 	} catch (error) {
 		return {

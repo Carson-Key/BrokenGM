@@ -63,6 +63,7 @@ const Campaign = () => {
                     events={clockEvents}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="clocks"
                     path="clock"
                     items={clocks} 
@@ -75,6 +76,7 @@ const Campaign = () => {
                     gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="relations"
                     path="relation"
                     items={relations} 
@@ -87,6 +89,7 @@ const Campaign = () => {
                     gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="votingsystems"
                     path="votingsystem"
                     items={votingSystems} 
@@ -99,6 +102,7 @@ const Campaign = () => {
                     gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="clockevents"
                     path="clockevents"
                     items={clockEvents} 
@@ -111,6 +115,7 @@ const Campaign = () => {
                     gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="characternotes"
                     path="characternotes"
                     items={characterNotes} 

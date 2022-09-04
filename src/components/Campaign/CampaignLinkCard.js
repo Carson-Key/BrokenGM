@@ -10,13 +10,18 @@ import CardTitle from '../../ui/CardTitle'
 import GenericLinkCard from '../../ui/GenericLinkCard'
 // Contexts
 import { NotificationContext } from "../../contexts/Notification"
+import { PopUpContext } from "../../contexts/PopUp"
 // Helpers
-import { getDocument } from '../../helpers/firestore'
+import { getDocument, deleteDocumentWithPromise, updateDocumentWithPromise } from '../../helpers/firestore'
+import { firePopUp } from '../../helpers/popup'
+import { removeElementFromArray } from '../../helpers/misc'
 
 const CampaignLinkCard = (props) => {
-    const { items, isAdmin, docID, playerBody, path, Settings, players, clocks, events, gm } = props
+    const { id, items, isAdmin, docID, playerBody, path, Settings, players, clocks, events, gm } = props
     const setNotification = useContext(NotificationContext)[1]
+    const setPopUp = useContext(PopUpContext)[1]
     const [itemArray, setItemArray] = useState([])
+    const [itemExists, setItemExists] = useState(false)
 
     useEffect(() => {
         items.forEach((item, i) => {
@@ -25,6 +30,7 @@ const CampaignLinkCard = (props) => {
                     setItemArray(prev => [...prev, {name: "", id: "", access: false}])
                 } else {
                     const itemData = data.data()
+                    setItemExists(data.exists())
                     setItemArray(prev => [...prev, {name: itemData.name, id: item, access: true}])
                 }
             })
@@ -57,11 +63,25 @@ const CampaignLinkCard = (props) => {
                                 <div className="w-5">
                                     <button
                                         onClick={() => {
-                                            if (docID === "votingsystems") {
-                                                console.log("vote")
-                                            } else {
-                                                console.log("yes")
-                                            }
+                                            firePopUp(
+                                                "Are you sure you want to delete " + item.name,
+                                                () => {
+                                                    if (docID === "votingsystems") {
+                                                        console.log("vote")
+                                                    } else {
+                                                        deleteDocumentWithPromise(docID, item.id, setNotification, itemExists).then(() => {
+                                                            getDocument("campaigns", id, setNotification, true).then((data) => {
+                                                                let tempItems = removeElementFromArray([...data.data()[docID]], item.id)
+                                                                updateDocumentWithPromise("campaigns", id, { [docID]: tempItems }, setNotification, true).then(() => {
+                                                                    window.location.reload(false)
+                                                                })
+                                                            })
+                                                        })
+                                                    }
+                                                },
+                                                () => {},
+                                                setPopUp
+                                            )
                                         }}
                                     ><FaTrash/></button>
                                 </div>  
