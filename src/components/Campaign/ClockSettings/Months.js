@@ -12,7 +12,7 @@ import { removeElementFromArray } from "../../../helpers/misc"
 
 const Months = (props) => {
     const { 
-        monthsOfYear, setMonthsOfYear, daysInMonths, setDaysInMonths, afterAddFunc, afterRemoveFunc
+        monthsOfYear, setMonthsOfYear, daysInMonths, setDaysInMonths, afterAddFunc, afterRemoveFunc, onChange
     } = props
     const setNotification = useContext(NotificationContext)[1]
     const [newMonth, setNewMonth] = useState("")
@@ -28,6 +28,7 @@ const Months = (props) => {
                                 <DaysInMonthInput
                                     daysInMonths={daysInMonths} amountofDays={daysInMonths[i]}
                                     setDaysInMonths={setDaysInMonths} i={i} monthsOfYear={monthsOfYear}
+                                    onChange={onChange}
                                 />
                                 <button className="text-red-500 mx-2"
                                     onClick={() => {
@@ -36,7 +37,7 @@ const Months = (props) => {
                                         tempDaysInMonths.splice(i, 1)
                                         setMonthsOfYear(tempMonthsOfYear)
                                         setDaysInMonths(tempDaysInMonths)
-                                        afterRemoveFunc()
+                                        afterRemoveFunc(tempMonthsOfYear, tempDaysInMonths)
                                     }}
                                 >
                                     <FaTrash/>
@@ -64,7 +65,7 @@ const Months = (props) => {
                                 setNewMonth("")
                                 setMonthsOfYear([...monthsOfYear, newMonth])
                                 setDaysInMonths([...daysInMonths, ""])
-                                afterAddFunc()
+                                afterAddFunc([...monthsOfYear, newMonth], [...daysInMonths, ""])
                             } else {
                                 fireError(setNotification, 1, "Please fill month name field before adding a new entry")
                             }

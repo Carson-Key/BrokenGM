@@ -69,6 +69,7 @@ const ClockEventsFields = (props) => {
                     monthsOfYear={monthsOfYear} setMonthsOfYear={setMonthsOfYear}
                     daysInMonths={daysInMonths} setDaysInMonths={setDaysInMonths}
                     afterAddFunc={() => {}} afterRemoveFunc={() => {}}
+                    onChange={() => {}}
                 />
             </SettingsSection>
             <div className="py-4 flex justify-center">

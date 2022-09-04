@@ -9,6 +9,7 @@ import SettingsSectionTitle from "../SettingsSectionTitle"
 import AssociatedEvents from "./AssociatedEvents"
 import HoursInDay from "./HoursInDay"
 import DaysInWeek from "./DaysInWeek"
+import Months from "./Months"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
@@ -26,6 +27,8 @@ const ClockSettings = (props) => {
     const [hoursInDay, setHoursInDay] = useState(0)
     const [currentEvent, setCurrentEvent] = useState("")
     const [daysInWeek, setDaysInWeek] = useState([])
+    const [monthsOfYear, setMonthsOfYear] = useState([])
+    const [daysInMonths, setDaysInMonths] = useState([])
 
     useEffect(() => {
         getDocument("clocks", id, setNotification).then((data)  => {
@@ -34,6 +37,8 @@ const ClockSettings = (props) => {
             setActivePlayers(clockPlayersDB)
             setAdmins(clockAdminsDB)
             setDaysInWeek(data.data().daysOfWeek)
+            setMonthsOfYear(data.data().monthsOfYear)
+            setDaysInMonths(data.data().daysInMonths)
             setCurrentEvent(data.data().clockEvent)
             setIsClock(data.exists())
             setHoursInDay(data.data().hoursInDay)
@@ -85,6 +90,36 @@ const ClockSettings = (props) => {
                     }} 
                     afterRemoveFunc={(newDaysInWeek) => {
                         updateDocument("clocks", id, {daysOfWeek: newDaysInWeek}, setNotification, isClocks)
+                    }}
+                />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Months</SettingsSectionTitle>
+                <Months
+                    monthsOfYear={monthsOfYear} setMonthsOfYear={setMonthsOfYear}
+                    daysInMonths={daysInMonths} setDaysInMonths={setDaysInMonths}
+                    onChange={(newValue, i) => {
+                        let tempDaysInMonths = [...daysInMonths]
+                        tempDaysInMonths[i] = newValue
+                        updateDocument(
+                            "clocks", id, 
+                            {daysInMonths: tempDaysInMonths}, 
+                            setNotification, isClocks
+                        )
+                    }}
+                    afterAddFunc={(newMonthsOfYear, newDaysInMonths) => {
+                        updateDocument(
+                            "clocks", id, 
+                            {monthsOfYear: newMonthsOfYear, daysInMonths: newDaysInMonths}, 
+                            setNotification, isClocks
+                        )
+                    }} 
+                    afterRemoveFunc={(newMonthsOfYear, newDaysInMonths) => {
+                        updateDocument(
+                            "clocks", id, 
+                            {monthsOfYear: newMonthsOfYear, daysInMonths: newDaysInMonths}, 
+                            setNotification, isClocks
+                        )
                     }}
                 />
             </SettingsSection>

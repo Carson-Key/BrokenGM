@@ -7,13 +7,13 @@ import { fireError } from "../../../helpers/notifications"
 
 const DaysInMonthInput = (props) => {
     const { 
-        daysInMonths, setDaysInMonths, i, monthsOfYear
+        daysInMonths, setDaysInMonths, i, monthsOfYear, onChange
     } = props
     const setNotification = useContext(NotificationContext)[1]
-    const [newAmountOfDays, setNewAmountOfDays] = useState(daysInMonths[i])
+    const [newAmountOfDays, setNewAmountOfDays] = useState(daysInMonths[i] ? daysInMonths[i] : "")
 
     useEffect(() => {
-        setNewAmountOfDays(daysInMonths[i])
+        setNewAmountOfDays(daysInMonths[i] ? daysInMonths[i] : "")
     }, [monthsOfYear, daysInMonths, i])
 
     return (  
@@ -24,11 +24,13 @@ const DaysInMonthInput = (props) => {
                     tempDaysInMonths[i] = ""
                     setNewAmountOfDays(tempDaysInMonths[i])
                     setDaysInMonths(tempDaysInMonths)
+                    onChange("", i)
                 } else if (parseInt(event.target.value)) {
                     let tempDaysInMonths = [...daysInMonths]
                     tempDaysInMonths[i] = parseInt(event.target.value)
                     setNewAmountOfDays(tempDaysInMonths[i])
                     setDaysInMonths(tempDaysInMonths)
+                    onChange(tempDaysInMonths[i], i)
                 } else {
                     fireError(setNotification, 1, "Please only use numbers in Hours in Day")
                 }
