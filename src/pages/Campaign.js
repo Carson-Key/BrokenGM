@@ -55,6 +55,11 @@ const Campaign = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <Container className="flex flex-wrap justify-evenly">
+                <AddCampaignItemCard
+                    id={id}
+                    clocks={clocks}
+                    events={clockEvents}
+                />
                 <CampaignLinkCard 
                     docID="clocks"
                     path="clock"
@@ -104,11 +109,6 @@ const Campaign = () => {
                     players={players}
                     clocks={clocks}
                     Settings={CharacterNotesSettings}
-                />
-                <AddCampaignItemCard
-                    id={id}
-                    clocks={clocks}
-                    events={clockEvents}
                 />
             </Container>
         </IsLoading>
