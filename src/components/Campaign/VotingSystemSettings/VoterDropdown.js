@@ -10,7 +10,9 @@ const VoterDropdown = (props) => {
     const [valueState, setValueState] = useState(value)
 
     return (
-        <select value={valueState} onChange={(event) => {
+        <select 
+            className="border rounded bg-gray-100 ml-2"
+            value={valueState} onChange={(event) => {
             setValueState(event.target.value)
             onChange(event.target.value)
         }}>
