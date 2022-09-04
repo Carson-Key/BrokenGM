@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react"
 import DefaultVoters from "./DefaultVoters"
 // Campaign
 import EditPlayers from "../EditPlayers"
+import EditAdmins from "../EditAdmins"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
@@ -24,6 +25,7 @@ const VotingSystemSettings = (props) => {
     const [defaultVotersObject, setDefaultVotersObject] = useState({})
     const [voters, setVoters] = useState([])
     const [votersObject, setVotersObject] = useState({})
+    const [adminsObject, setAdminsObject] = useState({})
     const [admins, setAdmins] = useState([])
 
     useEffect(() => {
@@ -34,12 +36,8 @@ const VotingSystemSettings = (props) => {
             setAdmins(clockAdminsDB)
             setIsVotingSystem(data.exists())
             let tempEnabledPlayers = {...players}
-            let tempEnabledAdmins = {...players}
             clockPlayersDB.forEach((player) => {    
                 tempEnabledPlayers[player] = {id: player, name: returnChildOfObject(players, [player, "name"], ''), access: true}
-            })            
-            clockAdminsDB.forEach((admin) => {    
-                tempEnabledAdmins[admin] = {id: admin, name: returnChildOfObject(players, [admin, "name"], ''), access: true}
             })
             
             setVotingSystemPlayers(tempEnabledPlayers)
@@ -54,6 +52,11 @@ const VotingSystemSettings = (props) => {
             if (data) {
                 setVoters(Object.keys(data))
                 setVotersObject(data)
+            }
+        })
+        getRealtimeDBOnce("votingsystems/" + id + "/admins", (data) => {
+            if (data) {
+                setAdminsObject(data)
             }
         })
     }, [players, id, setNotification])
@@ -113,6 +116,33 @@ const VotingSystemSettings = (props) => {
                             ...votingSystemPlayers, 
                             [player]: {...playerObject, access: !playerObject.access}
                         })
+                    }}
+                />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Edit Admin Access</SettingsSectionTitle>
+                <EditAdmins
+                    admins={admins}
+                    gm={gm}
+                    players={votingSystemPlayers}
+                    toggleAccess={(event, player) => {
+                        if (admins.includes(player)) {
+                            let tempAdminsObject = {...adminsObject}
+                            let tempAdmins = [...admins]
+                            tempAdmins = removeElementFromArray(tempAdmins, player)
+                            setAdmins(tempAdmins)
+                            delete tempAdminsObject[player]
+                            setAdminsObject(tempAdminsObject)
+                            updateDocument("votingsystems", id, {admins: tempAdmins}, setNotification, isVotingSystem)
+                            updateRealtimeDB(tempAdminsObject, ["votingsystems/" + id + "/admins/"])
+                        } else {
+                            let tempAdminsObject = {...adminsObject, [player]: true}
+                            let tempAdmins = [...admins, player]
+                            setAdmins(tempAdmins)
+                            setAdminsObject(tempAdminsObject)
+                            updateDocument("votingsystems", id, {admins: tempAdmins}, setNotification, isVotingSystem)
+                            updateRealtimeDB(tempAdminsObject, ["votingsystems/" + id + "/admins/"])
+                        }
                     }}
                 />
             </SettingsSection>
