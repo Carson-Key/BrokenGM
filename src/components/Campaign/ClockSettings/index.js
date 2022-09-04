@@ -8,6 +8,7 @@ import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
 import AssociatedEvents from "./AssociatedEvents"
 import HoursInDay from "./HoursInDay"
+import DaysInWeek from "./DaysInWeek"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
@@ -24,6 +25,7 @@ const ClockSettings = (props) => {
     const [admins, setAdmins] = useState([])
     const [hoursInDay, setHoursInDay] = useState(0)
     const [currentEvent, setCurrentEvent] = useState("")
+    const [daysInWeek, setDaysInWeek] = useState([])
 
     useEffect(() => {
         getDocument("clocks", id, setNotification).then((data)  => {
@@ -31,6 +33,7 @@ const ClockSettings = (props) => {
             const clockAdminsDB = data.data().admins
             setActivePlayers(clockPlayersDB)
             setAdmins(clockAdminsDB)
+            setDaysInWeek(data.data().daysOfWeek)
             setCurrentEvent(data.data().clockEvent)
             setIsClock(data.exists())
             setHoursInDay(data.data().hoursInDay)
@@ -72,6 +75,18 @@ const ClockSettings = (props) => {
                 >
                     Update
                 </button>
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Days in Week</SettingsSectionTitle>
+                <DaysInWeek
+                    daysInWeek={daysInWeek} setDaysInWeek={setDaysInWeek} 
+                    afterAddFunc={(newDaysInWeek) => {
+                        updateDocument("clocks", id, {daysOfWeek: newDaysInWeek}, setNotification, isClocks)
+                    }} 
+                    afterRemoveFunc={(newDaysInWeek) => {
+                        updateDocument("clocks", id, {daysOfWeek: newDaysInWeek}, setNotification, isClocks)
+                    }}
+                />
             </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>

@@ -32,7 +32,7 @@ const DaysInWeek = (props) => {
                                     onClick={() => {
                                         let tempDaysInWeek = removeElementFromArray([...daysInWeek], day)
                                         setDaysInWeek([...tempDaysInWeek])
-                                        afterRemoveFunc()
+                                        afterRemoveFunc(tempDaysInWeek)
                                     }}
                                 >
                                     <FaTrash/>
@@ -59,7 +59,7 @@ const DaysInWeek = (props) => {
                             if (newDayOfWeek !== "") {
                                 setNewDayOfWeek("")
                                 setDaysInWeek([...daysInWeek, newDayOfWeek])
-                                afterAddFunc()
+                                afterAddFunc([...daysInWeek, newDayOfWeek])
                             } else {
                                 fireError(setNotification, 1, "Please fill day of week field before adding a new entry")
                             }
