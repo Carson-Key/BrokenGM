@@ -30,8 +30,8 @@ const DaysInWeek = (props) => {
                                 {day}
                                 <button className="text-red-500"
                                     onClick={() => {
-                                        let tempDaysInWeek = removeElementFromArray(daysInWeek, day)
-                                        setDaysInWeek(tempDaysInWeek)
+                                        let tempDaysInWeek = removeElementFromArray([...daysInWeek], day)
+                                        setDaysInWeek([...tempDaysInWeek])
                                         afterRemoveFunc()
                                     }}
                                 >

@@ -20,12 +20,12 @@ const DaysInMonthInput = (props) => {
         <input
             onChange={(event) => {
                 if (event.target.value === "") {
-                    let tempDaysInMonths = daysInMonths
+                    let tempDaysInMonths = [...daysInMonths]
                     tempDaysInMonths[i] = ""
                     setNewAmountOfDays(tempDaysInMonths[i])
                     setDaysInMonths(tempDaysInMonths)
                 } else if (parseInt(event.target.value)) {
-                    let tempDaysInMonths = daysInMonths
+                    let tempDaysInMonths = [...daysInMonths]
                     tempDaysInMonths[i] = parseInt(event.target.value)
                     setNewAmountOfDays(tempDaysInMonths[i])
                     setDaysInMonths(tempDaysInMonths)

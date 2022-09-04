@@ -31,13 +31,11 @@ const Months = (props) => {
                                 />
                                 <button className="text-red-500 mx-2"
                                     onClick={() => {
-                                        let tempMonthsOfYear = removeElementFromArray(monthsOfYear, month)
-                                        let tempDaysInMonths = daysInMonths
+                                        let tempMonthsOfYear = removeElementFromArray([...monthsOfYear], month)
+                                        let tempDaysInMonths = [...daysInMonths]
                                         tempDaysInMonths.splice(i, 1)
                                         setMonthsOfYear(tempMonthsOfYear)
                                         setDaysInMonths(tempDaysInMonths)
-                                        console.log(tempMonthsOfYear)
-                                        console.log(tempDaysInMonths)
                                         afterRemoveFunc()
                                     }}
                                 >
