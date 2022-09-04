@@ -1,14 +1,17 @@
 // Stores
 import NotificationStore from '../contexts/Notification'
+import PopUpStore from '../contexts/PopUp'
 
 const ContextStores = (props) => {
     const { children } = props
 
     return (
         <>
-            <NotificationStore>
-                {children}
-            </NotificationStore>
+            <PopUpStore>
+                <NotificationStore>
+                    {children}
+                </NotificationStore>
+            </PopUpStore>
         </>
     )
 }

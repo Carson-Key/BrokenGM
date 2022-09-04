@@ -11,10 +11,12 @@ import ConfirmationPopUp from '../../ui/ConfirmationPopUp'
 import Input from '../../ui/Input'
 // Contexts
 import { NotificationContext } from '../../contexts/Notification'
+import { PopUpContext } from '../../contexts/PopUp'
 // Helpers
 import { moreLessTextDecider } from '../../helpers/misc'
 import { updateDocument } from '../../helpers/firestore'
 import { fireError } from '../../helpers/notifications'
+import { firePopUp } from '../../helpers/popup'
 
 const List = (props) => {
     const { 
@@ -27,6 +29,7 @@ const List = (props) => {
     const [deleteCatPopUp, setDeleteCatPopUp] = useState(false)
     const [resetInputValues, setResetInputValues] = useState(false)
     const setNotification = useContext(NotificationContext)[1]
+    const setPopUpOne = useContext(PopUpContext)[1]
     const [indexToDelete, setIndexToDelete] = useState(null)
     const [newItem, setNewItem] = useState("")
 
@@ -137,7 +140,18 @@ const List = (props) => {
                                 "hidden"
                             }
                             onClick={() => {
-                                setDeleteCatPopUp(true)
+                                firePopUp(
+                                    "Are you sure you want to delete " + name,
+                                    () => {
+                                        let tempNotes = [...notes]
+                                        delete tempNotes[index][elementIndex]
+                                        setNotes(tempNotes)
+                                        updateDocument("characternotes", id, {characters: tempNotes}, setNotification, isCharacterNotes)
+                                        setDeleteCatPopUp(false)
+                                    },
+                                    () => {},
+                                    setPopUpOne
+                                )
                             }}
                         >Delete</button>
                     </div>
