@@ -1,3 +1,5 @@
+// Packages
+import { Fragment } from 'react'
 // Components
 import Input from '../../ui/Input'
 
@@ -24,7 +26,7 @@ const EditPlayers = (props) => {
                         />
                     )
                 } else {
-                    return <></>
+                    return <Fragment key={i} />
                 }
             })
         }</div>
