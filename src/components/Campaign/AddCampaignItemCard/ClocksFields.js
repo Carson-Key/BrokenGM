@@ -8,6 +8,7 @@ import AssociatedEvents from '../ClockSettings/AssociatedEvents'
 import DaysInWeek from '../ClockSettings/DaysInWeek'
 import HoursInDay from '../ClockSettings/HoursInDay'
 import Months from '../ClockSettings/Months'
+import Years from '../ClockSettings/Years'
 // AddCampaignItemCard
 import Name from './Name'
 // Contexts
@@ -29,6 +30,8 @@ const ClockEventsFields = (props) => {
     const [monthsOfYear, setMonthsOfYear] = useState([])
     const [daysInMonths, setDaysInMonths] = useState([])
     const setNotification = useContext(NotificationContext)[1]
+    const [yearSuffix, setYearSuffix] = useState("")
+    const [yearPrefix, setYearPrefix] = useState("")
 
     useEffect(() => {
         getCurrentUser(setUserID)
@@ -72,6 +75,13 @@ const ClockEventsFields = (props) => {
                     onChange={() => {}}
                 />
             </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Years</SettingsSectionTitle>
+                <Years 
+                    yearSuffix={yearSuffix} setYearSuffix={setYearSuffix} 
+                    yearPrefix={yearPrefix} setYearPrefix={setYearPrefix}
+                />
+            </SettingsSection>
             <div className="py-4 flex justify-center">
                 <button 
                     className="rounded bg-green-400 text-white px-3 py-1"
@@ -99,6 +109,8 @@ const ClockEventsFields = (props) => {
                             newClock.hoursInDay = hoursInDay
                             newClock.monthsOfYear = monthsOfYear
                             newClock.daysInMonths = daysInMonths
+                            newClock.yearSuffix = yearSuffix
+                            newClock.preYearSuffix = yearPrefix
                             getDocument("campaigns", id, setNotification).then((data) => {
                                 const campaignData = data.data()
                                 let campaign = {...campaignData}
