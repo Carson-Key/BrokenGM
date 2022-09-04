@@ -36,6 +36,7 @@ const AssociatedClock = (props) => {
                 setCurrentClock(event.target.value)
                 selectEvent(event)
             }}>
+                <option value={""}>none</option>
                 {
                     clockIDs.map((clock, i) => {
                         console.log()
