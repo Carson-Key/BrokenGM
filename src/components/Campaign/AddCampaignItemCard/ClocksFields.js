@@ -89,7 +89,7 @@ const ClockEventsFields = (props) => {
                             }
                         } else {
                             const eventsID = uuidv4()
-                            let newClock = CLOCKS
+                            let newClock = {...CLOCKS}
                             newClock.name = name
                             newClock.admins = [userID]
                             newClock.clockEvent = currentEvent

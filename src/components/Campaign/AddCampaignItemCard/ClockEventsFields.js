@@ -46,7 +46,7 @@ const ClockEventsFields = (props) => {
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {
                         const eventsID = uuidv4()
-                        let newEvents = CLOCKEVENTS
+                        let newEvents = {...CLOCKEVENTS}
                         newEvents.name = name
                         newEvents.admins = [userID]
                         newEvents.clock = currentClock

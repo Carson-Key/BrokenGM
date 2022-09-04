@@ -44,7 +44,7 @@ const RelationsFields = (props) => {
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {
                         const relationID = uuidv4()
-                        let newRelations = RELATIONS
+                        let newRelations = {...RELATIONS}
                         newRelations.name = name
                         newRelations.admins = [userID]
                         newRelations.playerCharacters = characters

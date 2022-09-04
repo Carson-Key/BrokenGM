@@ -35,7 +35,7 @@ const NotesFields = (props) => {
                     className="rounded bg-green-400 text-white px-3 py-1"
                     onClick={() => {
                         const noteID = uuidv4()
-                        let newNote = CHARACTERNNOTES
+                        let newNote = {...CHARACTERNNOTES}
                         newNote.name = name
                         newNote.admins = [userID]
                         getDocument("campaigns", id, setNotification).then((data) => {
