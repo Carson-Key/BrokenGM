@@ -6,50 +6,52 @@ import EditAdmins from "../EditAdmins"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
-import AssociatedClock from "./AssociatedClock"
+import Characters from "./Characters"
 // Contexts
 import { NotificationContext } from "../../../contexts/Notification"
 // Helpers
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
 
-const ClockEventsSettings = (props) => {
-    const { players, id, clocks, gm } = props
+const ClockSettings = (props) => {
+    const { players, id, gm } = props
     const setNotification = useContext(NotificationContext)[1]
-    const [clockEventsPlayers, setClockEventsPlayers] = useState({...players})
-    const [isClockEvents, setIsClockEvents] = useState(false)
+    const [relationPlayers, setRealtionPlayers] = useState({...players})
+    const [isRealion, setIsRealtion] = useState(false)
     const [activePlayers, setActivePlayers] = useState([])
-    const [currentClock, setCurrentClock] = useState("")
     const [admins, setAdmins] = useState([])
+    const [characters, setCharacters] = useState({})
 
     useEffect(() => {
-        getDocument("clockevents", id, setNotification).then((data)  => {
+        getDocument("relations", id, setNotification).then((data)  => {
             const clockPlayersDB = data.data().players
             const clockAdminsDB = data.data().admins
+            setCharacters(data.data().playerCharacters)
             setAdmins(clockAdminsDB)
             setActivePlayers(clockPlayersDB)
-            setIsClockEvents(data.exists())
-            setCurrentClock(data.data().clock)
+            setIsRealtion(data.exists())
             let tempEnabledPlayers = {...players}
             clockPlayersDB.forEach((player) => {    
                 tempEnabledPlayers[player] = {id: player, name: returnChildOfObject(players, [player, "name"], ''), access: true}
             })
             
-            setClockEventsPlayers(tempEnabledPlayers)
+            setRealtionPlayers(tempEnabledPlayers)
         })
-    }, [players, id, setNotification, clocks])
+    }, [players, id, setNotification])
 
     return (
         <SettingsBody>
             <SettingsSection>
-                <SettingsSectionTitle>Associated Clock</SettingsSectionTitle>
-                <AssociatedClock
-                    clocks={clocks}
-                    selectEvent={(event) => {
-                        updateDocument("clockevents", id, {clock: event.target.value}, setNotification, isClockEvents)
+                <SettingsSectionTitle>Player Characters</SettingsSectionTitle>
+                <Characters
+                    characters={characters} setCharacters={setCharacters} 
+                    afterAddFunc={(newPlayerCharacters) => {
+                        updateDocument("relations", id, {playerCharacters: newPlayerCharacters}, setNotification, isRealion)
+                    }} 
+                    afterRemoveFunc={(newPlayerCharacters) => {
+                        // TODO: Fix this ;(
+                        updateDocument("relations", id, {playerCharacters: {...newPlayerCharacters}}, setNotification, isRealion)
                     }}
-                    currentClock={currentClock}
-                    setCurrentClock={setCurrentClock}
                 />
             </SettingsSection>
             <SettingsSection>
@@ -57,21 +59,21 @@ const ClockEventsSettings = (props) => {
                 <EditPlayers
                     gm={gm}
                     admins={admins}
-                    players={clockEventsPlayers}
+                    players={relationPlayers}
                     toggleAccess={(event, player) => {
-                        const playerObject = clockEventsPlayers[player]
+                        const playerObject = relationPlayers[player]
                         if (playerObject.access) {
                             let tempActivePlayers = [...activePlayers]
                             tempActivePlayers = removeElementFromArray(tempActivePlayers, player)
                             setActivePlayers(tempActivePlayers)
-                            updateDocument("clockevents", id, {players: tempActivePlayers}, setNotification, isClockEvents)
+                            updateDocument("relations", id, {players: tempActivePlayers}, setNotification, isRealion)
                         } else {
                             let tempActivePlayers = [...activePlayers, player]
                             setActivePlayers(tempActivePlayers)
-                            updateDocument("clockevents", id, {players: tempActivePlayers}, setNotification, isClockEvents)
+                            updateDocument("relations", id, {players: tempActivePlayers}, setNotification, isRealion)
                         }
-                        setClockEventsPlayers({
-                            ...clockEventsPlayers, 
+                        setRealtionPlayers({
+                            ...relationPlayers, 
                             [player]: {...playerObject, access: !playerObject.access}
                         })
                     }}
@@ -82,17 +84,17 @@ const ClockEventsSettings = (props) => {
                 <EditAdmins
                     admins={admins}
                     gm={gm}
-                    players={clockEventsPlayers}
+                    players={relationPlayers}
                     toggleAccess={(event, player) => {
                         if (admins.includes(player)) {
                             let tempAdmins = [...admins]
                             tempAdmins = removeElementFromArray(tempAdmins, player)
                             setAdmins(tempAdmins)
-                            updateDocument("clockevents", id, {admins: tempAdmins}, setNotification, isClockEvents)
+                            updateDocument("relations", id, {admins: tempAdmins}, setNotification, isRealion)
                         } else {
                             let tempAdmins = [...admins, player]
                             setAdmins(tempAdmins)
-                            updateDocument("clockevents", id, {admins: tempAdmins}, setNotification, isClockEvents)
+                            updateDocument("relations", id, {admins: tempAdmins}, setNotification, isRealion)
                         }
                     }}
                 />
@@ -101,4 +103,4 @@ const ClockEventsSettings = (props) => {
     )
 }
 
-export default ClockEventsSettings
+export default ClockSettings

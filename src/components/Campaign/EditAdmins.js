@@ -3,14 +3,14 @@ import { Fragment } from 'react'
 // Components
 import Input from '../../ui/Input'
 
-const EditPlayers = (props) => {
-    const { players, toggleAccess, gm, admins } = props
+const EditAdmins = (props) => {
+    const { admins, players, toggleAccess, gm } = props
     const playersArray = Object.keys(players)
 
     return (
         <div className="flex flex-wrap">{
             playersArray.map((playerID, i) => {
-                if (playerID !== gm && !admins.includes(playerID)) {
+                if (playerID !== gm) {
                     return (
                         <Input 
                             key={i}
@@ -21,7 +21,7 @@ const EditPlayers = (props) => {
                             inputClass="mr-1"
                             name={players[playerID].name}
                             labelText={players[playerID].name}
-                            checked={players[playerID].access}
+                            checked={admins.includes(playerID)}
                             type="checkbox"
                         />
                     )
@@ -33,4 +33,4 @@ const EditPlayers = (props) => {
     )
 }
 
-export default EditPlayers
+export default EditAdmins

@@ -39,7 +39,11 @@ const Relation = () => {
                     if (data === "permission-denied") {
                         setClockData(null)
                     } else {
-                        setClockData(data.data())
+                        if (data) {
+                            if (data.data) {
+                                setClockData(data.data())
+                            }
+                        }
                     }
                     setIsLoading(false)
                 })

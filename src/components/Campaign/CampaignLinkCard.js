@@ -1,6 +1,7 @@
 // Packages
 import { useContext, useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { FaTrash } from "react-icons/fa"
 // Components
 import ConditionalRender from '../ConditionalRender'
 // UI
@@ -9,13 +10,19 @@ import CardTitle from '../../ui/CardTitle'
 import GenericLinkCard from '../../ui/GenericLinkCard'
 // Contexts
 import { NotificationContext } from "../../contexts/Notification"
+import { PopUpContext } from "../../contexts/PopUp"
 // Helpers
-import { getDocument } from '../../helpers/firestore'
+import { getDocument, deleteDocumentWithPromise, updateDocumentWithPromise } from '../../helpers/firestore'
+import { firePopUp } from '../../helpers/popup'
+import { removeElementFromArray } from '../../helpers/misc'
+import { updateRealtimeDB } from '../../helpers/database'
 
 const CampaignLinkCard = (props) => {
-    const { items, isAdmin, docID, playerBody, path, Settings, players, clocks } = props
+    const { id, items, isAdmin, docID, playerBody, path, Settings, players, clocks, events, gm } = props
     const setNotification = useContext(NotificationContext)[1]
+    const setPopUp = useContext(PopUpContext)[1]
     const [itemArray, setItemArray] = useState([])
+    const [itemExists, setItemExists] = useState(false)
 
     useEffect(() => {
         items.forEach((item, i) => {
@@ -24,6 +31,7 @@ const CampaignLinkCard = (props) => {
                     setItemArray(prev => [...prev, {name: "", id: "", access: false}])
                 } else {
                     const itemData = data.data()
+                    setItemExists(data.exists())
                     setItemArray(prev => [...prev, {name: itemData.name, id: item, access: true}])
                 }
             })
@@ -47,10 +55,38 @@ const CampaignLinkCard = (props) => {
                         }
                     >   
                         <Card>
-                            <Link to={"/" + path + "/" + item.id}>
-                                <CardTitle>{item.name}</CardTitle>
-                            </Link>
-                            {<Settings players={players} id={item.id} clocks={clocks} />}
+                            <CardTitle className="flex justify-between" >
+                                <div className="w-11/12 flex justify-center">
+                                    <Link to={"/" + path + "/" + item.id}>
+                                        <p>{item.name}</p>
+                                    </Link>  
+                                </div>
+                                <div className="w-5">
+                                    <button
+                                        onClick={() => {
+                                            firePopUp(
+                                                "Are you sure you want to delete " + item.name,
+                                                () => {
+                                                    deleteDocumentWithPromise(docID, item.id, setNotification, itemExists).then(() => {
+                                                        getDocument("campaigns", id, setNotification, true).then((data) => {
+                                                            let tempItems = removeElementFromArray([...data.data()[docID]], item.id)
+                                                            updateDocumentWithPromise("campaigns", id, { [docID]: tempItems }, setNotification, true).then(() => {
+                                                                if (docID === "votingsystems") {
+                                                                    updateRealtimeDB({}, ["votingsystems/" + item.id + "/"])
+                                                                }
+                                                                window.location.reload(false)
+                                                            })
+                                                        })
+                                                    })
+                                                },
+                                                () => {},
+                                                setPopUp
+                                            )
+                                        }}
+                                    ><FaTrash/></button>
+                                </div>  
+                            </CardTitle>     
+                            {<Settings gm={gm} players={players} id={item.id} clocks={clocks} events={events} />}
                         </Card>
                     </ConditionalRender>
                 )

@@ -2,8 +2,10 @@
 import { useState, useEffect, useContext } from "react"
 // VotingSystemSettings
 import DefaultVoters from "./DefaultVoters"
+import SetVoters from "./SetVoters"
 // Campaign
 import EditPlayers from "../EditPlayers"
+import EditAdmins from "../EditAdmins"
 import SettingsBody from "../SettingsBody"
 import SettingsSection from "../SettingsSection"
 import SettingsSectionTitle from "../SettingsSectionTitle"
@@ -13,9 +15,10 @@ import { NotificationContext } from "../../../contexts/Notification"
 import { getDocument, updateDocument } from "../../../helpers/firestore"
 import { getRealtimeDBOnce, updateRealtimeDB } from "../../../helpers/database"
 import { returnChildOfObject, removeElementFromArray } from "../../../helpers/misc"
+import { firePing } from "../../../helpers/notifications"
 
 const VotingSystemSettings = (props) => {
-    const { players, id } = props
+    const { players, id, gm } = props
     const setNotification = useContext(NotificationContext)[1]
     const [votingSystemPlayers, setVotingSystemPlayers] = useState({...players})
     const [isVotingSystem, setIsVotingSystem] = useState(false)
@@ -24,11 +27,15 @@ const VotingSystemSettings = (props) => {
     const [defaultVotersObject, setDefaultVotersObject] = useState({})
     const [voters, setVoters] = useState([])
     const [votersObject, setVotersObject] = useState({})
+    const [adminsObject, setAdminsObject] = useState({})
+    const [admins, setAdmins] = useState([])
 
     useEffect(() => {
         getDocument("votingsystems", id, setNotification).then((data)  => {
             const clockPlayersDB = data.data().players
+            const clockAdminsDB = data.data().admins
             setActivePlayers(clockPlayersDB)
+            setAdmins(clockAdminsDB)
             setIsVotingSystem(data.exists())
             let tempEnabledPlayers = {...players}
             clockPlayersDB.forEach((player) => {    
@@ -49,6 +56,11 @@ const VotingSystemSettings = (props) => {
                 setVotersObject(data)
             }
         })
+        getRealtimeDBOnce("votingsystems/" + id + "/admins", (data) => {
+            if (data) {
+                setAdminsObject(data)
+            }
+        })
     }, [players, id, setNotification])
 
     return (
@@ -60,11 +72,42 @@ const VotingSystemSettings = (props) => {
                     setDefaultVoters={setDefaultVoters}
                     defaultVotersObject={defaultVotersObject} 
                     setDefaultVotersObject={setDefaultVotersObject}
+                    afterAddFunc={(formattedName) => {
+                        updateRealtimeDB(
+                            "", ["votingsystems/" + id + "/defaultVoters/" + formattedName]
+                        )
+                    }} 
+                    afterRemoveFunc={(tempDefaultVotersObject) => {
+                        updateRealtimeDB(
+                            tempDefaultVotersObject, 
+                            ["votingsystems/" + id + "/defaultVoters/"]
+                        )
+                    }}
                 />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Edit Voter Access</SettingsSectionTitle>
+                <SetVoters
+                    id={id} defaultVoters={defaultVoters} voters={voters}
+                    votersObject={votersObject} setVotersObject={setVotersObject}
+                />
+                <div className="w-full flex justify-center my-1">
+                    <button 
+                        className="px-2 py-1 text-white rounded bg-green-400"
+                        onClick={() => {
+                            updateRealtimeDB(votersObject, ["votingsystems/" + id + "/voters/"])
+                            firePing(setNotification, 0, "You have successfully updated Voter Access")
+                        }}
+                    >
+                        Update
+                    </button>
+                </div>
             </SettingsSection>
             <SettingsSection>
                 <SettingsSectionTitle>Edit Player Access</SettingsSectionTitle>
                 <EditPlayers
+                    admins={admins}
+                    gm={gm}
                     players={votingSystemPlayers}
                     toggleAccess={(event, player) => {
                         const playerObject = votingSystemPlayers[player]
@@ -93,6 +136,33 @@ const VotingSystemSettings = (props) => {
                             ...votingSystemPlayers, 
                             [player]: {...playerObject, access: !playerObject.access}
                         })
+                    }}
+                />
+            </SettingsSection>
+            <SettingsSection>
+                <SettingsSectionTitle>Edit Admin Access</SettingsSectionTitle>
+                <EditAdmins
+                    admins={admins}
+                    gm={gm}
+                    players={votingSystemPlayers}
+                    toggleAccess={(event, player) => {
+                        if (admins.includes(player)) {
+                            let tempAdminsObject = {...adminsObject}
+                            let tempAdmins = [...admins]
+                            tempAdmins = removeElementFromArray(tempAdmins, player)
+                            setAdmins(tempAdmins)
+                            delete tempAdminsObject[player]
+                            setAdminsObject(tempAdminsObject)
+                            updateDocument("votingsystems", id, {admins: tempAdmins}, setNotification, isVotingSystem)
+                            updateRealtimeDB(tempAdminsObject, ["votingsystems/" + id + "/admins/"])
+                        } else {
+                            let tempAdminsObject = {...adminsObject, [player]: true}
+                            let tempAdmins = [...admins, player]
+                            setAdmins(tempAdmins)
+                            setAdminsObject(tempAdminsObject)
+                            updateDocument("votingsystems", id, {admins: tempAdmins}, setNotification, isVotingSystem)
+                            updateRealtimeDB(tempAdminsObject, ["votingsystems/" + id + "/admins/"])
+                        }
                     }}
                 />
             </SettingsSection>

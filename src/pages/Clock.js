@@ -44,7 +44,7 @@ const Clock = () => {
                 getDocument("clockevents", data.data().clockEvent, setNotification, true).then((data) => {
                     if (data !== "permission-denied") {
                         if (data) {
-                            if (data.data()) {
+                            if (data.data) {
                                 let breakWhileLoop = false
                                 let eventsDB = data.data().events
                                 let index = eventsDB.length - 1

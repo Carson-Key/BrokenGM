@@ -3,12 +3,15 @@ import { useState } from "react"
 import { FaTrash } from "react-icons/fa"
 import { GrAddCircle } from 'react-icons/gr'
 // Helpers
-import { updateRealtimeDB } from "../../../helpers/database"
 import { formatCharacterName, reverseFormatCharacterName } from "../../../helpers/voting"
 import { removeElementFromArray } from "../../../helpers/misc"
 
 const DefaultVoters = (props) => {
-    const { id, defaultVoters, defaultVotersObject, setDefaultVoters, setDefaultVotersObject } = props
+    const { 
+        defaultVoters, defaultVotersObject, 
+        setDefaultVoters, setDefaultVotersObject,
+        afterAddFunc, afterRemoveFunc
+    } = props
     const [newDfaultVoter, setNewDefaultVoter] = useState("")
 
     return (
@@ -27,9 +30,9 @@ const DefaultVoters = (props) => {
                                 <button className="text-red-500"
                                     onClick={() => {
                                         let tempDefaultVotersObject = {...defaultVotersObject}
-                                        let tempDefaultVoters = removeElementFromArray(defaultVoters, voter)
+                                        let tempDefaultVoters = removeElementFromArray([...defaultVoters], voter)
                                         delete tempDefaultVotersObject[voter]
-                                        updateRealtimeDB(tempDefaultVotersObject, ["votingsystems/" + id + "/defaultVoters/"])
+                                        afterRemoveFunc(tempDefaultVotersObject)
                                         setDefaultVoters(tempDefaultVoters)
                                         setDefaultVotersObject(tempDefaultVotersObject)
                                     }}
@@ -56,8 +59,9 @@ const DefaultVoters = (props) => {
                     onClick={
                         () => {
                             const formattedName = reverseFormatCharacterName(newDfaultVoter)
-                            updateRealtimeDB("", ["votingsystems/" + id + "/defaultVoters/" + formattedName])
+                            afterAddFunc(formattedName)
                             setNewDefaultVoter("")
+                            setDefaultVotersObject({...defaultVotersObject, [formattedName]: ""})
                             setDefaultVoters([...defaultVoters, formattedName])
                         }
                     }

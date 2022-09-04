@@ -8,7 +8,8 @@ import {
     RelationSettings ,
     VotingSystemSettings,
     ClockEventsSettings,
-    CharacterNotesSettings
+    CharacterNotesSettings,
+    AddCampaignItemCard
 } from '../components/Campaign'
 import IsLoading from '../components/IsLoading'
 // UI
@@ -32,10 +33,12 @@ const Campaign = () => {
     const [clockEvents, setClockEvents] = useState([])
     const [characterNotes, setCharacterNotes] = useState([])
     const [players, setPlayers] = useState([])
+    const [gm, setGM] = useState("")
 
     useEffect(() => {
         getDocument("campaigns", id, setNotification).then((data) => {
             const campaignData = data.data()
+            setGM((campaignData.gm) ? campaignData.gm : "")
             setClocks((campaignData.clocks) ? campaignData.clocks : [])
             setRelations((campaignData.relations) ? campaignData.relations : [])
             setVotingSystems((campaignData.votingsystems) ? campaignData.votingsystems : [])
@@ -54,7 +57,13 @@ const Campaign = () => {
     return (
         <IsLoading isLoading={isLoading}>
             <Container className="flex flex-wrap justify-evenly">
+                <AddCampaignItemCard
+                    id={id}
+                    clocks={clocks}
+                    events={clockEvents}
+                />
                 <CampaignLinkCard 
+                    id={id}
                     docID="clocks"
                     path="clock"
                     items={clocks} 
@@ -62,9 +71,12 @@ const Campaign = () => {
                     playerBody="To Clock"
                     players={players}
                     clocks={[]}
+                    events={clockEvents}
                     Settings={ClockSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="relations"
                     path="relation"
                     items={relations} 
@@ -72,9 +84,12 @@ const Campaign = () => {
                     playerBody="To Relation"
                     players={players}
                     clocks={[]}
+                    events={[]}
                     Settings={RelationSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="votingsystems"
                     path="votingsystem"
                     items={votingSystems} 
@@ -82,9 +97,12 @@ const Campaign = () => {
                     playerBody="To Voting System"
                     players={players}
                     clocks={[]}
+                    events={[]}
                     Settings={VotingSystemSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="clockevents"
                     path="clockevents"
                     items={clockEvents} 
@@ -92,17 +110,22 @@ const Campaign = () => {
                     playerBody="To Clock Events"
                     players={players}
                     clocks={clocks}
+                    events={[]}
                     Settings={ClockEventsSettings}
+                    gm={gm}
                 />
                 <CampaignLinkCard 
+                    id={id}
                     docID="characternotes"
                     path="characternotes"
                     items={characterNotes} 
                     isAdmin={isAdmin}
                     playerBody="To Notes"
                     players={players}
-                    clocks={clocks}
+                    clocks={[]}
+                    events={[]}
                     Settings={CharacterNotesSettings}
+                    gm={gm}
                 />
             </Container>
         </IsLoading>
